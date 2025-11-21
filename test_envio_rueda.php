@@ -157,7 +157,7 @@ try {
 
             <div style='background:#fff;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
                 <h4 style='margin:0 0 12px 0;color:#10b981;font-size:17px;'>
-                    📌 MODALIDAD A: Recibo Solicitudes
+                    📌 Empresas que Buscan Servicios/Proveedores
                 </h4>
                 <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
                     <li>Usted marca su disponibilidad en el sistema</li>
@@ -169,7 +169,7 @@ try {
 
             <div style='background:#fff;border:2px solid #3b82f6;padding:20px;margin:20px 0;border-radius:8px;'>
                 <h4 style='margin:0 0 12px 0;color:#3b82f6;font-size:17px;'>
-                    🔍 MODALIDAD B: Solicito Reuniones
+                    🔍 Empresas que Ofrecen Servicios/Productos
                 </h4>
                 <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
                     <li>Usted explora las empresas disponibles</li>
@@ -214,7 +214,6 @@ try {
                 <ul style='margin:0;padding-left:20px;color:#555;'>
                     <li><strong>15 mesas f&iacute;sicas</strong> en el evento</li>
                     <li>M&aacute;ximo <strong>60 reuniones</strong> en total</li>
-                    <li>Sistema de reserva por <strong>orden de llegada</strong></li>
                 </ul>
             </div>
 
@@ -223,7 +222,7 @@ try {
             </h3>
 
             <div style='background:#ecfdf5;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
-                <p style='margin:0 0 10px 0;font-weight:bold;color:#065f46;'>Si est&aacute; en MODALIDAD A (Recibo solicitudes):</p>
+                <p style='margin:0 0 10px 0;font-weight:bold;color:#065f46;'>Si su empresa busca servicios/proveedores:</p>
                 <ol style='margin:5px 0 0 0;padding-left:20px;color:#555;line-height:1.8;'>
                     <li>Ingrese con sus credenciales</li>
                     <li>Complete su perfil empresarial</li>
@@ -234,7 +233,7 @@ try {
             </div>
 
             <div style='background:#eff6ff;border:2px solid #3b82f6;padding:20px;margin:20px 0;border-radius:8px;'>
-                <p style='margin:0 0 10px 0;font-weight:bold;color:#1e40af;'>Si est&aacute; en MODALIDAD B (Solicito reuniones):</p>
+                <p style='margin:0 0 10px 0;font-weight:bold;color:#1e40af;'>Si su empresa ofrece servicios/productos:</p>
                 <ol style='margin:5px 0 0 0;padding-left:20px;color:#555;line-height:1.8;'>
                     <li>Ingrese con sus credenciales</li>
                     <li>Complete su perfil empresarial</li>
@@ -252,40 +251,10 @@ try {
                     <li>✓ <strong>Registro prioritario:</strong> Configure su disponibilidad cuanto antes</li>
                     <li>✓ <strong>Confirmaci&oacute;n autom&aacute;tica:</strong> Recibir&aacute; emails con cada actualizaci&oacute;n</li>
                     <li>✓ <strong>Mesa asignada:</strong> Sabr&aacute; exactamente d&oacute;nde acudir el d&iacute;a del evento</li>
-                    <li>✓ <strong>Su rol:</strong> Verifique en el sistema si est&aacute; en Modalidad A o B</li>
                 </ul>
             </div>
 
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;text-align:center;'>
-                🔗 Acceso al Sistema
-            </h3>
-
-            <table style='width:100%;border-collapse:collapse;font-size:15px;margin:20px 0;background:#f9fafb;'>
-                <tr>
-                    <td style='padding:12px;border:1px solid #ddd;font-weight:bold;width:30%;background:#f3f4f6;'>Portal:</td>
-                    <td style='padding:12px;border:1px solid #ddd;'>
-                        <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php'
-                           style='color:#004aad;text-decoration:underline;word-break:break-all;'>
-                           www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style='padding:12px;border:1px solid #ddd;font-weight:bold;background:#f3f4f6;'>Usuario:</td>
-                    <td style='padding:12px;border:1px solid #ddd;'><strong>$email</strong></td>
-                </tr>
-                <tr>
-                    <td style='padding:12px;border:1px solid #ddd;font-weight:bold;background:#f3f4f6;'>Contrase&ntilde;a:</td>
-                    <td style='padding:12px;border:1px solid #ddd;'>La que registr&oacute; al crear su cuenta</td>
-                </tr>
-            </table>
-
-            <p style='text-align:center;font-size:14px;color:#666;margin:15px 0;'>
-                ¿Olvid&oacute; su contrase&ntilde;a? Cont&aacute;ctenos a
-                <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;'>contacto@bioceanicocentral.cl</a>
-            </p>
-
-            <div style='text-align:center;margin:35px 0;'>
+            <div style='text-align:center;margin:40px 0;'>
                 <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php'
                    style='background:#004aad;color:white;padding:16px 40px;font-size:17px;
                    font-weight:bold;text-decoration:none;border-radius:8px;display:inline-block;
@@ -327,13 +296,13 @@ Le confirmamos su participación en la Rueda de Negocios - Nodo Bioceánico Cent
 
 Dos Modalidades de Participación:
 
-MODALIDAD A: Recibo Solicitudes
+EMPRESAS QUE BUSCAN SERVICIOS/PROVEEDORES
 - Usted marca su disponibilidad en el sistema
 - Selecciona 1 mesa fija y hasta 2 bloques horarios (15 min cada uno)
 - Otras empresas le solicitan reuniones
 - Usted decide con quién reunirse (aprobar/rechazar)
 
-MODALIDAD B: Solicito Reuniones
+EMPRESAS QUE OFRECEN SERVICIOS/PRODUCTOS
 - Usted explora las empresas disponibles
 - Ve sus mesas y horarios
 - Solicita reuniones con las empresas que le interesen
@@ -348,14 +317,10 @@ Bloque 4: 12:00 - 12:15
 === CAPACIDAD ===
 - 15 mesas físicas en el evento
 - Máximo 60 reuniones en total
-- Sistema de reserva por orden de llegada
 
 === ACCESO AL SISTEMA ===
-Portal: https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
-Usuario: $email
-Contraseña: La que registró al crear su cuenta
-
-¿Olvidó su contraseña? Contáctenos a contacto@bioceanicocentral.cl
+🚀 Acceder al Sistema Ahora
+https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
 
 ¡Prepare sus mejores propuestas y haga crecer su red de negocios!
 
@@ -383,7 +348,7 @@ Rueda de Negocios - Nodo Bioceánico Central
     echo "<li>El correo incluye el prefijo <code>[PRUEBA]</code> en el asunto</li>";
     echo "<li>Se usaron datos reales de: " . html_entity_decode("$nombre $apellido") . "</li>";
     echo "<li>El email incluye <strong>instrucciones completas</strong> para usar el sistema de rueda de negocios</li>";
-    echo "<li>Contiene información sobre las dos modalidades (A y B)</li>";
+    echo "<li>Contiene información sobre las dos modalidades (empresas que buscan servicios y empresas que ofrecen servicios)</li>";
     echo "<li>Incluye el link al sistema: bioceanicocentral.cl/rueda-negocios-arica/views/registro.php</li>";
     echo "<li>El email incluye tracking pixel (se registrará si lo abres)</li>";
     echo "</ul>";
