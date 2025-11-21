@@ -205,7 +205,7 @@ try {
                                     <td align="center" style='padding:22px 0;background:#f8f9fa;'>
                                         <p style='margin:0 0 12px 0;font-size:15px;color:#1a1a1a;font-weight:600;'>Complete su registro ahora</p>
                                         <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php' style='display:inline-block;padding:13px 32px;background:#004aad;color:white;text-decoration:none;font-weight:600;font-size:14px;border-radius:4px;'>REGISTRARSE →</a>
-                                        <p style='margin:12px 0 0 0;font-size:13px;color:#666;'>Cupos limitados &bull; Por orden de llegada</p>
+                                        <p style='margin:12px 0 0 0;font-size:13px;color:#666;'>Cupos limitados</p>
                                     </td>
                                 </tr>
                             </table>
@@ -278,7 +278,7 @@ Hay DOS MODALIDADES según tu objetivo comercial:
 - Capacidad: 60 reuniones máximo (15 mesas)
 
 ⚠️ ¡CUPOS LIMITADOS!
-Solo hay 60 espacios disponibles. Complete su registro cuanto antes para asegurar su participación. Las mesas se asignan por orden de llegada.
+Solo hay 60 espacios disponibles. Complete su registro cuanto antes para asegurar su participación.
 
 === COMPLETE SU REGISTRO AHORA ===
 Es rápido y simple: complete sus datos, elija su modalidad y defina qué busca o qué ofrece.
