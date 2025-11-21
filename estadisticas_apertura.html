@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Apertura | Nodo Biocéanico 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #004aad;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-percentage {
+            font-size: 14px;
+            color: #10b981;
+            margin-top: 5px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f3f4f6;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-pending {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .btn-refresh {
+            background: #004aad;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .btn-refresh:hover {
+            background: #003a8c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Estadísticas de Apertura de Emails</h1>
+            <p>Nodo Biocéanico 2025</p>
+        </div>
+
+        <button class="btn-refresh" onclick="location.reload()">🔄 Actualizar Datos</button>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">📧 Total Enviados</div>
+                <div class="stat-value" id="total-enviados">-</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">✅ Emails Abiertos</div>
+                <div class="stat-value" id="total-abiertos">-</div>
+                <div class="stat-percentage" id="porcentaje-abiertos">-</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">⏳ Sin Abrir</div>
+                <div class="stat-value" id="total-sin-abrir">-</div>
+                <div class="stat-percentage" id="porcentaje-sin-abrir">-</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">📈 Tasa de Apertura</div>
+                <div class="stat-value" id="tasa-apertura">-</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h3 style="margin-bottom: 15px;">📋 Detalle de Registros</h3>
+            <table id="tabla-registros">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Fecha Apertura</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-registros">
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px;">
+                            Cargando datos...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function cargarEstadisticas() {
+            try {
+                const response = await fetch('obtener_estadisticas.php');
+                const data = await response.json();
+
+                // Actualizar estadísticas
+                document.getElementById('total-enviados').textContent = data.total;
+                document.getElementById('total-abiertos').textContent = data.abiertos;
+                document.getElementById('total-sin-abrir').textContent = data.sin_abrir;
+                document.getElementById('tasa-apertura').textContent = data.tasa_apertura + '%';
+
+                const porcentajeAbiertos = ((data.abiertos / data.total) * 100).toFixed(1);
+                const porcentajeSinAbrir = ((data.sin_abrir / data.total) * 100).toFixed(1);
+
+                document.getElementById('porcentaje-abiertos').textContent = porcentajeAbiertos + '% del total';
+                document.getElementById('porcentaje-sin-abrir').textContent = porcentajeSinAbrir + '% del total';
+
+                // Actualizar tabla
+                const tbody = document.getElementById('tbody-registros');
+                tbody.innerHTML = '';
+
+                data.registros.forEach(registro => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${registro.codigo}</td>
+                        <td>${registro.nombre} ${registro.apellido}</td>
+                        <td>${registro.email}</td>
+                        <td>
+                            ${registro.abierto ? 
+                                '<span class="badge badge-success">✅ Abierto</span>' : 
+                                '<span class="badge badge-pending">⏳ Pendiente</span>'}
+                        </td>
+                        <td>${registro.fecha_apertura || '-'}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar estadísticas');
+            }
+        }
+
+        // Cargar al inicio
+        cargarEstadisticas();
+
+        // Auto-actualizar cada 30 segundos
+        setInterval(cargarEstadisticas, 30000);
+    </script>
+</body>
+</html>

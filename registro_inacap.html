@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro INACAP - Cumbre Nodo Bioceánico 2025</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+      color: #2B2B2B;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .form-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      border-top: 6px solid #E30613;
+    }
+
+    h1 {
+      text-align: center;
+      color: #E30613;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    p.subtitle {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+      color: #2B2B2B;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      margin-top: 5px;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #E30613;
+      box-shadow: 0 0 5px rgba(227, 6, 19, 0.3);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 25px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #E30613, #B0000B);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #c10511, #90000A);
+      transform: translateY(-2px);
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    .footer-text strong {
+      color: #E30613;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-card">
+    <h1>Registro INACAP</h1>
+    <p class="subtitle">Participación en la Cumbre Nodo Bioceánico Central 2025</p>
+
+    <form id="inacapForm">
+      <label>RUT <span style="color:#E30613">*</span></label>
+      <input type="text" name="rut" placeholder="Ej: 12.345.678-9" required>
+
+      <label>Nombre Completo <span style="color:#E30613">*</span></label>
+      <input type="text" name="nombre" placeholder="Ej: Juan Pérez Soto" required>
+
+      <label>Carrera <span style="color:#E30613">*</span></label>
+      <input type="text" name="carrera" placeholder="Ej: Ingeniería en Logística" required>
+
+      <label>Correo Electrónico <span style="color:#E30613">*</span></label>
+      <input type="email" name="email" placeholder="tu@inacapmail.cl" required>
+
+      <label>Tipo de Participante <span style="color:#E30613">*</span></label>
+      <select name="tipo_participante" required>
+        <option value="">Selecciona una opción</option>
+        <option value="Alumno">Alumno</option>
+        <option value="Docente">Docente</option>
+        <option value="Administrativo">Administrativo</option>
+      </select>
+
+      <button type="submit" id="submitBtn">Registrar</button>
+    </form>
+
+    <p class="footer-text">
+      © 2025 Nodo Bioceánico 
+    </p>
+  </div>
+
+  <script>
+  const form = document.getElementById("inacapForm");
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.textContent = "Enviando...";
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    
+    console.log("📤 Datos a enviar:", data);
+    console.log("🔗 URL destino:", "guardar_registro_inacap.php");
+    
+    try {
+      const res = await fetch("guardar_registro_inacap.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+      
+      console.log("📡 Status HTTP:", res.status);
+      console.log("📡 Status Text:", res.statusText);
+      
+      // Primero obtener el texto crudo de la respuesta
+      const textoRespuesta = await res.text();
+      console.log("📄 Respuesta cruda del servidor:", textoRespuesta);
+      
+      // Intentar parsear como JSON
+      let result;
+      try {
+        result = JSON.parse(textoRespuesta);
+        console.log("✅ JSON parseado correctamente:", result);
+      } catch(parseError) {
+        console.error("❌ Error al parsear JSON:", parseError);
+        console.error("El servidor no respondió con JSON válido");
+        alert("❌ Error: El servidor no respondió correctamente.\n\nRevisa la consola del navegador (F12) para ver los detalles.");
+        btn.disabled = false;
+        btn.textContent = "Registrar";
+        return;
+      }
+      
+      alert(result.message);
+      if(result.status === 'ok') {
+        form.reset();
+      }
+      
+    } catch(err) {
+      console.error("❌ Error de fetch completo:", err);
+      console.error("Tipo de error:", err.name);
+      console.error("Mensaje:", err.message);
+      alert("⚠️ Error de conexión. Intenta nuevamente.\n\nRevisa la consola (F12) para más detalles.");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Registrar";
+    }
+  });
+</script>
+</body>
+</html>

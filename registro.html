@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Nodo Bioceánico Central 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a52 50%, #2c5f7d 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .reg-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reg-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: regFadeInDown 0.8s ease;
+        }
+
+        .reg-badge {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.2);
+            border: 2px solid #2ecc71;
+            color: #2ecc71;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .reg-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .reg-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .reg-form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: regFadeInUp 0.8s ease;
+        }
+
+        .reg-form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .reg-form-subtitle {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .reg-form-section {
+            margin-bottom: 40px;
+        }
+
+        .reg-section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reg-section-icon {
+            font-size: 1.5rem;
+        }
+
+        .reg-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .reg-form-group {
+            margin-bottom: 20px;
+        }
+
+        .reg-form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .reg-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .reg-required {
+            color: #e74c3c;
+            margin-left: 3px;
+        }
+
+        .reg-input,
+        .reg-select,
+        .reg-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: white;
+        }
+
+        .reg-input:focus,
+        .reg-select:focus,
+        .reg-textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .reg-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .reg-radio-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .reg-radio-option {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .reg-radio-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .reg-radio-label:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .reg-radio-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .reg-radio-input:checked + .reg-radio-text {
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        .reg-radio-label:has(.reg-radio-input:checked) {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .reg-checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .reg-checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .reg-checkbox-label:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .reg-checkbox-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .reg-checkbox-label:has(.reg-checkbox-input:checked) {
+            border-color: #3498db;
+            background: #e3f2fd;
+            font-weight: 600;
+        }
+
+        .reg-info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #2e7d32;
+        }
+
+        .reg-warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #e65100;
+        }
+
+        .reg-terms {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .reg-terms-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .reg-terms-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .reg-button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .reg-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 18px 35px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reg-btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
+        }
+
+        .reg-btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(52, 152, 219, 0.4);
+        }
+
+        .reg-btn-primary:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .reg-btn-secondary {
+            background: transparent;
+            color: #7f8c8d;
+            border: 2px solid #bdc3c7;
+        }
+
+        .reg-btn-secondary:hover {
+            border-color: #3498db;
+            color: #3498db;
+        }
+
+        .reg-success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 40px;
+            animation: regFadeInUp 0.8s ease;
+        }
+
+        .reg-success-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+
+        .reg-success-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        .reg-success-text {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .reg-help-text {
+            font-size: 0.85rem;
+            color: #95a5a6;
+            margin-top: 6px;
+        }
+
+        @keyframes regFadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes regFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .reg-form-card {
+                padding: 30px 20px;
+            }
+
+            .reg-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .reg-form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .reg-radio-group {
+                flex-direction: column;
+            }
+
+            .reg-radio-option {
+                min-width: 100%;
+            }
+
+            .reg-button-group {
+                flex-direction: column;
+            }
+
+            .reg-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reg-container">
+        <!-- Header -->
+        <!-- Header -->
+<div class="reg-header">
+  
+
+  <!-- Logo debajo del badge -->
+  <div class="reg-logo" style="margin: 10px 0 15px 0;">
+    <img src="logo1.png" alt="Logo Nodo Bioceánico" 
+         style="max-width: 500px; height: auto; border-radius: 8px;">
+  </div>
+
+  <h1>Desafíos y Oportunidades para la Macrozona Andina • 26, 27, 28 Noviembre 2025 • Arica, Chile</h1>
+  <p>Confirma tu Asistencia</p>
+</div>
+
+
+        <!-- Form Card -->
+        <div class="reg-form-card">
+            <div id="formContent">
+
+    <!-- Logos institucionales -->
+    <div class="reg-logos" style="text-align:center; margin-bottom: 20px;">
+        <img src="logos2.png" alt="Logos institucionales" 
+             style="max-width: 100%; height: auto; border-radius: 6px;">
+    </div>
+
+    <h2 class="reg-form-title">Formulario de Registro</h2>
+    <p class="reg-form-subtitle">
+        Completa tus datos para confirmar tu participación. 
+        Los campos marcados con <span class="reg-required">*</span> son obligatorios.
+    </p>
+
+
+                <form id="registroForm">
+                    <!-- Sección 1: Datos Personales -->
+                    <div class="reg-form-section">
+                        <div class="reg-section-title">
+                            <span class="reg-section-icon">👤</span>
+                            <span>Datos Personales</span>
+                        </div>
+
+                        <div class="reg-form-row">
+                            <div class="reg-form-group">
+                                <label class="reg-label">
+                                    Nombre <span class="reg-required">*</span>
+                                </label>
+                                <input type="text" class="reg-input" name="nombre" required 
+                                       placeholder="Ej: Juan">
+                            </div>
+
+                            <div class="reg-form-group">
+                                <label class="reg-label">
+                                    Apellido <span class="reg-required">*</span>
+                                </label>
+                                <input type="text" class="reg-input" name="apellido" required 
+                                       placeholder="Ej: Pérez">
+                            </div>
+                        </div>
+
+                        <div class="reg-form-row">
+                            <div class="reg-form-group">
+                                <label class="reg-label">
+                                    Email <span class="reg-required">*</span>
+                                </label>
+                                <input type="email" class="reg-input" name="email" required 
+                                       placeholder="tu@email.com">
+                                <div class="reg-help-text">Recibirás la confirmación en este correo</div>
+                            </div>
+
+                            <div class="reg-form-group">
+                                <label class="reg-label">
+                                    Teléfono <span class="reg-required">*</span>
+                                </label>
+                                <input type="tel" class="reg-input" name="telefono" required 
+                                       placeholder="+56 9 XXXX XXXX">
+                            </div>
+                        </div>
+
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                País <span class="reg-required">*</span>
+                            </label>
+                            <select class="reg-select" name="pais" required>
+                                <option value="">Selecciona tu país</option>
+                                <option value="Chile">🇨🇱 Chile</option>
+                                <option value="Bolivia">🇧🇴 Bolivia</option>
+                                <option value="Brasil">🇧🇷 Brasil</option>
+                                <option value="Perú">🇵🇪 Perú</option>
+                                <option value="Argentina">🇦🇷 Argentina</option>
+                                <option value="Paraguay">🇵🇾 Paraguay</option>
+                                <option value="Otro">🌎 Otro</option>
+                            </select>
+                        </div>
+                    <div class="reg-form-group">
+  <label class="reg-label">
+      Documento de Identidad <span class="reg-required">*</span>
+  </label>
+  <input type="text" class="reg-input" id="docIdentidad" name="documento" placeholder="Ej: 12.345.678-9" required>
+  <div class="reg-help-text" id="docHelp">Ingresa tu RUT (formato: 12.345.678-9)</div>
+</div>
+
+<script>
+  const paisSelect = document.querySelector('select[name="pais"]');
+  const docInput = document.getElementById('docIdentidad');
+  const docHelp = document.getElementById('docHelp');
+
+  const formatos = {
+    'Chile': {placeholder: '12.345.678-9', ayuda: 'Ingresa tu RUT chileno (formato: 12.345.678-9)'},
+    'Bolivia': {placeholder: '1234567', ayuda: 'Ingresa tu Cédula de Identidad boliviana (Ej: 1234567)'},
+    'Brasil': {placeholder: '123.456.789-00', ayuda: 'Ingresa tu CPF brasileño (formato: 123.456.789-00)'},
+    'Argentina': {placeholder: '12.345.678', ayuda: 'Ingresa tu DNI argentino (solo números)'},
+    'Paraguay': {placeholder: '1234567', ayuda: 'Ingresa tu Cédula de Identidad paraguaya'},
+    'Otro': {placeholder: 'Pasaporte o ID', ayuda: 'Ingresa tu número de pasaporte o documento equivalente'}
+  };
+
+  paisSelect.addEventListener('change', e => {
+    const pais = e.target.value;
+    if (formatos[pais]) {
+      docInput.placeholder = formatos[pais].placeholder;
+      docHelp.textContent = formatos[pais].ayuda;
+    } else {
+      docInput.placeholder = 'Documento de identidad';
+      docHelp.textContent = '';
+    }
+  });
+</script>
+
+                    </div>
+
+                    <!-- Sección 2: Información Empresarial -->
+                    <div class="reg-form-section">
+                        <div class="reg-section-title">
+                            <span class="reg-section-icon">🏢</span>
+                            <span>Información de tu Empresa / Institución</span>
+                        </div>
+
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                Nombre de la Empresa / Institución <span class="reg-required">*</span>
+                            </label>
+                            <input type="text" class="reg-input" name="empresa" required 
+                                   placeholder="Ej: Exportadora del Pacífico S.A.">
+                        </div>
+
+                        <div class="reg-form-row">
+                            <div class="reg-form-group">
+                                <label class="reg-label">
+                                    Cargo <span class="reg-required">*</span>
+                                </label>
+                                <input type="text" class="reg-input" name="cargo" required 
+                                       placeholder="Ej: Gerente General / Representante">
+                            </div>
+
+                            <div class="reg-form-group">
+                                <label class="reg-label">
+                                    Tamaño (Institución elige "No Aplica") <span class="reg-required">*</span>
+                                </label>
+                                <select class="reg-select" name="tamano" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="PyME">PyME (hasta 50 empleados)</option>
+                                    <option value="Mediana">Mediana (51-200 empleados)</option>
+                                    <option value="Grande">Grande (más de 200 empleados)</option>
+                                <option value="N/A">No Aplica</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                Sector / Industria <span class="reg-required">*</span>
+                            </label>
+                            <select class="reg-select" name="sector" required>
+                                <option value="">Selecciona tu sector</option>
+                                <option value="Logística">Logística y Transporte</option>
+                                <option value="Exportación">Exportación/Importación</option>
+                                <option value="Agroindustria">Agroindustria</option>
+                                <option value="Minería">Minería</option>
+                                <option value="Manufactura">Manufactura</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Prensa">Prensa</option>
+                                <option value="Gobierno">Gobierno/Institucional</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                Sitio Web de la Empresa
+                            </label>
+                            <input type="text" class="reg-input" name="website" 
+                                   placeholder="Ej:www.tuempresa.com">
+                        </div>
+                    </div>
+
+                    <!-- Sección 3: Intereses y Objetivos -->
+                    <div class="reg-form-section">
+                        <div class="reg-section-title">
+                            <span class="reg-section-icon">🎯</span>
+                            <span>Intereses y Objetivos</span>
+                        </div>
+
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                ¿Qué te interesa del Corredor Bioceánico? <span class="reg-required">*</span>
+                            </label>
+                            <div class="reg-checkbox-group">
+                                <label class="reg-checkbox-label">
+                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Exportar">
+                                    <span>Exportar productos</span>
+                                </label>
+                                <label class="reg-checkbox-label">
+                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Importar">
+                                    <span>Importar insumos</span>
+                                </label>
+                                <label class="reg-checkbox-label">
+                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Logística">
+                                    <span>Servicios logísticos</span>
+                                </label>
+                                <label class="reg-checkbox-label">
+                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Inversión">
+                                    <span>Oportunidades de inversión</span>
+                                </label>
+                                <label class="reg-checkbox-label">
+                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Networking">
+                                    <span>Networking</span>
+                                </label>
+                                <label class="reg-checkbox-label">
+                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Información">
+                                    <span>Información del corredor</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                Cuéntanos sobre tus objetivos en la cumbre
+                            </label>
+                            <textarea class="reg-textarea" name="objetivos" 
+                                      placeholder="Ej: Busco establecer alianzas con empresas brasileñas para exportar productos agrícolas al mercado asiático..."></textarea>
+                            <div class="reg-help-text">Esta información nos ayudará a mejorar tu experiencia</div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 4: Rueda de Negocios -->
+                	<!--
+                    <div class="reg-form-section">
+                        <div class="reg-section-title">
+                            <span class="reg-section-icon">🤝</span>
+                            <span>Rueda de Negocios B2B</span>
+                        </div>
+						-->
+                        <!--
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                ¿Te interesa participar en la Rueda de Negocios? <span class="reg-required">*</span>
+                            </label>
+                            <div class="reg-radio-group">
+                                <div class="reg-radio-option">
+                                    <label class="reg-radio-label">
+                                        <input type="radio" class="reg-radio-input" name="rueda" value="Si" required>
+                                        <span class="reg-radio-text">✅ Sí, me interesa</span>
+                                    </label>
+                                </div>
+                                <div class="reg-radio-option">
+                                    <label class="reg-radio-label">
+                                        <input type="radio" class="reg-radio-input" name="rueda" value="No" required>
+                                        <span class="reg-radio-text">❌ No por ahora</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="reg-help-text">Podrás activar este servicio más adelante desde tu perfil</div>
+                        </div>
+                    </div>
+					-->
+                    <!-- Sección 5: Cómo te enteraste -->
+                    <div class="reg-form-section">
+                        <div class="reg-form-group">
+                            <label class="reg-label">
+                                ¿Cómo te enteraste de este evento?
+                            </label>
+                            <select class="reg-select" name="fuente">
+                                <option value="">Selecciona una opción</option>
+                                <option value="Email">Correo electrónico</option>
+                                <option value="Redes">Redes sociales</option>
+                                <option value="Referido">Referido por un colega</option>
+                                <option value="Web">Sitio web</option>
+                                <option value="Prensa">Prensa/Medios</option>
+                                <option value="Gobierno">Entidad gubernamental</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Términos y Condiciones -->
+                    <!-- Términos y Condiciones (con link a modal) -->
+<div class="reg-terms" style="margin-top:20px;">
+  <label class="reg-terms-label">
+    <input type="checkbox" class="reg-terms-checkbox" name="terminos" required>
+    <span>
+      Acepto los 
+      <a href="#" id="openTerms" style="color:#3498db; text-decoration:underline;">
+        términos y condiciones del servicio
+      </a>.
+      <span class="reg-required">*</span>
+    </span>
+  </label>
+</div>
+
+
+                    <div class="reg-warning-box" style="margin-top: 20px;">
+                        ⚠️ <strong>Nota:</strong> La confirmación final de tu asistencia quedará sujeta a 
+                        disponibilidad de cupos. Recibirás un email de confirmación dentro de los proximos minutos.
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="reg-button-group">
+                        <button type="button" class="reg-btn reg-btn-secondary" onclick="window.history.back()">
+                            ← Volver al Evento
+                        </button>
+                        <button type="submit" class="reg-btn reg-btn-primary" id="submitBtn">
+                            Confirmar Asistencia →
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Success Message (hidden by default) -->
+            <div class="reg-success-message" id="successMessage">
+                <div class="reg-success-icon">✅</div>
+                <h3 class="reg-success-title">¡Registro Exitoso!</h3>
+                <p class="reg-success-text">
+                    Bienvenido al Nodo Bioceánico.<br><br>
+                    <strong>Hemos enviado un correo de confirmación a tu email.</strong><br><br>
+                    En los proximos minutos, recibirás:<br>
+                    • Confirmación definitiva de tu cupo<br>
+                    • Credenciales de acceso<br>
+                    • Agenda detallada del evento<br>
+                    
+                </p>
+                <!--<button class="reg-btn reg-btn-primary" onclick="window.location.href='/'">
+                    Volver al Inicio
+                </button>-->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registroForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formContent = document.getElementById('formContent');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Validar que al menos un interés esté seleccionado
+            const intereses = document.querySelectorAll('input[name="intereses"]:checked');
+            if (intereses.length === 0) {
+                alert('Por favor selecciona al menos un interés del Corredor Bioceánico');
+                return;
+            }
+
+            // Validar términos
+            const terminos = document.querySelector('input[name="terminos"]');
+            if (!terminos.checked) {
+                alert('Debes aceptar los términos y condiciones para continuar');
+                return;
+            }
+
+            // Deshabilitar botón durante el envío
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+
+            // Recopilar datos del formulario
+            const formData = new FormData(form);
+            const data = {};
+            
+            // Procesar todos los campos excepto checkboxes múltiples
+            for (let [key, value] of formData.entries()) {
+                if (key !== 'intereses') {
+                    data[key] = value;
+                }
+            }
+
+            // Procesar intereses (checkboxes múltiples)
+            const interesesArray = Array.from(intereses).map(cb => cb.value);
+            data.intereses = interesesArray;
+
+            // Simular envío (aquí conectarías con tu backend PHP)
+            await simulateSubmit(data);
+
+            // Mostrar mensaje de éxito
+            formContent.style.display = 'none';
+            successMessage.style.display = 'block';
+
+            // En producción, aquí harías:
+            // const response = await fetch('/api/registro-evento.php', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify(data)
+            // });
+            // const result = await response.json();
+        });
+
+       async function simulateSubmit(data) {
+    try {
+        const response = await fetch('/registro/guardar_registro.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.status === "ok") {
+            console.log('✅ Registro exitoso:', result);
+            alert(`✅ ${result.message}`);
+        } else {
+            console.error('❌ Error en el registro:', result.message);
+            alert(`❌ Error al registrar: ${result.message}`);
+        }
+    } catch (error) {
+        console.error('⚠️ Error de conexión:', error);
+        alert('⚠️ No se pudo conectar al servidor. Inténtalo nuevamente.');
+    }
+}
+
+
+
+        // Validación en tiempo real del email
+        const emailInput = document.querySelector('input[name="email"]');
+        emailInput.addEventListener('blur', function() {
+            if (this.value && !this.validity.valid) {
+                alert('Por favor ingresa un email válido');
+            }
+        });
+    </script>
+<!-- Modal de Términos y Condiciones -->
+<div id="termsModal" class="terms-modal">
+  <div class="terms-content">
+    <span id="closeTerms" class="terms-close">&times;</span>
+    <h2>Términos y Condiciones de Uso</h2>
+    <p><strong>Última actualización:</strong> Octubre 2025</p>
+    <p>El sitio <strong>www.bioceanicocentral.cl</strong> permite el registro y participación en eventos
+      relacionados con el Evento "Nodo Bioceánico". El uso de esta plataforma implica la aceptación de los siguientes términos:</p>
+
+    <h3>1. Objeto del servicio</h3>
+    <p>El formulario tiene por finalidad recopilar datos para la coordinación de eventos, ruedas de negocios y actividades
+      vinculadas al Corredor Bioceánico Central.</p>
+
+    <h3>2. Tratamiento de datos personales</h3>
+    <p>Los datos ingresados serán tratados conforme a la <strong>Ley N°19.628</strong> sobre Protección de la Vida Privada.
+      Solo se usarán para fines de comunicación y organización de actividades, sin ser compartidos con terceros ajenos.
+      Puedes solicitar la eliminación o rectificación de tus datos escribiendo a 
+      <a href="mailto:contacto@bioceanicocentral.cl">contacto@bioceanicocentral.cl</a>.</p>
+
+    <h3>3. Comunicaciones electrónicas</h3>
+    <p>Al registrarte, autorizas el envío de correos electrónicos con información relacionada a las actividades.
+      Puedes solicitar la baja de estas comunicaciones en cualquier momento.</p>
+
+    <h3>4. Responsabilidad del usuario</h3>
+    <p>El usuario se compromete a entregar información veraz. La organización puede eliminar registros con datos falsos
+      o que incumplan estas condiciones.</p>
+
+    <h3>5. Propiedad intelectual</h3>
+    <p>Los contenidos y materiales del sitio pertenecen a sus autores y no pueden ser reproducidos sin autorización.</p>
+
+    <h3>6. Modificaciones</h3>
+    <p>La organización puede actualizar estos términos cuando sea necesario. La versión vigente estará disponible en este sitio.</p>
+
+    <h3>7. Legislación aplicable</h3>
+    <p>Este acuerdo se rige por las leyes de la <strong>República de Chile</strong>. Cualquier conflicto será resuelto por los tribunales ordinarios de <strong>Iquique</strong>.</p>
+
+    <p style="text-align:center; margin-top:20px;">
+      <button id="closeBtn" class="reg-btn reg-btn-primary">Aceptar y cerrar</button>
+    </p>
+  </div>
+</div>
+
+<style>
+  .terms-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+  }
+  .terms-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 30px 40px;
+    border-radius: 20px;
+    max-width: 800px;
+    color: #2c3e50;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    animation: fadeIn 0.4s ease;
+  }
+  .terms-content h2 {color: #1a3a52;text-align:center;margin-bottom:20px;}
+  .terms-content h3 {color: #3498db;margin-top:25px;}
+  .terms-close {
+    float: right;font-size:28px;font-weight:bold;color:#888;cursor:pointer;transition:0.3s;
+  }
+  .terms-close:hover {color:#000;}
+  @keyframes fadeIn {from {opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+
+<script>
+  const modal = document.getElementById("termsModal");
+  const openBtn = document.getElementById("openTerms");
+  const closeBtn = document.getElementById("closeTerms");
+  const acceptBtn = document.getElementById("closeBtn");
+
+  openBtn.onclick = function(e) {
+    e.preventDefault();
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+  }
+  closeBtn.onclick = function() {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+  acceptBtn.onclick = function() {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+  }
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+  }
+</script>
+
+</body>
+</html>

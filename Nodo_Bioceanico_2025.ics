@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Nodo Bioceánico//INACAP//
+BEGIN:VEVENT
+UID:INACAP20251109190123155@bioceanicocentral.cl
+DTSTAMP:20251109T190123Z
+DTSTART:20251126T090000Z
+DTEND:20251128T180000Z
+SUMMARY:Nodo Bioceánico Central 2025
+LOCATION:Arica, Chile
+DESCRIPTION:Evento internacional de integración y desarrollo macrozonal andino - Seguimiento INACAP.
+ORGANIZER;CN=INACAP:mailto:contacto@bioceanicocentral.cl
+END:VEVENT
+END:VCALENDAR

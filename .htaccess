@@ -1,0 +1,7 @@
+# 🚫 Desactiva el listado de directorios
+Options -Indexes
+
+# Seguridad básica
+<FilesMatch "\.(php|inc)$">
+    Require all denied
+</FilesMatch>

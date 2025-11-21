@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Nodo Bioceánico//Registro 2025//ES
+BEGIN:VEVENT
+UID:69123dc37eae0@bioceanicocentral.cl
+DTSTAMP:20251110T193219Z
+DTSTART:20251126T120000Z
+DTEND:20251128T230000Z
+SUMMARY:Evento Nodo Bioceánico
+LOCATION:Arica, Chile
+DESCRIPTION=Evento internacional de integración y desarrollo macrozonal andino.
+END:VEVENT
+END:VCALENDAR

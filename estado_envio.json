@@ -1,0 +1,132 @@
+{
+    "iniciado": "2025-11-20 08:33:30",
+    "estado": "completado",
+    "total": 162,
+    "enviados": 162,
+    "errores": 0,
+    "progreso_porcentaje": 100,
+    "ultimo_envio": "Proceso completado",
+    "logs": [
+        {
+            "timestamp": "08:31:52",
+            "email": "dcorrea@puertoarica.cl",
+            "nombre": "Diego Correa esp",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:01",
+            "email": "jreyes@relual-abogados.com",
+            "nombre": "JORGE LUIS REYES LUJAN MARTINEZ",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:31:58",
+            "email": "yossi.zeballos@gmail.com",
+            "nombre": "Yossiara  Zeballos Hurtado",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:01",
+            "email": "gsl2006@gmail.com",
+            "nombre": "GASTON SOTO",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:04",
+            "email": "sofi.mg12@gmail.com",
+            "nombre": "Sofía Muñoz",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:06",
+            "email": "natalybadillalvarez@gmail.com",
+            "nombre": "Nataly Badilla",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:09",
+            "email": "carlos.chavez@medlog.com",
+            "nombre": "Carlos Eli Chavez Cabrera",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:12",
+            "email": "rhernandezmu@gmail.com",
+            "nombre": "RODRIGO HERNANDEZ",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:56",
+            "email": "andres.henault@msc.com",
+            "nombre": "Andres Miguel Henault Ruiz",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:32:59",
+            "email": "vangyur@gmail.com",
+            "nombre": "VANG MARCOS YURI PEREZ VERTIZ-BLANCO",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:01",
+            "email": "ERIQUELMEN@INVESTIGACIONES.CL",
+            "nombre": "ESTEBAN RIQUELME",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:04",
+            "email": "FALFAROP@INVESTIGACIONES.CL",
+            "nombre": "FRANCISCO ALFARO",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:07",
+            "email": "ECORTEZ@MINSEGPUBLICA.GOB.CL",
+            "nombre": "ELSA CORTEZ",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:10",
+            "email": "juancarlos.tapia@lns.maersk.com",
+            "nombre": "Juan Carlos  Tapia",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:13",
+            "email": "giocobracamonte2@gmail.com",
+            "nombre": "Jacqueline Gioconda  Bracamonte  Gatica ",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:22",
+            "email": "cynthia.celis@agunsa.cl",
+            "nombre": "Cynthia Celis Molina",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:18",
+            "email": "cynthia.celis@agunsa.com",
+            "nombre": "Cynthia Celis",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:21",
+            "email": "dogla19999@gmail.com",
+            "nombre": "Angel Douglas Zegarra Tapia",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:24",
+            "email": "inversioneslepas@gmail.com",
+            "nombre": "Giovanni  Silva Focacci",
+            "status": "enviado"
+        },
+        {
+            "timestamp": "08:33:27",
+            "email": "michelle.yanulaque@gmail.com",
+            "nombre": "Michelle  Yanulaque Olivares",
+            "status": "enviado"
+        }
+    ],
+    "errores_detalle": []
+}

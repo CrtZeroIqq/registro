@@ -1,0 +1,13 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Nodo Bioceánico Central//Registro 2025//ES
+BEGIN:VEVENT
+UID:68f398e678dc0@bioceanicocentral.cl
+DTSTAMP:20251018T134054Z
+DTSTART:20251126T120000Z
+DTEND:20251128T230000Z
+SUMMARY:Cumbre del Corredor Bioceánico Central 2025
+LOCATION:Arica, Chile
+DESCRIPTION=Evento internacional de integración y desarrollo macrozonal andino.
+END:VEVENT
+END:VCALENDAR
