@@ -908,22 +908,12 @@
 
                     } else {
                         const cuposDisp = data.cupos_disponibles;
-                        const porcentaje = data.porcentaje_ocupado;
 
-                        // Actualizar banner según disponibilidad
-                        if (cuposDisp <= 20) {
-                            banner.className = 'cupos-banner'; // Rojo (urgente)
-                            banner.querySelector('.cupos-banner-title').textContent = '⚠️ ¡Últimos Cupos!';
-                        } else if (cuposDisp <= 100) {
-                            banner.className = 'cupos-banner warning'; // Naranja (advertencia)
-                            banner.querySelector('.cupos-banner-title').textContent = '⚡ Cupos Limitados';
-                        } else {
-                            banner.className = 'cupos-banner success'; // Verde (disponible)
-                            banner.querySelector('.cupos-banner-title').textContent = '✓ Cupos Disponibles';
-                        }
-
-                        countEl.textContent = cuposDisp + ' de 300';
-                        textEl.textContent = `¡Asegura tu lugar ahora! (${porcentaje}% ocupado)`;
+                        // Banner siempre en naranja con "¡Últimos Cupos!"
+                        banner.className = 'cupos-banner warning';
+                        banner.querySelector('.cupos-banner-title').textContent = '⚡ ¡Últimos Cupos!';
+                        countEl.textContent = cuposDisp;
+                        textEl.style.display = 'none'; // Ocultar texto adicional
                     }
                 }
             } catch (error) {
