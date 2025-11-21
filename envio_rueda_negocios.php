@@ -283,8 +283,9 @@ while ($row = $result->fetch_assoc()) {
                                 <tr>
                                     <td align="center" style='padding:22px 0;background:#f8f9fa;'>
                                         <p style='margin:0 0 12px 0;font-size:15px;color:#1a1a1a;font-weight:600;'>Complete su registro ahora</p>
-                                        <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php' style='display:inline-block;padding:13px 32px;background:#004aad;color:white;text-decoration:none;font-weight:600;font-size:14px;border-radius:4px;'>REGISTRARSE →</a>
-                                        <p style='margin:12px 0 0 0;font-size:13px;color:#666;'>Cupos limitados</p>
+                                        <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php' style='display:inline-block;padding:13px 32px;background:#004aad;color:white;text-decoration:none;font-weight:600;font-size:14px;border-radius:4px;margin-bottom:8px;'>REGISTRARSE →</a>
+                                        <p style='margin:0 0 12px 0;font-size:13px;color:#666;'>Cupos limitados</p>
+                                        <a href='https://www.bioceanicocentral.cl/registro/desuscribir_rueda.php?codigo=$codigo' style='display:inline-block;padding:10px 24px;background:#e0e0e0;color:#666;text-decoration:none;font-weight:500;font-size:13px;border-radius:4px;'>Ya no me interesa</a>
                                     </td>
                                 </tr>
                             </table>
@@ -306,14 +307,6 @@ while ($row = $result->fetch_assoc()) {
                             <p style='margin:0 0 4px 0;font-size:13px;color:#1a1a1a;font-weight:600;'>Equipo Organizador</p>
                             <p style='margin:0 0 6px 0;font-size:13px;color:#666;'>Rueda de Negocios - Nodo Bioceánico Central</p>
                             <p style='margin:0;font-size:13px;color:#666;'>📧 <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;text-decoration:none;'>contacto@bioceanicocentral.cl</a></p>
-                        </td>
-                    </tr>
-
-                    <!-- Desuscripción -->
-                    <tr>
-                        <td style='padding:18px 35px;background:#f5f5f5;border-top:1px solid #e5e5e5;text-align:center;'>
-                            <p style='margin:0 0 10px 0;font-size:12px;color:#999;'>¿Ya no estás interesado en la Rueda de Negocios?</p>
-                            <a href='https://www.bioceanicocentral.cl/registro/desuscribir_rueda.php?codigo=$codigo' style='display:inline-block;font-size:11px;color:#666;text-decoration:underline;'>Ya no me interesa</a>
                         </td>
                     </tr>
 

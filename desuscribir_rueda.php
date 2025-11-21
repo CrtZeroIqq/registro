@@ -60,7 +60,7 @@ $conn->set_charset("utf8mb4");
 // ==========================================
 // 🔹 VERIFICAR SI EL CÓDIGO EXISTE
 // ==========================================
-$stmt = $conn->prepare("SELECT id, nombre, apellido, email, rueda FROM registros WHERE codigo = ?");
+$stmt = $conn->prepare("SELECT id, nombre, apellido, email, rueda FROM registros WHERE codigo_registro = ?");
 $stmt->bind_param("s", $codigo);
 $stmt->execute();
 $result = $stmt->get_result();
