@@ -230,6 +230,14 @@ try {
                         </td>
                     </tr>
 
+                    <!-- Desuscripción -->
+                    <tr>
+                        <td style='padding:18px 35px;background:#f5f5f5;border-top:1px solid #e5e5e5;text-align:center;'>
+                            <p style='margin:0 0 10px 0;font-size:12px;color:#999;'>¿Ya no estás interesado en la Rueda de Negocios?</p>
+                            <a href='https://www.bioceanicocentral.cl/registro/desuscribir_rueda.php?codigo=$codigo' style='display:inline-block;font-size:11px;color:#666;text-decoration:underline;'>Ya no me interesa</a>
+                        </td>
+                    </tr>
+
                 </table>
             </td>
         </tr>
@@ -300,6 +308,10 @@ https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
 Equipo Organizador
 Rueda de Negocios - Nodo Bioceánico Central
 📧 contacto@bioceanicocentral.cl
+
+---
+¿Ya no está interesado en la Rueda de Negocios?
+https://www.bioceanicocentral.cl/registro/desuscribir_rueda.php?codigo=$codigo
 ";
 
     // ENVIAR
