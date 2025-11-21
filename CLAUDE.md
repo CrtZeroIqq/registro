@@ -674,13 +674,15 @@ The system includes a specialized email campaign for the "Rueda de Negocios" (Bu
 - **Script**: `envio_rueda_negocios.php`
 - **Dashboard**: `dashboard_rueda.html`
 - **SQL Filter**: `WHERE rueda = 'Si'`
-- **Email Template**: Participation instructions with:
-  - Event date and time confirmation (Nov 28, 2025, 11:00-12:30)
-  - Two participation modalities explained (A: Receive Requests, B: Request Meetings)
-  - Time blocks table (4 blocks of 15 minutes each)
-  - Capacity information (15 tables, 60 max meetings)
-  - System access instructions with portal URL and credentials
-  - Step-by-step instructions for each modality
+- **Email Template**: Invitation to complete registration with:
+  - Acknowledgment of expressed interest during event registration
+  - Explanation of what Rueda de Negocios is (B2B networking, 1-1 meetings)
+  - Benefits of participating (direct connections, time optimization, business opportunities)
+  - Two modalities explained (companies seeking services vs offering services/products)
+  - Event information (Nov 28, 2025, 11:00-12:30, 4 blocks of 15 min)
+  - Urgency messaging (limited capacity: 60 spaces, first-come basis)
+  - Strong CTA: "Complete Your Registration Now"
+  - Post-registration flow explanation (4 steps)
 
 **Campaign Features**:
 - Same throttling as main campaign (15 emails/batch, 3s delay, 45s between batches)
@@ -723,36 +725,55 @@ The system includes a specialized email campaign for the "Rueda de Negocios" (Bu
 
 ### Email Template Content
 
-The participation instructions email includes:
+The invitation email includes:
 
 **Header**:
 - Event title and date: November 28, 2025, 11:00-12:30 hrs
-- Confirmation of participation
+- Acknowledgment of expressed interest
 
-**System Explanation**:
-- Two modalities clearly explained with visual boxes
-- **Empresas que Buscan Servicios/Proveedores** (Companies seeking services): Fixed table, receive and approve/reject meeting requests
-- **Empresas que Ofrecen Servicios/Productos** (Companies offering services): Explore companies and request meetings
+**Introduction**:
+- Thanks them for expressing interest during event registration
+- Announces they have excellent news for them
 
-**Time Blocks**:
-- Table with 4 time blocks (15 minutes each)
-- Block 1: 11:00 - 11:15
-- Block 2: 11:20 - 11:35
-- Block 3: 11:40 - 11:55
-- Block 4: 12:00 - 12:15
+**What is Rueda de Negocios?**:
+- Exclusive B2B networking space
+- 1-on-1 meetings of 15 minutes
+- Agile and efficient format for concrete business connections
 
-**Capacity Information**:
-- 15 physical tables
-- Maximum 60 meetings
+**Benefits of Participating** (3 key points):
+- 🎯 Direct Connections: Confirmed meetings with companies aligned to your sector
+- ⏱️ Time Optimization: Up to 4 scheduled meetings in 90 minutes
+- 📊 Business Opportunities: Generate new businesses, alliances, and agreements
 
-**Step-by-Step Instructions**:
-- Separate instructions for each modality
-- Clear numbered steps from login to event day
+**How It Works?** (Two modalities):
+- **Empresas que Buscan Servicios/Proveedores** (Companies seeking services): Reserve a fixed table, receive meeting requests, decide who to meet
+- **Empresas que Ofrecen Servicios/Productos** (Companies offering services): Explore directory, request meetings, wait for confirmation
 
-**System Access**:
-- Simplified CTA button linking directly to the system portal
-- Portal URL: https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
-- Login credentials table removed for simplicity
+**Event Information**:
+- Date: November 28, 2025
+- Schedule: 11:00 - 12:30 hrs
+- Blocks: 4 sessions of 15 minutes each
+- Capacity: 60 meetings maximum (15 tables)
+
+**Urgency Section**:
+- Limited capacity warning (only 60 spaces)
+- Call to complete registration ASAP
+- First-come, first-served table assignment
+
+**Main CTA**:
+- Large button: "✅ COMPLETAR MI REGISTRO"
+- Link: https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
+- Supporting text: "Quick and simple process"
+
+**What Happens After Registering?** (4-step flow):
+1. Access platform to see participating companies
+2. Request or receive meeting requests
+3. Receive automatic email confirmations
+4. On event day, know exactly where and when meetings are
+
+**Closing**:
+- Motivational message: "Don't miss this opportunity to grow your business network!"
+- Support contact: contacto@bioceanicocentral.cl
 
 **Tracking**:
 - Email open tracking pixel included
@@ -793,6 +814,24 @@ To modify the email template:
 ---
 
 ## Changelog
+
+### 2025-11-21 - Complete Rewrite: Rueda Email from Instructions to Invitation
+- **MAJOR CHANGE**: Completely rewrote email template to match correct user journey
+- **Problem Identified**: Previous email assumed users were already registered and provided usage instructions
+- **Reality**: Users only expressed interest (rueda='Si') and haven't registered yet
+- **New Approach**: Email is now an invitation to complete registration in the system
+- **Subject Changed**: From "Instrucciones de Participación" to "Invitación: Completa tu Registro"
+- **Content Restructured**:
+  - Added "What is Rueda de Negocios?" explanation section
+  - Added "Benefits of Participating" section (3 key benefits)
+  - Explained two modalities in simpler terms (seeking vs offering)
+  - Added urgency messaging (limited capacity, first-come basis)
+  - Changed from step-by-step instructions to post-registration flow
+  - Main CTA changed to "COMPLETAR MI REGISTRO" (Complete My Registration)
+- **Files Updated**: Both `envio_rueda_negocios.php` and `test_envio_rueda.php`
+- **Added**: AltBody (plain text version) to production script
+- **Updated**: Test script informational messages to reflect invitation nature
+- **Alignment**: Now correctly matches the registration form flow
 
 ### 2025-11-21 - Simplified Rueda de Negocios Email Template (Final Version)
 - Replaced generic "Modalidad A/B" terminology with descriptive business-focused names:
