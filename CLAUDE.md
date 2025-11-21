@@ -731,8 +731,8 @@ The participation instructions email includes:
 
 **System Explanation**:
 - Two modalities clearly explained with visual boxes
-- **Modality A (Receive Requests)**: Fixed table, receive and approve/reject meeting requests
-- **Modality B (Request Meetings)**: Explore companies and request meetings
+- **Empresas que Buscan Servicios/Proveedores** (Companies seeking services): Fixed table, receive and approve/reject meeting requests
+- **Empresas que Ofrecen Servicios/Productos** (Companies offering services): Explore companies and request meetings
 
 **Time Blocks**:
 - Table with 4 time blocks (15 minutes each)
@@ -744,20 +744,15 @@ The participation instructions email includes:
 **Capacity Information**:
 - 15 physical tables
 - Maximum 60 meetings
-- First-come, first-served reservation system
 
 **Step-by-Step Instructions**:
 - Separate instructions for each modality
 - Clear numbered steps from login to event day
 
 **System Access**:
+- Simplified CTA button linking directly to the system portal
 - Portal URL: https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
-- Username: Their registration email
-- Password: The one they created during registration
-- Password recovery contact
-
-**CTA Button**:
-- Direct link to access the system
+- Login credentials table removed for simplicity
 
 **Tracking**:
 - Email open tracking pixel included
@@ -798,6 +793,17 @@ To modify the email template:
 ---
 
 ## Changelog
+
+### 2025-11-21 - Simplified Rueda de Negocios Email Template (Final Version)
+- Replaced generic "Modalidad A/B" terminology with descriptive business-focused names:
+  - "Empresas que Buscan Servicios/Proveedores" (Companies seeking services/suppliers)
+  - "Empresas que Ofrecen Servicios/Productos" (Companies offering services/products)
+- Removed detailed access credentials table, kept only prominent CTA button
+- Removed "Sistema de reserva por orden de llegada" from capacity section
+- Removed modality verification from "Importante" section
+- Updated AltBody plain text versions to match HTML changes
+- Applied changes to both production and test scripts
+- Updated CLAUDE.md documentation to reflect final template
 
 ### 2025-11-21 - Updated Rueda de Negocios Email Template
 - Updated email template with complete participation instructions
