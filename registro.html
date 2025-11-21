@@ -419,6 +419,92 @@
                 width: 100%;
             }
         }
+
+        /* ==========================================
+           🔹 BANNER DE CUPOS DISPONIBLES
+           ========================================== */
+        .cupos-banner {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            animation: regFadeInDown 0.8s ease;
+        }
+
+        .cupos-banner.warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .cupos-banner.success {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .cupos-banner.closed {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            box-shadow: 0 4px 15px rgba(127, 140, 141, 0.3);
+        }
+
+        .cupos-banner-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .cupos-banner-count {
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 8px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cupos-banner-text {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .form-bloqueado-overlay {
+            position: relative;
+        }
+
+        .form-bloqueado-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 10;
+            border-radius: 12px;
+        }
+
+        .mensaje-registro-cerrado {
+            position: relative;
+            z-index: 11;
+            background: #ecf0f1;
+            border: 3px solid #95a5a6;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .mensaje-registro-cerrado h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .mensaje-registro-cerrado p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -451,10 +537,16 @@
 
     <h2 class="reg-form-title">Formulario de Registro</h2>
     <p class="reg-form-subtitle">
-        Completa tus datos para confirmar tu participación. 
+        Completa tus datos para confirmar tu participación.
         Los campos marcados con <span class="reg-required">*</span> son obligatorios.
     </p>
 
+    <!-- Banner de Cupos Disponibles -->
+    <div id="cuposBanner" class="cupos-banner">
+        <div class="cupos-banner-title">⚠️ Cupos Limitados</div>
+        <div class="cupos-banner-count" id="cuposCount">Cargando...</div>
+        <div class="cupos-banner-text" id="cuposText">Verificando disponibilidad...</div>
+    </div>
 
                 <form id="registroForm">
                     <!-- Sección 1: Datos Personales -->
@@ -775,8 +867,83 @@
         const formContent = document.getElementById('formContent');
         const successMessage = document.getElementById('successMessage');
 
+        // ==========================================
+        // 🔹 VERIFICAR CUPOS DISPONIBLES
+        // ==========================================
+        let registroCerrado = false;
+
+        async function verificarCupos() {
+            try {
+                const response = await fetch('api/verificar_cupos.php');
+                const data = await response.json();
+
+                if (data.status === 'ok') {
+                    const banner = document.getElementById('cuposBanner');
+                    const countEl = document.getElementById('cuposCount');
+                    const textEl = document.getElementById('cuposText');
+
+                    registroCerrado = data.registro_cerrado;
+
+                    if (registroCerrado) {
+                        // Registro cerrado
+                        banner.className = 'cupos-banner closed';
+                        banner.querySelector('.cupos-banner-title').textContent = '🔒 Registro Cerrado';
+                        countEl.textContent = 'Cupos Agotados';
+                        textEl.textContent = 'Se alcanzó el límite de 300 registros';
+
+                        // Bloquear formulario
+                        form.style.position = 'relative';
+                        form.style.pointerEvents = 'none';
+                        form.style.opacity = '0.5';
+
+                        // Agregar mensaje de cierre
+                        const mensajeCerrado = document.createElement('div');
+                        mensajeCerrado.className = 'mensaje-registro-cerrado';
+                        mensajeCerrado.innerHTML = `
+                            <h3>🔒 Registro Cerrado</h3>
+                            <p>Lo sentimos, hemos alcanzado el límite de <strong>300 registros</strong>.</p>
+                            <p>Para consultas, contacta a: <a href="mailto:contacto@bioceanicocentral.cl">contacto@bioceanicocentral.cl</a></p>
+                        `;
+                        form.parentNode.insertBefore(mensajeCerrado, form);
+
+                    } else {
+                        const cuposDisp = data.cupos_disponibles;
+                        const porcentaje = data.porcentaje_ocupado;
+
+                        // Actualizar banner según disponibilidad
+                        if (cuposDisp <= 20) {
+                            banner.className = 'cupos-banner'; // Rojo (urgente)
+                            banner.querySelector('.cupos-banner-title').textContent = '⚠️ ¡Últimos Cupos!';
+                        } else if (cuposDisp <= 100) {
+                            banner.className = 'cupos-banner warning'; // Naranja (advertencia)
+                            banner.querySelector('.cupos-banner-title').textContent = '⚡ Cupos Limitados';
+                        } else {
+                            banner.className = 'cupos-banner success'; // Verde (disponible)
+                            banner.querySelector('.cupos-banner-title').textContent = '✓ Cupos Disponibles';
+                        }
+
+                        countEl.textContent = cuposDisp + ' de 300';
+                        textEl.textContent = `¡Asegura tu lugar ahora! (${porcentaje}% ocupado)`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error al verificar cupos:', error);
+                // Si hay error, ocultar el banner pero no bloquear
+                document.getElementById('cuposBanner').style.display = 'none';
+            }
+        }
+
+        // Verificar cupos al cargar la página
+        verificarCupos();
+
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // Validar si el registro está cerrado
+            if (registroCerrado) {
+                alert('❌ Lo sentimos, el registro ha sido cerrado. Se alcanzó el límite de 300 cupos.');
+                return;
+            }
 
             // Validar que al menos un interés esté seleccionado
             const intereses = document.querySelectorAll('input[name="intereses"]:checked');

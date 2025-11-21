@@ -64,6 +64,24 @@ if (empty($nombre) || empty($apellido) || empty($email) || empty($pais)) {
     exit;
 }
 
+// ============================
+// 🔹 VALIDAR LÍMITE DE CUPOS (300 registros)
+// ============================
+$LIMITE_CUPOS = 300;
+$result_count = $conn->query("SELECT COUNT(*) as total FROM registros");
+if ($result_count) {
+    $row_count = $result_count->fetch_assoc();
+    $total_registros = (int)$row_count['total'];
+
+    if ($total_registros >= $LIMITE_CUPOS) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => '❌ Lo sentimos, se ha alcanzado el límite de 300 registros. El evento está completo.',
+            'cupos_disponibles' => 0
+        ]);
+        exit;
+    }
+}
 
 $blacklist = [
     'jonathanscott@parinacota.gov.cl',
