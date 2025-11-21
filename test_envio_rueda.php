@@ -72,8 +72,6 @@ $cargo    = ent($row['cargo'] ?? 'N/A');
 $sector   = ent($row['sector'] ?? 'N/A');
 $codigo   = ent($row['codigo_registro']);
 
-$qr_url = "https://www.bioceanicocentral.cl/registro/qrcodes/$codigo.png";
-
 echo "<h2>📧 Script de Prueba - Rueda de Negocios</h2>";
 echo "<p><strong>Datos del registro de ejemplo:</strong></p>";
 echo "<ul>";

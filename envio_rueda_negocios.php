@@ -155,8 +155,6 @@ while ($row = $result->fetch_assoc()) {
     $sector   = ent($row['sector'] ?? 'N/A');
     $codigo   = ent($row['codigo_registro']);
 
-    $qr_url = "https://www.bioceanicocentral.cl/registro/qrcodes/$codigo.png";
-
     $email_limpio = html_entity_decode($email);
     log_detallado("Preparando envío a: $email_limpio");
 
