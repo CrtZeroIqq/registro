@@ -121,7 +121,7 @@ try {
     // ==========================================
     // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS
     // ==========================================
-    $mail->Body = <<<'EMAILHTML'
+    $mail->Body = <<<EMAILHTML
 <div style='margin:0;padding:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;'>
     <table width="100%" cellpadding="0" cellspacing="0" style='background:#f5f5f5;'>
         <tr>
