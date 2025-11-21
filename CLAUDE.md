@@ -77,6 +77,7 @@
 | `index.html` | Access restriction page |
 | `test_mail.php` | Email testing script |
 | `test_qr.php` | QR generation testing |
+| `test_envio_rueda.php` | Test script for rueda de negocios email template |
 | `.htaccess` | Disables directory listing, restricts PHP access |
 
 ### Data Files
@@ -688,21 +689,32 @@ The system includes a specialized email campaign for the "Rueda de Negocios" (Bu
 
 ### How to Run the Campaign
 
-1. **Verify Database**:
+1. **Test the Email First** (Recommended):
+   ```bash
+   # Edit test_envio_rueda.php and change the email address
+   # OR access via browser with email parameter:
+   # test_envio_rueda.php?email=tu@email.com
+   ```
+   - The script will use real data from a registration with `rueda='Si'`
+   - Email subject includes `[PRUEBA]` prefix to distinguish from real campaign
+   - Verify design, content, QR code, and overall appearance
+   - Check email tracking pixel works
+
+2. **Verify Database**:
    ```sql
    SELECT COUNT(*) FROM registros WHERE rueda = 'Si';
    ```
 
-2. **Open Dashboard**:
+3. **Open Dashboard**:
    - Navigate to `dashboard_rueda.html` in browser
    - Dashboard shows campaign info and real-time metrics
 
-3. **Start Campaign**:
+4. **Start Campaign**:
    - Click "Iniciar Envío a Rueda de Negocios" button
    - Script runs in background (`envio_rueda_negocios.php`)
    - Monitor progress in real-time
 
-4. **Monitor Results**:
+5. **Monitor Results**:
    - Check logs: `tail -f envio_rueda_detallado.log`
    - Check state: `cat estado_envio_rueda.json`
    - View dashboard for visual progress
@@ -723,6 +735,7 @@ The invitation email includes:
 
 | Component | File Path |
 |-----------|-----------|
+| Test Script | `/home/user/registro/test_envio_rueda.php` |
 | Campaign Script | `/home/user/registro/envio_rueda_negocios.php` |
 | Dashboard | `/home/user/registro/dashboard_rueda.html` |
 | State File | `/home/user/registro/estado_envio_rueda.json` |
