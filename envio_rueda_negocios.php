@@ -190,7 +190,7 @@ while ($row = $result->fetch_assoc()) {
         $mail->addCustomHeader('X-Priority', '3');
 
         $mail->isHTML(true);
-        $mail->Subject = "🤝 Invitaci&oacute;n: Rueda de Negocios Arica - Completa tu Registro";
+        $mail->Subject = "🤝 Invitación: Rueda de Negocios Arica - Completa tu Registro";
 
         // ==========================================
         // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS

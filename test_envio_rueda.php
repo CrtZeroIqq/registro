@@ -116,7 +116,7 @@ try {
     $mail->addCustomHeader('X-Priority', '3');
 
     $mail->isHTML(true);
-    $mail->Subject = "[PRUEBA] 🤝 Invitaci&oacute;n: Rueda de Negocios Arica - Completa tu Registro";
+    $mail->Subject = "[PRUEBA] 🤝 Invitación: Rueda de Negocios Arica - Completa tu Registro";
 
     // ==========================================
     // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS
