@@ -121,196 +121,126 @@ try {
     // ==========================================
     // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS
     // ==========================================
-    $mail->Body = "
-<div style='margin:0;padding:0;background:#e9eef5;font-family:Arial, sans-serif;'>
-    <div style='max-width:700px;margin:30px auto;background:white;border-radius:12px;
-        overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);'>
+    $mail->Body = "<div style='margin:0;padding:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;'>
+    <table width="100%" cellpadding="0" cellspacing="0" style='background:#f5f5f5;'>
+        <tr>
+            <td align="center" style='padding:20px 10px;'>
+                <table width="600" cellpadding="0" cellspacing="0" style='background:white;max-width:600px;'>
 
-        <div style='background:linear-gradient(135deg, #004aad 0%, #0066cc 100%);padding:35px 25px;text-align:center;color:white;'>
-            <img src='https://www.bioceanicocentral.cl/wp-content/uploads/2025/11/logonuevo.png'
-                alt='Nodo Bioce&aacute;nico'
-                style='width:120px;max-width:35%;margin-bottom:15px;'>
+                    <!-- Header -->
+                    <tr>
+                        <td style='border-left:5px solid #004aad;padding:30px 35px;background:#ffffff;'>
+                            <img src='https://www.bioceanicocentral.cl/wp-content/uploads/2025/11/logonuevo.png'
+                                 alt='Nodo Bioceánico' style='height:50px;margin-bottom:18px;'>
+                            <h1 style='margin:0 0 6px 0;font-size:23px;font-weight:600;color:#1a1a1a;line-height:1.3;'>
+                                Rueda de Negocios Arica 2025
+                            </h1>
+                            <p style='margin:0;font-size:14px;color:#666;'>28 de Noviembre &bull; 11:00 - 12:30 hrs</p>
+                        </td>
+                    </tr>
 
-            <h2 style='margin:10px 0 0;font-size:28px;font-weight:700;'>
-                🤝 Rueda de Negocios Arica
-            </h2>
+                    <!-- Contenido -->
+                    <tr>
+                        <td style='padding:25px 35px;line-height:1.6;color:#333;'>
+                            <p style='margin:0 0 12px 0;font-size:15px;'>Estimado/a <strong>$nombre $apellido</strong>,</p>
+                            <p style='margin:0 0 18px 0;font-size:15px;'>Durante su registro al evento <strong>Nodo Bioceánico Central 2025</strong>, usted manifestó interés en participar de nuestra Rueda de Negocios. ¡Tenemos excelentes noticias para usted!</p>
 
-            <p style='margin:8px 0 0;font-size:16px;opacity:0.95;'>
-                28 de Noviembre 2025 | 11:00 - 12:30 hrs
-            </p>
-        </div>
+                            <!-- Qué es -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style='margin:20px 0;border-left:3px solid #004aad;background:#f8f9fa;'>
+                                <tr>
+                                    <td style='padding:16px 18px;'>
+                                        <p style='margin:0 0 6px 0;font-size:15px;font-weight:600;color:#004aad;'>¿Qué es la Rueda de Negocios?</p>
+                                        <p style='margin:0;font-size:14px;color:#555;line-height:1.5;'>Un espacio exclusivo de networking B2B con reuniones 1-a-1 de 15 minutos. Formato ágil y eficiente para generar conexiones comerciales concretas.</p>
+                                    </td>
+                                </tr>
+                            </table>
 
-        <div style='padding:40px 35px;color:#333;line-height:1.7;font-size:15px;'>
-            <p style='font-size:16px;'>Estimado/a <strong>$nombre $apellido</strong>,</p>
+                            <!-- Beneficios -->
+                            <p style='margin:20px 0 10px 0;font-size:15px;font-weight:600;color:#1a1a1a;'>Por qué participar</p>
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="40" valign="top" style='padding:6px 0;'><span style='font-size:18px;color:#004aad;'>→</span></td>
+                                    <td style='padding:6px 0;font-size:14px;'><strong style='color:#1a1a1a;'>Conexiones directas</strong><br><span style='color:#666;'>Reuniones confirmadas con empresas de tu sector</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="40" valign="top" style='padding:6px 0;'><span style='font-size:18px;color:#004aad;'>→</span></td>
+                                    <td style='padding:6px 0;font-size:14px;'><strong style='color:#1a1a1a;'>Optimización de tiempo</strong><br><span style='color:#666;'>Hasta 4 reuniones en 90 minutos</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="40" valign="top" style='padding:6px 0;'><span style='font-size:18px;color:#004aad;'>→</span></td>
+                                    <td style='padding:6px 0;font-size:14px;'><strong style='color:#1a1a1a;'>Nuevas oportunidades</strong><br><span style='color:#666;'>Negocios, alianzas y acuerdos concretos</span></td>
+                                </tr>
+                            </table>
 
-            <p>
-                Durante su registro al evento <strong style='color:#004aad;'>Nodo Bioce&aacute;nico Central 2025</strong>,
-                usted manifest&oacute; inter&eacute;s en participar de nuestra <strong>Rueda de Negocios</strong>.
-                ¡Tenemos excelentes noticias para usted!
-            </p>
+                            <!-- Dos modalidades -->
+                            <p style='margin:22px 0 12px 0;font-size:15px;font-weight:600;color:#1a1a1a;'>Dos formas de participar</p>
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td width="48%" valign="top" style='padding:14px;background:#f0f9ff;border-top:2px solid #0284c7;'>
+                                        <p style='margin:0 0 8px 0;font-weight:600;font-size:13px;color:#0369a1;'>EMPRESAS QUE BUSCAN</p>
+                                        <p style='margin:0;font-size:13px;color:#555;line-height:1.5;'>Reserva mesa fija &bull; Recibe solicitudes &bull; Aprueba reuniones</p>
+                                    </td>
+                                    <td width="4%"></td>
+                                    <td width="48%" valign="top" style='padding:14px;background:#f0fdf4;border-top:2px solid#10b981;'>
+                                        <p style='margin:0 0 8px 0;font-weight:600;font-size:13px;color:#047857;'>EMPRESAS QUE OFRECEN</p>
+                                        <p style='margin:0;font-size:13px;color:#555;line-height:1.5;'>Explora directorio &bull; Solicita reuniones &bull; Recibe confirmaciones</p>
+                                    </td>
+                                </tr>
+                            </table>
 
-            <div style='background:#f0f7ff;border-left:4px solid #004aad;padding:20px;margin:25px 0;border-radius:6px;'>
-                <h3 style='margin:0 0 10px 0;font-size:18px;color:#004aad;'>
-                    💼 ¿Qu&eacute; es la Rueda de Negocios?
-                </h3>
-                <p style='margin:0;color:#555;'>
-                    Es un <strong>espacio exclusivo de networking B2B</strong> donde podr&aacute; tener <strong>reuniones 1-a-1 de 15 minutos</strong>
-                    con empresas de su inter&eacute;s. Un formato &aacute;gil y eficiente para generar conexiones comerciales concretas.
-                </p>
-            </div>
+                            <!-- Info evento -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style='margin:22px 0;background:#fafafa;border:1px solid #e5e5e5;'>
+                                <tr>
+                                    <td style='padding:16px 18px;'>
+                                        <p style='margin:0 0 10px 0;font-weight:600;color:#1a1a1a;font-size:14px;'>Detalles del evento</p>
+                                        <table width="100%" cellpadding="0" cellspacing="0" style='font-size:13px;color:#666;'>
+                                            <tr><td width="90" style='padding:3px 0;'><strong style='color:#1a1a1a;'>Fecha:</strong></td><td style='padding:3px 0;'>28 de Noviembre 2025</td></tr>
+                                            <tr><td style='padding:3px 0;'><strong style='color:#1a1a1a;'>Horario:</strong></td><td style='padding:3px 0;'>11:00 - 12:30 hrs</td></tr>
+                                            <tr><td style='padding:3px 0;'><strong style='color:#1a1a1a;'>Bloques:</strong></td><td style='padding:3px 0;'>4 sesiones de 15 minutos</td></tr>
+                                            <tr><td style='padding:3px 0;'><strong style='color:#1a1a1a;'>Capacidad:</strong></td><td style='padding:3px 0;'>60 reuniones máximo (15 mesas)</td></tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
 
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
-                ✨ Beneficios de Participar
-            </h3>
+                            <!-- CTA -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style='margin:25px 0;'>
+                                <tr>
+                                    <td align="center" style='padding:22px 0;background:#f8f9fa;'>
+                                        <p style='margin:0 0 12px 0;font-size:15px;color:#1a1a1a;font-weight:600;'>Complete su registro ahora</p>
+                                        <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php' style='display:inline-block;padding:13px 32px;background:#004aad;color:white;text-decoration:none;font-weight:600;font-size:14px;border-radius:4px;'>REGISTRARSE →</a>
+                                        <p style='margin:12px 0 0 0;font-size:13px;color:#666;'>Cupos limitados &bull; Por orden de llegada</p>
+                                    </td>
+                                </tr>
+                            </table>
 
-            <div style='display:table;width:100%;margin-bottom:20px;'>
-                <div style='display:table-row;'>
-                    <div style='display:table-cell;padding:10px 15px;background:#f9fafb;border-radius:8px;margin-bottom:10px;'>
-                        <div style='display:flex;align-items:start;'>
-                            <span style='font-size:24px;margin-right:12px;'>🎯</span>
-                            <div>
-                                <strong style='color:#004aad;display:block;margin-bottom:3px;'>Conexiones Directas</strong>
-                                <span style='color:#666;font-size:14px;'>Reuniones confirmadas con empresas afines a tu sector</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                            <!-- Qué pasa después -->
+                            <p style='margin:18px 0 8px 0;font-size:14px;font-weight:600;color:#1a1a1a;'>Después del registro:</p>
+                            <ol style='margin:0;padding-left:20px;font-size:14px;color:#666;line-height:1.7;'>
+                                <li>Accederá a la plataforma de empresas participantes</li>
+                                <li>Podrá solicitar o recibir solicitudes de reunión</li>
+                                <li>Recibirá confirmaciones automáticas</li>
+                                <li>Sabrá exactamente dónde y cuándo son sus reuniones</li>
+                            </ol>
+                        </td>
+                    </tr>
 
-            <div style='display:table;width:100%;margin-bottom:20px;'>
-                <div style='display:table-row;'>
-                    <div style='display:table-cell;padding:10px 15px;background:#f9fafb;border-radius:8px;margin-bottom:10px;'>
-                        <div style='display:flex;align-items:start;'>
-                            <span style='font-size:24px;margin-right:12px;'>⏱️</span>
-                            <div>
-                                <strong style='color:#004aad;display:block;margin-bottom:3px;'>Optimizaci&oacute;n de Tiempo</strong>
-                                <span style='color:#666;font-size:14px;'>Hasta 4 reuniones programadas en 90 minutos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <!-- Footer -->
+                    <tr>
+                        <td style='padding:22px 35px;background:#fafafa;border-top:1px solid #e5e5e5;'>
+                            <p style='margin:0 0 4px 0;font-size:13px;color:#1a1a1a;font-weight:600;'>Equipo Organizador</p>
+                            <p style='margin:0 0 6px 0;font-size:13px;color:#666;'>Rueda de Negocios - Nodo Bioceánico Central</p>
+                            <p style='margin:0;font-size:13px;color:#666;'>📧 <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;text-decoration:none;'>contacto@bioceanicocentral.cl</a></p>
+                        </td>
+                    </tr>
 
-            <div style='display:table;width:100%;margin-bottom:20px;'>
-                <div style='display:table-row;'>
-                    <div style='display:table-cell;padding:10px 15px;background:#f9fafb;border-radius:8px;margin-bottom:10px;'>
-                        <div style='display:flex;align-items:start;'>
-                            <span style='font-size:24px;margin-right:12px;'>📊</span>
-                            <div>
-                                <strong style='color:#004aad;display:block;margin-bottom:3px;'>Oportunidades Comerciales</strong>
-                                <span style='color:#666;font-size:14px;'>Genera nuevos negocios, alianzas y acuerdos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
-                🔄 ¿C&oacute;mo Funciona?
-            </h3>
-
-            <p style='margin-bottom:15px;color:#555;'>Hay <strong>dos modalidades</strong> seg&uacute;n tu objetivo comercial:</p>
-
-            <div style='background:#fff;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
-                <h4 style='margin:0 0 12px 0;color:#10b981;font-size:17px;'>
-                    📌 Empresas que Buscan Servicios/Proveedores
-                </h4>
-                <p style='margin:0 0 10px 0;font-size:14px;color:#555;'>
-                    <strong>¿Necesitas contratar servicios o proveedores?</strong>
-                </p>
-                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:14px;'>
-                    <li>Reservas una <strong>mesa fija</strong> en el evento</li>
-                    <li>Otras empresas te solicitan reuniones</li>
-                    <li>T&uacute; decides con qui&eacute;n reunirte</li>
-                </ul>
-            </div>
-
-            <div style='background:#fff;border:2px solid #3b82f6;padding:20px;margin:20px 0;border-radius:8px;'>
-                <h4 style='margin:0 0 12px 0;color:#3b82f6;font-size:17px;'>
-                    🔍 Empresas que Ofrecen Servicios/Productos
-                </h4>
-                <p style='margin:0 0 10px 0;font-size:14px;color:#555;'>
-                    <strong>¿Quieres conseguir clientes o socios comerciales?</strong>
-                </p>
-                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:14px;'>
-                    <li>Exploras el directorio de empresas participantes</li>
-                    <li>Solicitas reuniones con las que te interesan</li>
-                    <li>Esperas su confirmaci&oacute;n autom&aacute;tica</li>
-                </ul>
-            </div>
-
-            <div style='background:#fef3c7;border-left:4px solid #f59e0b;padding:20px;margin:25px 0;border-radius:6px;'>
-                <h4 style='margin:0 0 10px 0;color:#f59e0b;font-size:16px;'>
-                    ⏰ Informaci&oacute;n del Evento
-                </h4>
-                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
-                    <li><strong>Fecha:</strong> 28 de Noviembre 2025</li>
-                    <li><strong>Horario:</strong> 11:00 - 12:30 hrs</li>
-                    <li><strong>Bloques:</strong> 4 sesiones de 15 minutos cada una</li>
-                    <li><strong>Capacidad:</strong> 60 reuniones m&aacute;ximo (15 mesas)</li>
-                </ul>
-            </div>
-
-            <div style='background:#fef2f2;border-left:4px solid #ef4444;padding:20px;margin:25px 0;border-radius:6px;'>
-                <h4 style='margin:0 0 10px 0;color:#991b1b;font-size:16px;'>⚠️ ¡Cupos Limitados!</h4>
-                <p style='margin:0;color:#555;font-size:14px;'>
-                    Solo hay <strong>60 espacios disponibles</strong>. Complete su registro <strong>cuanto antes</strong>
-                    para asegurar su participaci&oacute;n. Las mesas se asignan por orden de llegada.
-                </p>
-            </div>
-
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;text-align:center;'>
-                🚀 Complete su Registro Ahora
-            </h3>
-
-            <p style='text-align:center;color:#555;margin-bottom:25px;'>
-                Es r&aacute;pido y simple: complete sus datos, elija su modalidad y defina qu&eacute; busca o qu&eacute; ofrece.
-            </p>
-
-            <div style='text-align:center;margin:40px 0;'>
-                <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php'
-                   style='background:#004aad;color:white;padding:18px 45px;font-size:18px;
-                   font-weight:bold;text-decoration:none;border-radius:8px;display:inline-block;
-                   box-shadow:0 4px 12px rgba(0,74,173,0.3);'>
-                   ✅ COMPLETAR MI REGISTRO
-                </a>
-            </div>
-
-            <div style='background:#e0f2fe;border:2px solid #0284c7;padding:20px;margin:30px 0;border-radius:8px;'>
-                <h4 style='margin:0 0 12px 0;color:#0284c7;font-size:16px;'>
-                    📝 ¿Qu&eacute; sucede despu&eacute;s de registrarse?
-                </h4>
-                <ol style='margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:14px;'>
-                    <li>Acceder&aacute; a la plataforma para ver empresas participantes</li>
-                    <li>Podr&aacute; solicitar o recibir solicitudes de reuni&oacute;n</li>
-                    <li>Recibir&aacute; confirmaciones autom&aacute;ticas por email</li>
-                    <li>El d&iacute;a del evento sabr&aacute; exactamente d&oacute;nde y cu&aacute;ndo son sus reuniones</li>
-                </ol>
-            </div>
-
-            <p style='text-align:center;font-size:16px;color:#004aad;font-weight:bold;margin:30px 0 15px 0;'>
-                ¡No pierda esta oportunidad de hacer crecer su red de negocios!
-            </p>
-
-            <p style='text-align:center;font-size:13px;color:#666;margin-top:20px;'>
-                ¿Tiene dudas? Cont&aacute;ctenos a
-                <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;text-decoration:none;font-weight:600;'>contacto@bioceanicocentral.cl</a>
-            </p>
-        </div>
-
-        <div style='background:#f0f3f8;padding:25px;text-align:center;font-size:13px;color:#555;'>
-            <p style='margin:0 0 8px 0;font-weight:bold;font-size:14px;'>Equipo Organizador</p>
-            <p style='margin:0 0 5px 0;'>Rueda de Negocios - Nodo Bioce&aacute;nico Central</p>
-            <p style='margin:5px 0;'>
-                📧 <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;text-decoration:none;'>contacto@bioceanicocentral.cl</a>
-            </p>
-            <p style='margin:10px 0 0 0;color:#888;font-size:12px;'>&copy; 2025 Nodo Bioce&aacute;nico Central - Todos los derechos reservados</p>
-        </div>
-    </div>
-
-    <img src='https://www.bioceanicocentral.cl/registro/track.php?code=$codigo'
-         width='1' height='1' style='display:none;' alt=''>
-</div>";
+                </table>
+            </td>
+        </tr>
+    </table>
+    <img src='https://www.bioceanicocentral.cl/registro/track.php?code=$codigo' width='1' height='1' style='display:none;' alt=''>
+</div>
+";
 
     // Texto alternativo para clientes sin HTML
     $mail->AltBody = "
