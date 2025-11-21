@@ -190,7 +190,7 @@ while ($row = $result->fetch_assoc()) {
         $mail->addCustomHeader('X-Priority', '3');
 
         $mail->isHTML(true);
-        $mail->Subject = "🤝 Rueda de Negocios Arica - 28 de Noviembre | Instrucciones de Participaci&oacute;n";
+        $mail->Subject = "🤝 Invitaci&oacute;n: Rueda de Negocios Arica - Completa tu Registro";
 
         // ==========================================
         // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS
@@ -218,26 +218,84 @@ while ($row = $result->fetch_assoc()) {
             <p style='font-size:16px;'>Estimado/a <strong>$nombre $apellido</strong>,</p>
 
             <p>
-                Le confirmamos su participaci&oacute;n en la <strong style='color:#004aad;'>Rueda de Negocios - Nodo Bioce&aacute;nico Central</strong>
-                que se realizar&aacute; el <strong>28 de Noviembre de 2025</strong>, de <strong>11:00 a 12:30 hrs</strong>.
+                Durante su registro al evento <strong style='color:#004aad;'>Nodo Bioce&aacute;nico Central 2025</strong>,
+                usted manifest&oacute; inter&eacute;s en participar de nuestra <strong>Rueda de Negocios</strong>.
+                ¡Tenemos excelentes noticias para usted!
             </p>
 
             <div style='background:#f0f7ff;border-left:4px solid #004aad;padding:20px;margin:25px 0;border-radius:6px;'>
-                <h3 style='margin:0 0 15px 0;font-size:18px;color:#004aad;'>
-                    📋 C&oacute;mo Funciona el Sistema
+                <h3 style='margin:0 0 10px 0;font-size:18px;color:#004aad;'>
+                    💼 ¿Qu&eacute; es la Rueda de Negocios?
                 </h3>
-                <p style='margin:0 0 15px 0;font-weight:bold;color:#333;'>Dos Modalidades de Participaci&oacute;n:</p>
+                <p style='margin:0;color:#555;'>
+                    Es un <strong>espacio exclusivo de networking B2B</strong> donde podr&aacute; tener <strong>reuniones 1-a-1 de 15 minutos</strong>
+                    con empresas de su inter&eacute;s. Un formato &aacute;gil y eficiente para generar conexiones comerciales concretas.
+                </p>
             </div>
+
+            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
+                ✨ Beneficios de Participar
+            </h3>
+
+            <div style='display:table;width:100%;margin-bottom:20px;'>
+                <div style='display:table-row;'>
+                    <div style='display:table-cell;padding:10px 15px;background:#f9fafb;border-radius:8px;margin-bottom:10px;'>
+                        <div style='display:flex;align-items:start;'>
+                            <span style='font-size:24px;margin-right:12px;'>🎯</span>
+                            <div>
+                                <strong style='color:#004aad;display:block;margin-bottom:3px;'>Conexiones Directas</strong>
+                                <span style='color:#666;font-size:14px;'>Reuniones confirmadas con empresas afines a tu sector</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style='display:table;width:100%;margin-bottom:20px;'>
+                <div style='display:table-row;'>
+                    <div style='display:table-cell;padding:10px 15px;background:#f9fafb;border-radius:8px;margin-bottom:10px;'>
+                        <div style='display:flex;align-items:start;'>
+                            <span style='font-size:24px;margin-right:12px;'>⏱️</span>
+                            <div>
+                                <strong style='color:#004aad;display:block;margin-bottom:3px;'>Optimizaci&oacute;n de Tiempo</strong>
+                                <span style='color:#666;font-size:14px;'>Hasta 4 reuniones programadas en 90 minutos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style='display:table;width:100%;margin-bottom:20px;'>
+                <div style='display:table-row;'>
+                    <div style='display:table-cell;padding:10px 15px;background:#f9fafb;border-radius:8px;margin-bottom:10px;'>
+                        <div style='display:flex;align-items:start;'>
+                            <span style='font-size:24px;margin-right:12px;'>📊</span>
+                            <div>
+                                <strong style='color:#004aad;display:block;margin-bottom:3px;'>Oportunidades Comerciales</strong>
+                                <span style='color:#666;font-size:14px;'>Genera nuevos negocios, alianzas y acuerdos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
+                🔄 ¿C&oacute;mo Funciona?
+            </h3>
+
+            <p style='margin-bottom:15px;color:#555;'>Hay <strong>dos modalidades</strong> seg&uacute;n tu objetivo comercial:</p>
 
             <div style='background:#fff;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
                 <h4 style='margin:0 0 12px 0;color:#10b981;font-size:17px;'>
                     📌 Empresas que Buscan Servicios/Proveedores
                 </h4>
-                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
-                    <li>Usted marca su disponibilidad en el sistema</li>
-                    <li>Selecciona <strong>1 mesa fija</strong> y hasta <strong>2 bloques horarios</strong> (15 min cada uno)</li>
-                    <li>Otras empresas le solicitan reuniones</li>
-                    <li>Usted decide con qui&eacute;n reunirse (aprobar/rechazar)</li>
+                <p style='margin:0 0 10px 0;font-size:14px;color:#555;'>
+                    <strong>¿Necesitas contratar servicios o proveedores?</strong>
+                </p>
+                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:14px;'>
+                    <li>Reservas una <strong>mesa fija</strong> en el evento</li>
+                    <li>Otras empresas te solicitan reuniones</li>
+                    <li>T&uacute; decides con qui&eacute;n reunirte</li>
                 </ul>
             </div>
 
@@ -245,100 +303,72 @@ while ($row = $result->fetch_assoc()) {
                 <h4 style='margin:0 0 12px 0;color:#3b82f6;font-size:17px;'>
                     🔍 Empresas que Ofrecen Servicios/Productos
                 </h4>
+                <p style='margin:0 0 10px 0;font-size:14px;color:#555;'>
+                    <strong>¿Quieres conseguir clientes o socios comerciales?</strong>
+                </p>
+                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:14px;'>
+                    <li>Exploras el directorio de empresas participantes</li>
+                    <li>Solicitas reuniones con las que te interesan</li>
+                    <li>Esperas su confirmaci&oacute;n autom&aacute;tica</li>
+                </ul>
+            </div>
+
+            <div style='background:#fef3c7;border-left:4px solid #f59e0b;padding:20px;margin:25px 0;border-radius:6px;'>
+                <h4 style='margin:0 0 10px 0;color:#f59e0b;font-size:16px;'>
+                    ⏰ Informaci&oacute;n del Evento
+                </h4>
                 <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
-                    <li>Usted explora las empresas disponibles</li>
-                    <li>Ve sus mesas y horarios</li>
-                    <li>Solicita reuniones con las empresas que le interesen</li>
-                    <li>Espera confirmaci&oacute;n de la otra empresa</li>
+                    <li><strong>Fecha:</strong> 28 de Noviembre 2025</li>
+                    <li><strong>Horario:</strong> 11:00 - 12:30 hrs</li>
+                    <li><strong>Bloques:</strong> 4 sesiones de 15 minutos cada una</li>
+                    <li><strong>Capacidad:</strong> 60 reuniones m&aacute;ximo (15 mesas)</li>
                 </ul>
-            </div>
-
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
-                ⏰ Bloques Horarios Disponibles
-            </h3>
-
-            <table style='width:100%;border-collapse:collapse;font-size:15px;margin-bottom:20px;background:#f9fafb;'>
-                <tr style='background:#004aad;color:white;'>
-                    <th style='padding:12px;text-align:left;border:1px solid #ddd;'>Bloque</th>
-                    <th style='padding:12px;text-align:left;border:1px solid #ddd;'>Horario</th>
-                </tr>
-                <tr>
-                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 1</strong></td>
-                    <td style='padding:10px;border:1px solid #ddd;'>11:00 - 11:15</td>
-                </tr>
-                <tr style='background:#f3f4f6;'>
-                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 2</strong></td>
-                    <td style='padding:10px;border:1px solid #ddd;'>11:20 - 11:35</td>
-                </tr>
-                <tr>
-                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 3</strong></td>
-                    <td style='padding:10px;border:1px solid #ddd;'>11:40 - 11:55</td>
-                </tr>
-                <tr style='background:#f3f4f6;'>
-                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 4</strong></td>
-                    <td style='padding:10px;border:1px solid #ddd;'>12:00 - 12:15</td>
-                </tr>
-            </table>
-
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
-                🎯 Capacidad
-            </h3>
-
-            <div style='background:#fef3c7;border-left:4px solid #f59e0b;padding:15px;margin:15px 0;border-radius:6px;'>
-                <ul style='margin:0;padding-left:20px;color:#555;'>
-                    <li><strong>15 mesas f&iacute;sicas</strong> en el evento</li>
-                    <li>M&aacute;ximo <strong>60 reuniones</strong> en total</li>
-                </ul>
-            </div>
-
-            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
-                🚀 Pr&oacute;ximos Pasos
-            </h3>
-
-            <div style='background:#ecfdf5;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
-                <p style='margin:0 0 10px 0;font-weight:bold;color:#065f46;'>Si su empresa busca servicios/proveedores:</p>
-                <ol style='margin:5px 0 0 0;padding-left:20px;color:#555;line-height:1.8;'>
-                    <li>Ingrese con sus credenciales</li>
-                    <li>Complete su perfil empresarial</li>
-                    <li>Seleccione su mesa y bloques horarios (m&aacute;x. 2)</li>
-                    <li>Revise y apruebe/rechace solicitudes de reuni&oacute;n</li>
-                    <li>El d&iacute;a del evento, dir&iacute;jase a su mesa asignada</li>
-                </ol>
-            </div>
-
-            <div style='background:#eff6ff;border:2px solid #3b82f6;padding:20px;margin:20px 0;border-radius:8px;'>
-                <p style='margin:0 0 10px 0;font-weight:bold;color:#1e40af;'>Si su empresa ofrece servicios/productos:</p>
-                <ol style='margin:5px 0 0 0;padding-left:20px;color:#555;line-height:1.8;'>
-                    <li>Ingrese con sus credenciales</li>
-                    <li>Complete su perfil empresarial</li>
-                    <li>Explore empresas disponibles</li>
-                    <li>Solicite reuniones en los horarios que le convengan</li>
-                    <li>Espere confirmaci&oacute;n por email</li>
-                    <li>El d&iacute;a del evento, dir&iacute;jase a la mesa indicada</li>
-                </ol>
             </div>
 
             <div style='background:#fef2f2;border-left:4px solid #ef4444;padding:20px;margin:25px 0;border-radius:6px;'>
-                <h4 style='margin:0 0 10px 0;color:#991b1b;font-size:16px;'>⚠️ Importante</h4>
-                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
-                    <li>✓ <strong>Capacidad limitada:</strong> Solo 60 espacios disponibles</li>
-                    <li>✓ <strong>Registro prioritario:</strong> Configure su disponibilidad cuanto antes</li>
-                    <li>✓ <strong>Confirmaci&oacute;n autom&aacute;tica:</strong> Recibir&aacute; emails con cada actualizaci&oacute;n</li>
-                    <li>✓ <strong>Mesa asignada:</strong> Sabr&aacute; exactamente d&oacute;nde acudir el d&iacute;a del evento</li>
-                </ul>
+                <h4 style='margin:0 0 10px 0;color:#991b1b;font-size:16px;'>⚠️ ¡Cupos Limitados!</h4>
+                <p style='margin:0;color:#555;font-size:14px;'>
+                    Solo hay <strong>60 espacios disponibles</strong>. Complete su registro <strong>cuanto antes</strong>
+                    para asegurar su participaci&oacute;n. Las mesas se asignan por orden de llegada.
+                </p>
             </div>
+
+            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;text-align:center;'>
+                🚀 Complete su Registro Ahora
+            </h3>
+
+            <p style='text-align:center;color:#555;margin-bottom:25px;'>
+                Es r&aacute;pido y simple: complete sus datos, elija su modalidad y defina qu&eacute; busca o qu&eacute; ofrece.
+            </p>
 
             <div style='text-align:center;margin:40px 0;'>
                 <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php'
                    style='background:#004aad;color:white;padding:18px 45px;font-size:18px;
                    font-weight:bold;text-decoration:none;border-radius:8px;display:inline-block;
                    box-shadow:0 4px 12px rgba(0,74,173,0.3);'>
-                   🚀 Acceder al Sistema Ahora
+                   ✅ COMPLETAR MI REGISTRO
                 </a>
             </div>
 
+            <div style='background:#e0f2fe;border:2px solid #0284c7;padding:20px;margin:30px 0;border-radius:8px;'>
+                <h4 style='margin:0 0 12px 0;color:#0284c7;font-size:16px;'>
+                    📝 ¿Qu&eacute; sucede despu&eacute;s de registrarse?
+                </h4>
+                <ol style='margin:0;padding-left:20px;color:#555;line-height:1.8;font-size:14px;'>
+                    <li>Acceder&aacute; a la plataforma para ver empresas participantes</li>
+                    <li>Podr&aacute; solicitar o recibir solicitudes de reuni&oacute;n</li>
+                    <li>Recibir&aacute; confirmaciones autom&aacute;ticas por email</li>
+                    <li>El d&iacute;a del evento sabr&aacute; exactamente d&oacute;nde y cu&aacute;ndo son sus reuniones</li>
+                </ol>
+            </div>
+
             <p style='text-align:center;font-size:16px;color:#004aad;font-weight:bold;margin:30px 0 15px 0;'>
-                ¡Prepare sus mejores propuestas y haga crecer su red de negocios!
+                ¡No pierda esta oportunidad de hacer crecer su red de negocios!
+            </p>
+
+            <p style='text-align:center;font-size:13px;color:#666;margin-top:20px;'>
+                ¿Tiene dudas? Cont&aacute;ctenos a
+                <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;text-decoration:none;font-weight:600;'>contacto@bioceanicocentral.cl</a>
             </p>
         </div>
 
@@ -355,6 +385,70 @@ while ($row = $result->fetch_assoc()) {
     <img src='https://www.bioceanicocentral.cl/registro/track.php?code=$codigo'
          width='1' height='1' style='display:none;' alt=''>
 </div>";
+
+        // Texto alternativo para clientes sin HTML
+        $mail->AltBody = "
+🤝 RUEDA DE NEGOCIOS ARICA
+28 de Noviembre 2025 | 11:00 - 12:30 hrs
+Nodo Bioceánico Central
+
+Estimado/a $nombre $apellido,
+
+Durante su registro al evento Nodo Bioceánico Central 2025, usted manifestó interés en participar de nuestra Rueda de Negocios. ¡Tenemos excelentes noticias para usted!
+
+=== ¿QUÉ ES LA RUEDA DE NEGOCIOS? ===
+Es un espacio exclusivo de networking B2B donde podrá tener reuniones 1-a-1 de 15 minutos con empresas de su interés. Un formato ágil y eficiente para generar conexiones comerciales concretas.
+
+=== BENEFICIOS DE PARTICIPAR ===
+🎯 Conexiones Directas: Reuniones confirmadas con empresas afines a tu sector
+⏱️ Optimización de Tiempo: Hasta 4 reuniones programadas en 90 minutos
+📊 Oportunidades Comerciales: Genera nuevos negocios, alianzas y acuerdos
+
+=== ¿CÓMO FUNCIONA? ===
+Hay DOS MODALIDADES según tu objetivo comercial:
+
+📌 EMPRESAS QUE BUSCAN SERVICIOS/PROVEEDORES
+¿Necesitas contratar servicios o proveedores?
+- Reservas una mesa fija en el evento
+- Otras empresas te solicitan reuniones
+- Tú decides con quién reunirte
+
+🔍 EMPRESAS QUE OFRECEN SERVICIOS/PRODUCTOS
+¿Quieres conseguir clientes o socios comerciales?
+- Exploras el directorio de empresas participantes
+- Solicitas reuniones con las que te interesan
+- Esperas su confirmación automática
+
+=== INFORMACIÓN DEL EVENTO ===
+- Fecha: 28 de Noviembre 2025
+- Horario: 11:00 - 12:30 hrs
+- Bloques: 4 sesiones de 15 minutos cada una
+- Capacidad: 60 reuniones máximo (15 mesas)
+
+⚠️ ¡CUPOS LIMITADOS!
+Solo hay 60 espacios disponibles. Complete su registro cuanto antes para asegurar su participación. Las mesas se asignan por orden de llegada.
+
+=== COMPLETE SU REGISTRO AHORA ===
+Es rápido y simple: complete sus datos, elija su modalidad y defina qué busca o qué ofrece.
+
+✅ COMPLETAR MI REGISTRO
+https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
+
+=== ¿QUÉ SUCEDE DESPUÉS DE REGISTRARSE? ===
+1. Accederá a la plataforma para ver empresas participantes
+2. Podrá solicitar o recibir solicitudes de reunión
+3. Recibirá confirmaciones automáticas por email
+4. El día del evento sabrá exactamente dónde y cuándo son sus reuniones
+
+¡No pierda esta oportunidad de hacer crecer su red de negocios!
+
+¿Tiene dudas? Contáctenos a contacto@bioceanicocentral.cl
+
+---
+Equipo Organizador
+Rueda de Negocios - Nodo Bioceánico Central
+📧 contacto@bioceanicocentral.cl
+";
 
         // ENVIAR
         $mail->send();
