@@ -64,8 +64,10 @@
 | File | Purpose | Key Features |
 |------|---------|--------------|
 | `envio_masivo.php` | Mass email sender (474 lines) | Throttled sending (15/batch), progress tracking, logging |
+| `envio_rueda_negocios.php` | Rueda de negocios campaign | Filtered by rueda='Si', special invitation template |
 | `enviar_qr_masivo.php` | Alternative mass sender | QR distribution variant |
 | `dashboard_envios.html` | Campaign dashboard | Real-time progress monitoring |
+| `dashboard_rueda.html` | Rueda de negocios dashboard | Monitor business networking campaign |
 | `track.php` | Email open tracking | 1x1 pixel tracker with IP/user-agent logging |
 | `obtener_estadisticas.php` | Statistics API | Email campaign metrics |
 
@@ -83,6 +85,8 @@
 | `email_tracking.log` | 93KB | JSON log of email opens |
 | `envio_detallado.log` | 83KB | Detailed mass email process log |
 | `estado_envio.json` | 3.9KB | Real-time email campaign state |
+| `envio_rueda_detallado.log` | New | Detailed log for rueda de negocios campaign |
+| `estado_envio_rueda.json` | New | Real-time state for rueda de negocios campaign |
 
 ---
 
@@ -97,6 +101,7 @@
 - Primary key: `id` (auto-increment)
 - Unique fields: `codigo` (e.g., REG20251119123456789), `email`
 - Key fields: nombre, apellido, email, telefono, empresa, cargo, region, ciudad
+- Business networking: rueda (values: 'Si', 'No', or NULL - indicates interest in business roundtable)
 - Additional: fecha_registro, qr_code_path, email_enviado, email_abierto
 
 **`registros_inacap`** - INACAP institution registrations
@@ -653,6 +658,86 @@ CREATE INDEX idx_email_enviado ON registros(email_enviado, email_abierto);
 
 ---
 
+## Business Networking System (Rueda de Negocios)
+
+### Overview
+The system includes a specialized email campaign for the "Rueda de Negocios" (Business Roundtable) - a networking event within the main conference where participants can have 1-on-1 meetings with business leaders and decision-makers.
+
+### How It Works
+
+**Registration Phase**:
+- During registration, attendees can express interest in the business roundtable via the `rueda` field
+- Database stores `rueda = 'Si'` for interested participants
+
+**Email Campaign**:
+- **Script**: `envio_rueda_negocios.php`
+- **Dashboard**: `dashboard_rueda.html`
+- **SQL Filter**: `WHERE rueda = 'Si'`
+- **Email Template**: Special invitation with:
+  - Confirmation of reserved spot
+  - Benefits of participating
+  - Call to action for attendance confirmation (deadline: Nov 23, 2025)
+  - Information about personalized meeting schedules
+
+**Campaign Features**:
+- Same throttling as main campaign (15 emails/batch, 3s delay, 45s between batches)
+- Separate state tracking (`estado_envio_rueda.json`)
+- Separate detailed logs (`envio_rueda_detallado.log`)
+- Real-time progress monitoring via dedicated dashboard
+- Email open tracking integrated
+
+### How to Run the Campaign
+
+1. **Verify Database**:
+   ```sql
+   SELECT COUNT(*) FROM registros WHERE rueda = 'Si';
+   ```
+
+2. **Open Dashboard**:
+   - Navigate to `dashboard_rueda.html` in browser
+   - Dashboard shows campaign info and real-time metrics
+
+3. **Start Campaign**:
+   - Click "Iniciar Envío a Rueda de Negocios" button
+   - Script runs in background (`envio_rueda_negocios.php`)
+   - Monitor progress in real-time
+
+4. **Monitor Results**:
+   - Check logs: `tail -f envio_rueda_detallado.log`
+   - Check state: `cat estado_envio_rueda.json`
+   - View dashboard for visual progress
+
+### Email Template Content
+
+The invitation email includes:
+- **Personalized greeting** with name
+- **Confirmation** of interest in business roundtable
+- **Benefits**: 1-on-1 meetings, international networking, personalized agenda
+- **Call to action**: Confirm attendance by responding to email
+- **Deadline**: November 23, 2025
+- **Event details**: Dates, location, company, role, sector
+- **QR code**: For event access
+- **Tracking pixel**: For open tracking
+
+### File Locations
+
+| Component | File Path |
+|-----------|-----------|
+| Campaign Script | `/home/user/registro/envio_rueda_negocios.php` |
+| Dashboard | `/home/user/registro/dashboard_rueda.html` |
+| State File | `/home/user/registro/estado_envio_rueda.json` |
+| Detailed Log | `/home/user/registro/envio_rueda_detallado.log` |
+
+### Customization
+
+To modify the email template:
+1. Edit `envio_rueda_negocios.php`
+2. Find the heredoc block starting with `$mail->Body = "`
+3. Modify HTML content (remember to use HTML entities for Spanish characters)
+4. Test before running campaign
+
+---
+
 ## Contact Information for Context
 
 **Event Details**:
@@ -669,6 +754,14 @@ CREATE INDEX idx_email_enviado ON registros(email_enviado, email_abierto);
 ---
 
 ## Changelog
+
+### 2025-11-21 - Business Networking Campaign System Added
+- Created `envio_rueda_negocios.php` - mass email campaign for business roundtable
+- Created `dashboard_rueda.html` - real-time monitoring dashboard
+- Added specialized email template with networking invitation
+- Implemented SQL filtering by `rueda = 'Si'` field
+- Separate state tracking and logging for campaign isolation
+- Updated CLAUDE.md with comprehensive documentation
 
 ### 2025-11-21 - Initial CLAUDE.md Creation
 - Comprehensive codebase analysis completed
