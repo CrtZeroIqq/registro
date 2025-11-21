@@ -57,28 +57,23 @@ if (!$result || $result->num_rows === 0) {
 
 $row = $result->fetch_assoc();
 
-// Función para convertir acentos
-function ent($txt) {
-    return htmlentities($txt, ENT_QUOTES, 'UTF-8');
-}
-
-// Extraer datos
-$nombre   = ent($row['nombre']);
-$apellido = ent($row['apellido']);
-$telefono = ent($row['telefono'] ?? 'N/A');
-$pais     = ent($row['pais'] ?? 'N/A');
-$empresa  = ent($row['empresa'] ?? 'N/A');
-$cargo    = ent($row['cargo'] ?? 'N/A');
-$sector   = ent($row['sector'] ?? 'N/A');
-$codigo   = ent($row['codigo_registro']);
+// Extraer datos directamente (UTF-8 nativo para email)
+$nombre   = $row['nombre'];
+$apellido = $row['apellido'];
+$telefono = $row['telefono'] ?? 'N/A';
+$pais     = $row['pais'] ?? 'N/A';
+$empresa  = $row['empresa'] ?? 'N/A';
+$cargo    = $row['cargo'] ?? 'N/A';
+$sector   = $row['sector'] ?? 'N/A';
+$codigo   = $row['codigo_registro'];
 
 echo "<h2>📧 Script de Prueba - Rueda de Negocios</h2>";
 echo "<p><strong>Datos del registro de ejemplo:</strong></p>";
 echo "<ul>";
-echo "<li><strong>Nombre:</strong> " . html_entity_decode("$nombre $apellido") . "</li>";
-echo "<li><strong>Empresa:</strong> " . html_entity_decode($empresa) . "</li>";
-echo "<li><strong>Cargo:</strong> " . html_entity_decode($cargo) . "</li>";
-echo "<li><strong>Código:</strong> " . html_entity_decode($codigo) . "</li>";
+echo "<li><strong>Nombre:</strong> " . htmlspecialchars("$nombre $apellido", ENT_QUOTES, 'UTF-8') . "</li>";
+echo "<li><strong>Empresa:</strong> " . htmlspecialchars($empresa, ENT_QUOTES, 'UTF-8') . "</li>";
+echo "<li><strong>Cargo:</strong> " . htmlspecialchars($cargo, ENT_QUOTES, 'UTF-8') . "</li>";
+echo "<li><strong>Código:</strong> " . htmlspecialchars($codigo, ENT_QUOTES, 'UTF-8') . "</li>";
 echo "</ul>";
 echo "<p><strong>Email de destino:</strong> <code>$email_prueba</code></p>";
 echo "<hr>";
@@ -109,8 +104,8 @@ try {
         ]
     ];
 
-    $mail->setFrom('contacto@bioceanicocentral.cl', 'Nodo Bioce&aacute;nico 2025');
-    $mail->addAddress($email_prueba, "Prueba - " . html_entity_decode("$nombre $apellido"));
+    $mail->setFrom('contacto@bioceanicocentral.cl', 'Nodo Bioceánico 2025');
+    $mail->addAddress($email_prueba, "Prueba - $nombre $apellido");
     $mail->addReplyTo('contacto@bioceanicocentral.cl', 'Nodo Bioceánico 2025');
     $mail->addCustomHeader('X-Campaign', 'Rueda-Negocios-2025-PRUEBA');
     $mail->addCustomHeader('X-Priority', '3');
@@ -323,7 +318,7 @@ Rueda de Negocios - Nodo Bioceánico Central
     echo "<h3>📊 Información adicional:</h3>";
     echo "<ul>";
     echo "<li>El correo incluye el prefijo <code>[PRUEBA]</code> en el asunto</li>";
-    echo "<li>Se usaron datos reales de: " . html_entity_decode("$nombre $apellido") . "</li>";
+    echo "<li>Se usaron datos reales de: " . htmlspecialchars("$nombre $apellido", ENT_QUOTES, 'UTF-8') . "</li>";
     echo "<li>El email es una <strong>INVITACIÓN</strong> para completar el registro en la plataforma de rueda de negocios</li>";
     echo "<li>Explica qué es la rueda de negocios y sus beneficios (networking B2B, reuniones 1-1, optimización de tiempo)</li>";
     echo "<li>Presenta las dos modalidades (empresas que buscan servicios vs empresas que ofrecen servicios)</li>";

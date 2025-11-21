@@ -106,8 +106,9 @@ $conn->set_charset("utf8mb4");
 // ==========================================
 // 🔹 FUNCIÓN PARA CONVERTIR ACENTOS
 // ==========================================
+// Función helper - devuelve el texto tal cual (UTF-8 nativo para email)
 function ent($txt) {
-    return htmlentities($txt, ENT_QUOTES, 'UTF-8');
+    return $txt;
 }
 
 // ==========================================
@@ -155,8 +156,7 @@ while ($row = $result->fetch_assoc()) {
     $sector   = ent($row['sector'] ?? 'N/A');
     $codigo   = ent($row['codigo_registro']);
 
-    $email_limpio = html_entity_decode($email);
-    log_detallado("Preparando envío a: $email_limpio");
+    log_detallado("Preparando envío a: $email");
 
     // ==========================================
     // 🔹 CONFIGURAR MAILER CON TRY-CATCH
@@ -183,8 +183,8 @@ while ($row = $result->fetch_assoc()) {
             ]
         ];
 
-        $mail->setFrom('contacto@bioceanicocentral.cl', 'Nodo Bioce&aacute;nico 2025');
-        $mail->addAddress($email_limpio, html_entity_decode("$nombre $apellido"));
+        $mail->setFrom('contacto@bioceanicocentral.cl', 'Nodo Bioceánico 2025');
+        $mail->addAddress($email, "$nombre $apellido");
         $mail->addReplyTo('contacto@bioceanicocentral.cl', 'Nodo Bioceánico 2025');
         $mail->addCustomHeader('X-Campaign', 'Rueda-Negocios-2025');
         $mail->addCustomHeader('X-Priority', '3');
@@ -385,13 +385,13 @@ Rueda de Negocios - Nodo Bioceánico Central
         $mail->send();
         $enviados++;
 
-        log_detallado("✓ ENVIADO exitosamente a: $email_limpio");
+        log_detallado("✓ ENVIADO exitosamente a: $email");
 
         $log_item = [
             'timestamp' => date('H:i:s'),
-            'email' => $email_limpio,
-            'nombre' => html_entity_decode("$nombre $apellido"),
-            'empresa' => html_entity_decode($empresa),
+            'email' => $email,
+            'nombre' => "$nombre $apellido",
+            'empresa' => $empresa,
             'status' => 'enviado'
         ];
 
@@ -407,7 +407,7 @@ Rueda de Negocios - Nodo Bioceánico Central
             'enviados' => $enviados,
             'errores' => $errores,
             'progreso_porcentaje' => $progreso,
-            'ultimo_envio' => $email_limpio,
+            'ultimo_envio' => $email,
             'logs' => array_slice($logs, -10),
             'errores_detalle' => $errores_detalle
         ]);
@@ -416,12 +416,12 @@ Rueda de Negocios - Nodo Bioceánico Central
         $errores++;
 
         $error_msg = $mail->ErrorInfo;
-        log_detallado("✗ ERROR enviando a: $email_limpio - $error_msg");
+        log_detallado("✗ ERROR enviando a: $email - $error_msg");
 
         $error_item = [
             'timestamp' => date('H:i:s'),
-            'email' => $email_limpio,
-            'nombre' => html_entity_decode("$nombre $apellido"),
+            'email' => $email,
+            'nombre' => "$nombre $apellido",
             'error' => $error_msg
         ];
 
@@ -429,8 +429,8 @@ Rueda de Negocios - Nodo Bioceánico Central
 
         $log_item = [
             'timestamp' => date('H:i:s'),
-            'email' => $email_limpio,
-            'nombre' => html_entity_decode("$nombre $apellido"),
+            'email' => $email,
+            'nombre' => "$nombre $apellido",
             'status' => 'error'
         ];
 
@@ -446,7 +446,7 @@ Rueda de Negocios - Nodo Bioceánico Central
             'enviados' => $enviados,
             'errores' => $errores,
             'progreso_porcentaje' => $progreso,
-            'ultimo_envio' => $email_limpio,
+            'ultimo_envio' => $email,
             'logs' => array_slice($logs, -10),
             'errores_detalle' => $errores_detalle
         ]);
