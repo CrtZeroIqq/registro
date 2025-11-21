@@ -674,11 +674,13 @@ The system includes a specialized email campaign for the "Rueda de Negocios" (Bu
 - **Script**: `envio_rueda_negocios.php`
 - **Dashboard**: `dashboard_rueda.html`
 - **SQL Filter**: `WHERE rueda = 'Si'`
-- **Email Template**: Special invitation with:
-  - Confirmation of reserved spot
-  - Benefits of participating
-  - Call to action for attendance confirmation (deadline: Nov 23, 2025)
-  - Information about personalized meeting schedules
+- **Email Template**: Participation instructions with:
+  - Event date and time confirmation (Nov 28, 2025, 11:00-12:30)
+  - Two participation modalities explained (A: Receive Requests, B: Request Meetings)
+  - Time blocks table (4 blocks of 15 minutes each)
+  - Capacity information (15 tables, 60 max meetings)
+  - System access instructions with portal URL and credentials
+  - Step-by-step instructions for each modality
 
 **Campaign Features**:
 - Same throttling as main campaign (15 emails/batch, 3s delay, 45s between batches)
@@ -721,15 +723,44 @@ The system includes a specialized email campaign for the "Rueda de Negocios" (Bu
 
 ### Email Template Content
 
-The invitation email includes:
-- **Personalized greeting** with name
-- **Confirmation** of interest in business roundtable
-- **Benefits**: 1-on-1 meetings, international networking, personalized agenda
-- **Call to action**: Confirm attendance by responding to email
-- **Deadline**: November 23, 2025
-- **Event details**: Dates, location, company, role, sector
-- **QR code**: For event access
-- **Tracking pixel**: For open tracking
+The participation instructions email includes:
+
+**Header**:
+- Event title and date: November 28, 2025, 11:00-12:30 hrs
+- Confirmation of participation
+
+**System Explanation**:
+- Two modalities clearly explained with visual boxes
+- **Modality A (Receive Requests)**: Fixed table, receive and approve/reject meeting requests
+- **Modality B (Request Meetings)**: Explore companies and request meetings
+
+**Time Blocks**:
+- Table with 4 time blocks (15 minutes each)
+- Block 1: 11:00 - 11:15
+- Block 2: 11:20 - 11:35
+- Block 3: 11:40 - 11:55
+- Block 4: 12:00 - 12:15
+
+**Capacity Information**:
+- 15 physical tables
+- Maximum 60 meetings
+- First-come, first-served reservation system
+
+**Step-by-Step Instructions**:
+- Separate instructions for each modality
+- Clear numbered steps from login to event day
+
+**System Access**:
+- Portal URL: https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
+- Username: Their registration email
+- Password: The one they created during registration
+- Password recovery contact
+
+**CTA Button**:
+- Direct link to access the system
+
+**Tracking**:
+- Email open tracking pixel included
 
 ### File Locations
 
@@ -767,6 +798,16 @@ To modify the email template:
 ---
 
 ## Changelog
+
+### 2025-11-21 - Updated Rueda de Negocios Email Template
+- Updated email template with complete participation instructions
+- New subject: "🤝 Rueda de Negocios Arica - 28 de Noviembre | Instrucciones de Participación"
+- Added detailed explanation of two participation modalities (A and B)
+- Included time blocks table (4 blocks of 15 minutes)
+- Added system access information with portal URL
+- Included step-by-step instructions for each modality
+- Updated both `envio_rueda_negocios.php` and `test_envio_rueda.php`
+- Updated CLAUDE.md documentation with new email content
 
 ### 2025-11-21 - Business Networking Campaign System Added
 - Created `envio_rueda_negocios.php` - mass email campaign for business roundtable

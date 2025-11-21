@@ -118,14 +118,14 @@ try {
     $mail->addCustomHeader('X-Priority', '3');
 
     $mail->isHTML(true);
-    $mail->Subject = "[PRUEBA] Invitaci&oacute;n Especial: Rueda de Negocios – Nodo Bioce&aacute;nico 2025";
+    $mail->Subject = "[PRUEBA] 🤝 Rueda de Negocios Arica - 28 de Noviembre | Instrucciones de Participaci&oacute;n";
 
     // ==========================================
     // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS
     // ==========================================
     $mail->Body = "
 <div style='margin:0;padding:0;background:#e9eef5;font-family:Arial, sans-serif;'>
-    <div style='max-width:650px;margin:30px auto;background:white;border-radius:12px;
+    <div style='max-width:700px;margin:30px auto;background:white;border-radius:12px;
         overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);'>
 
         <div style='background:linear-gradient(135deg, #004aad 0%, #0066cc 100%);padding:35px 25px;text-align:center;color:white;'>
@@ -134,11 +134,11 @@ try {
                 style='width:120px;max-width:35%;margin-bottom:15px;'>
 
             <h2 style='margin:10px 0 0;font-size:28px;font-weight:700;'>
-                Rueda de Negocios 2025
+                🤝 Rueda de Negocios Arica
             </h2>
 
-            <p style='margin:8px 0 0;font-size:15px;opacity:0.95;'>
-                Oportunidad exclusiva de networking empresarial
+            <p style='margin:8px 0 0;font-size:16px;opacity:0.95;'>
+                28 de Noviembre 2025 | 11:00 - 12:30 hrs
             </p>
         </div>
 
@@ -146,115 +146,168 @@ try {
             <p style='font-size:16px;'>Estimado/a <strong>$nombre $apellido</strong>,</p>
 
             <p>
-                En su registro para el evento <strong>Nodo Bioce&aacute;nico Central 2025</strong>,
-                usted manifest&oacute; inter&eacute;s en participar de nuestra
-                <strong style='color:#004aad;'>Rueda de Negocios</strong>.
+                Le confirmamos su participaci&oacute;n en la <strong style='color:#004aad;'>Rueda de Negocios - Nodo Bioce&aacute;nico Central</strong>
+                que se realizar&aacute; el <strong>28 de Noviembre de 2025</strong>, de <strong>11:00 a 12:30 hrs</strong>.
             </p>
 
             <div style='background:#f0f7ff;border-left:4px solid #004aad;padding:20px;margin:25px 0;border-radius:6px;'>
-                <p style='margin:0 0 10px 0;font-size:16px;font-weight:bold;color:#004aad;'>
-                    ¡Su lugar está reservado!
-                </p>
-                <p style='margin:0;font-size:14px;color:#555;'>
-                    Lo invitamos cordialmente a formar parte de esta instancia &uacute;nica de conexi&oacute;n
-                    empresarial que reunir&aacute; a l&iacute;deres del comercio internacional, log&iacute;stica
-                    y desarrollo econ&oacute;mico de la regi&oacute;n bioce&aacute;nica.
-                </p>
+                <h3 style='margin:0 0 15px 0;font-size:18px;color:#004aad;'>
+                    📋 C&oacute;mo Funciona el Sistema
+                </h3>
+                <p style='margin:0 0 15px 0;font-weight:bold;color:#333;'>Dos Modalidades de Participaci&oacute;n:</p>
+            </div>
+
+            <div style='background:#fff;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
+                <h4 style='margin:0 0 12px 0;color:#10b981;font-size:17px;'>
+                    📌 MODALIDAD A: Recibo Solicitudes
+                </h4>
+                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
+                    <li>Usted marca su disponibilidad en el sistema</li>
+                    <li>Selecciona <strong>1 mesa fija</strong> y hasta <strong>2 bloques horarios</strong> (15 min cada uno)</li>
+                    <li>Otras empresas le solicitan reuniones</li>
+                    <li>Usted decide con qui&eacute;n reunirse (aprobar/rechazar)</li>
+                </ul>
+            </div>
+
+            <div style='background:#fff;border:2px solid #3b82f6;padding:20px;margin:20px 0;border-radius:8px;'>
+                <h4 style='margin:0 0 12px 0;color:#3b82f6;font-size:17px;'>
+                    🔍 MODALIDAD B: Solicito Reuniones
+                </h4>
+                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
+                    <li>Usted explora las empresas disponibles</li>
+                    <li>Ve sus mesas y horarios</li>
+                    <li>Solicita reuniones con las empresas que le interesen</li>
+                    <li>Espera confirmaci&oacute;n de la otra empresa</li>
+                </ul>
             </div>
 
             <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
-                ¿Qu&eacute; es la Rueda de Negocios?
+                ⏰ Bloques Horarios Disponibles
             </h3>
 
-            <p>
-                Es un espacio dise&ntilde;ado para facilitar <strong>encuentros empresariales directos</strong>,
-                donde podr&aacute; establecer contactos estrat&eacute;gicos, explorar oportunidades de
-                colaboraci&oacute;n y expandir su red de negocios en el corredor bioce&aacute;nico.
-            </p>
-
-            <h3 style='color:#004aad;margin:25px 0 15px 0;font-size:18px;'>
-                Beneficios de participar:
-            </h3>
-
-            <ul style='color:#555;line-height:1.8;'>
-                <li>Reuniones 1 a 1 con empresarios y tomadores de decisi&oacute;n</li>
-                <li>Acceso a oportunidades de comercio e inversi&oacute;n internacional</li>
-                <li>Networking con l&iacute;deres de Chile, Bolivia, Paraguay, Argentina y Brasil</li>
-                <li>Agenda personalizada de reuniones seg&uacute;n su perfil empresarial</li>
-            </ul>
-
-            <div style='background:#fff8e1;border:2px solid #ffc107;padding:20px;margin:30px 0;border-radius:8px;'>
-                <p style='margin:0 0 10px 0;font-weight:bold;color:#d68000;font-size:16px;'>
-                    📋 Pr&oacute;ximos pasos:
-                </p>
-                <ol style='margin:5px 0;padding-left:20px;color:#555;'>
-                    <li>Confirme su asistencia respondiendo este correo antes del <strong>23 de noviembre</strong></li>
-                    <li>Indique el tipo de contactos empresariales que le interesan</li>
-                    <li>Recibir&aacute; su agenda personalizada de reuniones</li>
-                </ol>
-            </div>
-
-            <h3 style='color:#004aad;margin:25px 0 12px 0;font-size:17px;'>
-                Detalles del Evento
-            </h3>
-
-            <table style='width:100%;border-collapse:collapse;font-size:15px;margin-bottom:25px;'>
-                <tr>
-                    <td style='padding:8px 0;color:#555;width:35%;'><strong>📅 Fechas:</strong></td>
-                    <td>26, 27 y 28 de Noviembre 2025</td>
+            <table style='width:100%;border-collapse:collapse;font-size:15px;margin-bottom:20px;background:#f9fafb;'>
+                <tr style='background:#004aad;color:white;'>
+                    <th style='padding:12px;text-align:left;border:1px solid #ddd;'>Bloque</th>
+                    <th style='padding:12px;text-align:left;border:1px solid #ddd;'>Horario</th>
                 </tr>
                 <tr>
-                    <td style='padding:8px 0;color:#555;'><strong>📍 Lugar:</strong></td>
-                    <td>Arica, Chile</td>
+                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 1</strong></td>
+                    <td style='padding:10px;border:1px solid #ddd;'>11:00 - 11:15</td>
+                </tr>
+                <tr style='background:#f3f4f6;'>
+                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 2</strong></td>
+                    <td style='padding:10px;border:1px solid #ddd;'>11:20 - 11:35</td>
                 </tr>
                 <tr>
-                    <td style='padding:8px 0;color:#555;'><strong>🏢 Su empresa:</strong></td>
-                    <td>$empresa</td>
+                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 3</strong></td>
+                    <td style='padding:10px;border:1px solid #ddd;'>11:40 - 11:55</td>
                 </tr>
-                <tr>
-                    <td style='padding:8px 0;color:#555;'><strong>💼 Cargo:</strong></td>
-                    <td>$cargo</td>
-                </tr>
-                <tr>
-                    <td style='padding:8px 0;color:#555;'><strong>🔖 Sector:</strong></td>
-                    <td>$sector</td>
+                <tr style='background:#f3f4f6;'>
+                    <td style='padding:10px;border:1px solid #ddd;'><strong>Bloque 4</strong></td>
+                    <td style='padding:10px;border:1px solid #ddd;'>12:00 - 12:15</td>
                 </tr>
             </table>
 
-            <div style='text-align:center;margin:35px 0 25px 0;'>
-                <p style='margin-bottom:15px;color:#555;font-size:14px;'>Su c&oacute;digo QR de acceso:</p>
-                <div style='display:inline-block;background:white;padding:15px;border-radius:12px;
-                    border:3px solid #004aad;box-shadow:0 4px 12px rgba(0,0,0,0.15);'>
-                    <img src='$qr_url' alt='QR' style='width:200px;border-radius:6px;'>
-                </div>
-                <p style='margin-top:12px;font-size:16px;color:#004aad;'>
-                    C&oacute;digo: <strong>$codigo</strong>
-                </p>
+            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
+                🎯 Capacidad
+            </h3>
+
+            <div style='background:#fef3c7;border-left:4px solid #f59e0b;padding:15px;margin:15px 0;border-radius:6px;'>
+                <ul style='margin:0;padding-left:20px;color:#555;'>
+                    <li><strong>15 mesas f&iacute;sicas</strong> en el evento</li>
+                    <li>M&aacute;ximo <strong>60 reuniones</strong> en total</li>
+                    <li>Sistema de reserva por <strong>orden de llegada</strong></li>
+                </ul>
             </div>
 
-            <div style='text-align:center;margin-top:35px;'>
-                <a href='https://www.bioceanicocentral.cl'
-                   style='background:#004aad;color:white;padding:15px 35px;font-size:16px;
+            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;'>
+                🚀 Pr&oacute;ximos Pasos
+            </h3>
+
+            <div style='background:#ecfdf5;border:2px solid #10b981;padding:20px;margin:20px 0;border-radius:8px;'>
+                <p style='margin:0 0 10px 0;font-weight:bold;color:#065f46;'>Si est&aacute; en MODALIDAD A (Recibo solicitudes):</p>
+                <ol style='margin:5px 0 0 0;padding-left:20px;color:#555;line-height:1.8;'>
+                    <li>Ingrese con sus credenciales</li>
+                    <li>Complete su perfil empresarial</li>
+                    <li>Seleccione su mesa y bloques horarios (m&aacute;x. 2)</li>
+                    <li>Revise y apruebe/rechace solicitudes de reuni&oacute;n</li>
+                    <li>El d&iacute;a del evento, dir&iacute;jase a su mesa asignada</li>
+                </ol>
+            </div>
+
+            <div style='background:#eff6ff;border:2px solid #3b82f6;padding:20px;margin:20px 0;border-radius:8px;'>
+                <p style='margin:0 0 10px 0;font-weight:bold;color:#1e40af;'>Si est&aacute; en MODALIDAD B (Solicito reuniones):</p>
+                <ol style='margin:5px 0 0 0;padding-left:20px;color:#555;line-height:1.8;'>
+                    <li>Ingrese con sus credenciales</li>
+                    <li>Complete su perfil empresarial</li>
+                    <li>Explore empresas disponibles</li>
+                    <li>Solicite reuniones en los horarios que le convengan</li>
+                    <li>Espere confirmaci&oacute;n por email</li>
+                    <li>El d&iacute;a del evento, dir&iacute;jase a la mesa indicada</li>
+                </ol>
+            </div>
+
+            <div style='background:#fef2f2;border-left:4px solid #ef4444;padding:20px;margin:25px 0;border-radius:6px;'>
+                <h4 style='margin:0 0 10px 0;color:#991b1b;font-size:16px;'>⚠️ Importante</h4>
+                <ul style='margin:0;padding-left:20px;color:#555;line-height:1.8;'>
+                    <li>✓ <strong>Capacidad limitada:</strong> Solo 60 espacios disponibles</li>
+                    <li>✓ <strong>Registro prioritario:</strong> Configure su disponibilidad cuanto antes</li>
+                    <li>✓ <strong>Confirmaci&oacute;n autom&aacute;tica:</strong> Recibir&aacute; emails con cada actualizaci&oacute;n</li>
+                    <li>✓ <strong>Mesa asignada:</strong> Sabr&aacute; exactamente d&oacute;nde acudir el d&iacute;a del evento</li>
+                    <li>✓ <strong>Su rol:</strong> Verifique en el sistema si est&aacute; en Modalidad A o B</li>
+                </ul>
+            </div>
+
+            <h3 style='color:#004aad;margin:30px 0 15px 0;font-size:18px;text-align:center;'>
+                🔗 Acceso al Sistema
+            </h3>
+
+            <table style='width:100%;border-collapse:collapse;font-size:15px;margin:20px 0;background:#f9fafb;'>
+                <tr>
+                    <td style='padding:12px;border:1px solid #ddd;font-weight:bold;width:30%;background:#f3f4f6;'>Portal:</td>
+                    <td style='padding:12px;border:1px solid #ddd;'>
+                        <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php'
+                           style='color:#004aad;text-decoration:underline;word-break:break-all;'>
+                           www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style='padding:12px;border:1px solid #ddd;font-weight:bold;background:#f3f4f6;'>Usuario:</td>
+                    <td style='padding:12px;border:1px solid #ddd;'><strong>$email</strong></td>
+                </tr>
+                <tr>
+                    <td style='padding:12px;border:1px solid #ddd;font-weight:bold;background:#f3f4f6;'>Contrase&ntilde;a:</td>
+                    <td style='padding:12px;border:1px solid #ddd;'>La que registr&oacute; al crear su cuenta</td>
+                </tr>
+            </table>
+
+            <p style='text-align:center;font-size:14px;color:#666;margin:15px 0;'>
+                ¿Olvid&oacute; su contrase&ntilde;a? Cont&aacute;ctenos a
+                <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;'>contacto@bioceanicocentral.cl</a>
+            </p>
+
+            <div style='text-align:center;margin:35px 0;'>
+                <a href='https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php'
+                   style='background:#004aad;color:white;padding:16px 40px;font-size:17px;
                    font-weight:bold;text-decoration:none;border-radius:8px;display:inline-block;
-                   box-shadow:0 4px 10px rgba(0,0,0,0.2);transition:all 0.3s;'>
-                   Confirmar mi participaci&oacute;n
+                   box-shadow:0 4px 12px rgba(0,74,173,0.3);'>
+                   🚀 Acceder al Sistema Ahora
                 </a>
             </div>
 
-            <p style='margin-top:40px;font-size:13px;color:#777;text-align:center;line-height:1.6;'>
-                Para confirmar su asistencia o consultas adicionales, puede responder directamente a este correo
-                o contactarnos a <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;'>contacto@bioceanicocentral.cl</a>
-            </p>
-
-            <p style='margin-top:25px;font-size:14px;color:#555;text-align:center;font-style:italic;'>
-                ¡Esperamos contar con su presencia para hacer de esta rueda de negocios un &eacute;xito!
+            <p style='text-align:center;font-size:16px;color:#004aad;font-weight:bold;margin:30px 0 15px 0;'>
+                ¡Prepare sus mejores propuestas y haga crecer su red de negocios!
             </p>
         </div>
 
-        <div style='background:#f0f3f8;padding:20px;text-align:center;font-size:12px;color:#555;'>
-            <p style='margin:0 0 5px 0;font-weight:bold;'>Nodo Bioce&aacute;nico Central 2025</p>
-            <p style='margin:0;'>Arica, Chile &mdash; Conectando mercados, construyendo futuro</p>
-            <p style='margin:10px 0 0 0;'>&copy; 2025 Todos los derechos reservados.</p>
+        <div style='background:#f0f3f8;padding:25px;text-align:center;font-size:13px;color:#555;'>
+            <p style='margin:0 0 8px 0;font-weight:bold;font-size:14px;'>Equipo Organizador</p>
+            <p style='margin:0 0 5px 0;'>Rueda de Negocios - Nodo Bioce&aacute;nico Central</p>
+            <p style='margin:5px 0;'>
+                📧 <a href='mailto:contacto@bioceanicocentral.cl' style='color:#004aad;text-decoration:none;'>contacto@bioceanicocentral.cl</a>
+            </p>
+            <p style='margin:10px 0 0 0;color:#888;font-size:12px;'>&copy; 2025 Nodo Bioce&aacute;nico Central - Todos los derechos reservados</p>
         </div>
     </div>
 
@@ -264,26 +317,54 @@ try {
 
     // Texto alternativo para clientes sin HTML
     $mail->AltBody = "
-Rueda de Negocios 2025 - Nodo Bioceánico Central
+🤝 RUEDA DE NEGOCIOS ARICA
+28 de Noviembre 2025 | 11:00 - 12:30 hrs
+Nodo Bioceánico Central
 
 Estimado/a $nombre $apellido,
 
-En su registro para el evento Nodo Bioceánico Central 2025, usted manifestó interés en participar de nuestra Rueda de Negocios.
+Le confirmamos su participación en la Rueda de Negocios - Nodo Bioceánico Central que se realizará el 28 de Noviembre de 2025, de 11:00 a 12:30 hrs.
 
-¡Su lugar está reservado!
+=== CÓMO FUNCIONA EL SISTEMA ===
 
-Detalles del Evento:
-- Fechas: 26, 27 y 28 de Noviembre 2025
-- Lugar: Arica, Chile
-- Su empresa: $empresa
-- Cargo: $cargo
-- Sector: $sector
+Dos Modalidades de Participación:
 
-Código de acceso: $codigo
+MODALIDAD A: Recibo Solicitudes
+- Usted marca su disponibilidad en el sistema
+- Selecciona 1 mesa fija y hasta 2 bloques horarios (15 min cada uno)
+- Otras empresas le solicitan reuniones
+- Usted decide con quién reunirse (aprobar/rechazar)
 
-Para confirmar su asistencia, responda este correo antes del 23 de noviembre.
+MODALIDAD B: Solicito Reuniones
+- Usted explora las empresas disponibles
+- Ve sus mesas y horarios
+- Solicita reuniones con las empresas que le interesen
+- Espera confirmación de la otra empresa
 
-Contacto: contacto@bioceanicocentral.cl
+=== BLOQUES HORARIOS ===
+Bloque 1: 11:00 - 11:15
+Bloque 2: 11:20 - 11:35
+Bloque 3: 11:40 - 11:55
+Bloque 4: 12:00 - 12:15
+
+=== CAPACIDAD ===
+- 15 mesas físicas en el evento
+- Máximo 60 reuniones en total
+- Sistema de reserva por orden de llegada
+
+=== ACCESO AL SISTEMA ===
+Portal: https://www.bioceanicocentral.cl/rueda-negocios-arica/views/registro.php
+Usuario: $email
+Contraseña: La que registró al crear su cuenta
+
+¿Olvidó su contraseña? Contáctenos a contacto@bioceanicocentral.cl
+
+¡Prepare sus mejores propuestas y haga crecer su red de negocios!
+
+---
+Equipo Organizador
+Rueda de Negocios - Nodo Bioceánico Central
+📧 contacto@bioceanicocentral.cl
 ";
 
     // ENVIAR
@@ -295,7 +376,7 @@ Contacto: contacto@bioceanicocentral.cl
     echo "<div style='background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:20px;border-radius:8px;margin:20px 0;'>";
     echo "<h3 style='margin-top:0;'>✅ ¡Correo enviado exitosamente!</h3>";
     echo "<p><strong>Destinatario:</strong> $email_prueba</p>";
-    echo "<p><strong>Asunto:</strong> [PRUEBA] Invitación Especial: Rueda de Negocios</p>";
+    echo "<p><strong>Asunto:</strong> [PRUEBA] 🤝 Rueda de Negocios Arica - 28 de Noviembre | Instrucciones de Participación</p>";
     echo "<p>Revisa tu bandeja de entrada para verificar cómo se ve el correo.</p>";
     echo "</div>";
 
@@ -303,7 +384,9 @@ Contacto: contacto@bioceanicocentral.cl
     echo "<ul>";
     echo "<li>El correo incluye el prefijo <code>[PRUEBA]</code> en el asunto</li>";
     echo "<li>Se usaron datos reales de: " . html_entity_decode("$nombre $apellido") . "</li>";
-    echo "<li>El QR code corresponde al código: $codigo</li>";
+    echo "<li>El email incluye <strong>instrucciones completas</strong> para usar el sistema de rueda de negocios</li>";
+    echo "<li>Contiene información sobre las dos modalidades (A y B)</li>";
+    echo "<li>Incluye el link al sistema: bioceanicocentral.cl/rueda-negocios-arica/views/registro.php</li>";
     echo "<li>El email incluye tracking pixel (se registrará si lo abres)</li>";
     echo "</ul>";
 
