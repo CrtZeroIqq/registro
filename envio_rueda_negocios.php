@@ -195,7 +195,8 @@ while ($row = $result->fetch_assoc()) {
         // ==========================================
         // 🔹 PLANTILLA DE EMAIL - RUEDA DE NEGOCIOS
         // ==========================================
-        $mail->Body = "<div style='margin:0;padding:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;'>
+        $mail->Body = <<<'EMAILHTML'
+<div style='margin:0;padding:0;background:#f5f5f5;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;'>
     <table width="100%" cellpadding="0" cellspacing="0" style='background:#f5f5f5;'>
         <tr>
             <td align="center" style='padding:20px 10px;'>
@@ -314,7 +315,7 @@ while ($row = $result->fetch_assoc()) {
     </table>
     <img src='https://www.bioceanicocentral.cl/registro/track.php?code=$codigo' width='1' height='1' style='display:none;' alt=''>
 </div>
-";
+EMAILHTML;
 
         // Texto alternativo para clientes sin HTML
         $mail->AltBody = "
