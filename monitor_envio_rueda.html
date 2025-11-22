@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor - Envío Rueda de Negocios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a52 50%, #2c5f7d 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #004aad;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge.iniciando {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge.enviando {
+            background: #d1ecf1;
+            color: #0c5460;
+            animation: pulse 2s infinite;
+        }
+
+        .badge.completado {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .stat-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #004aad;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .progress-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+
+        .progress-bar-container {
+            background: #e9ecef;
+            height: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #004aad 0%, #0066cc 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .logs-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .logs-section h2 {
+            color: #004aad;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .log-item {
+            padding: 12px;
+            border-left: 4px solid #004aad;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .log-item.success {
+            border-left-color: #28a745;
+            background: #f0fff4;
+        }
+
+        .log-item.error {
+            border-left-color: #dc3545;
+            background: #fff5f5;
+        }
+
+        .log-item .timestamp {
+            font-weight: 700;
+            color: #004aad;
+            margin-right: 10px;
+        }
+
+        .log-item .email {
+            color: #666;
+        }
+
+        .errors-section {
+            background: #fff5f5;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #dc3545;
+        }
+
+        .errors-section h2 {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+
+        .error-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #dc3545;
+        }
+
+        .control-buttons {
+            background: white;
+            padding: 25px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #004aad;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #003580;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,74,173,0.3);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220,53,69,0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .ultimo-envio {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .ultimo-envio strong {
+            color: #004aad;
+        }
+
+        #processingIndicator {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #004aad;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .alert {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🤝 Monitor de Envío - Rueda de Negocios</h1>
+            <p>Envío masivo a empresas interesadas en la Rueda B2B</p>
+            <div id="estadoBadge" class="badge iniciando">Esperando inicio</div>
+        </div>
+
+        <!-- Botones de Control -->
+        <div class="control-buttons">
+            <button id="btnIniciar" class="btn btn-primary">▶️ Iniciar Envío Masivo</button>
+            <button id="btnDetener" class="btn btn-danger" disabled>⏹️ Detener (No disponible)</button>
+            <button id="btnRecargar" class="btn btn-primary" style="background: #6c757d;">🔄 Actualizar Estado</button>
+        </div>
+
+        <!-- Indicador de Procesamiento -->
+        <div id="processingIndicator">
+            <div class="spinner"></div>
+            <p>⏳ Procesando envíos... Por favor, no cierres esta ventana.</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon">📊</div>
+                <div class="value" id="statTotal">0</div>
+                <div class="label">Total a enviar</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon">✅</div>
+                <div class="value" id="statEnviados">0</div>
+                <div class="label">Enviados</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon">❌</div>
+                <div class="value" id="statErrores">0</div>
+                <div class="label">Errores</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="icon">📈</div>
+                <div class="value" id="statProgreso">0%</div>
+                <div class="label">Progreso</div>
+            </div>
+        </div>
+
+        <!-- Barra de Progreso -->
+        <div class="progress-section">
+            <h2 style="color:#004aad; margin-bottom:15px;">Progreso del Envío</h2>
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar" style="width: 0%">0%</div>
+            </div>
+            <div id="ultimoEnvio" class="ultimo-envio">
+                <strong>Último envío:</strong> <span id="ultimoEnvioText">-</span>
+            </div>
+        </div>
+
+        <!-- Logs Recientes -->
+        <div class="logs-section">
+            <h2>📋 Envíos Recientes (Últimos 10)</h2>
+            <div id="logsContainer">
+                <p style="color:#999; text-align:center;">No hay registros aún...</p>
+            </div>
+        </div>
+
+        <!-- Errores -->
+        <div id="errorsSection" class="errors-section hidden">
+            <h2>⚠️ Errores Detectados</h2>
+            <div id="errorsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        let intervalId = null;
+        let isProcessing = false;
+
+        // Función para iniciar el envío
+        function iniciarEnvio() {
+            if (isProcessing) {
+                alert('Ya hay un envío en proceso...');
+                return;
+            }
+
+            if (!confirm('¿Estás seguro de iniciar el envío masivo a TODAS las empresas que dijeron SÍ a la Rueda de Negocios?\n\nEsto puede tardar varios minutos.')) {
+                return;
+            }
+
+            isProcessing = true;
+            document.getElementById('btnIniciar').disabled = true;
+            document.getElementById('processingIndicator').style.display = 'block';
+
+            // Llamar al script PHP
+            fetch('envio_rueda_negocios.php', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+                isProcessing = false;
+                document.getElementById('processingIndicator').style.display = 'none';
+
+                if (data.status === 'completado') {
+                    alert(`✅ Envío completado!\n\nEnviados: ${data.enviados}\nErrores: ${data.errores}\nTotal: ${data.total}`);
+                }
+
+                // Actualizar estado final
+                cargarEstado();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                isProcessing = false;
+                document.getElementById('processingIndicator').style.display = 'none';
+                alert('❌ Error al procesar el envío. Revisa la consola.');
+            });
+
+            // Iniciar monitoreo automático cada 3 segundos
+            if (intervalId) clearInterval(intervalId);
+            intervalId = setInterval(cargarEstado, 3000);
+        }
+
+        // Función para cargar el estado actual
+        function cargarEstado() {
+            fetch('estado_envio_rueda.json?t=' + Date.now())
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Estado actual:', data);
+                    actualizarUI(data);
+
+                    // Detener monitoreo si está completado
+                    if (data.estado === 'completado' && intervalId) {
+                        clearInterval(intervalId);
+                        intervalId = null;
+                        document.getElementById('btnIniciar').disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error cargando estado:', error);
+                });
+        }
+
+        // Función para actualizar la UI
+        function actualizarUI(data) {
+            // Actualizar badge de estado
+            const badge = document.getElementById('estadoBadge');
+            badge.className = 'badge ' + data.estado;
+
+            const estadoTexto = {
+                'iniciando': 'Iniciando...',
+                'enviando': '📤 Enviando correos...',
+                'completado': '✅ Completado',
+                'error': '❌ Error'
+            };
+            badge.textContent = estadoTexto[data.estado] || data.estado;
+
+            // Actualizar estadísticas
+            document.getElementById('statTotal').textContent = data.total || 0;
+            document.getElementById('statEnviados').textContent = data.enviados || 0;
+            document.getElementById('statErrores').textContent = data.errores || 0;
+            document.getElementById('statProgreso').textContent = (data.progreso_porcentaje || 0) + '%';
+
+            // Actualizar barra de progreso
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = (data.progreso_porcentaje || 0) + '%';
+            progressBar.textContent = (data.progreso_porcentaje || 0) + '%';
+
+            // Actualizar último envío
+            document.getElementById('ultimoEnvioText').textContent = data.ultimo_envio || '-';
+
+            // Actualizar logs
+            if (data.logs && data.logs.length > 0) {
+                const logsContainer = document.getElementById('logsContainer');
+                logsContainer.innerHTML = '';
+
+                data.logs.slice().reverse().forEach(log => {
+                    const logItem = document.createElement('div');
+                    logItem.className = 'log-item ' + (log.status === 'enviado' ? 'success' : 'error');
+                    logItem.innerHTML = `
+                        <span class="timestamp">${log.timestamp}</span>
+                        <span class="email">${log.email}</span> -
+                        <strong>${log.nombre}</strong>
+                        ${log.empresa ? `<small>(${log.empresa})</small>` : ''}
+                    `;
+                    logsContainer.appendChild(logItem);
+                });
+            }
+
+            // Actualizar errores
+            if (data.errores_detalle && data.errores_detalle.length > 0) {
+                document.getElementById('errorsSection').classList.remove('hidden');
+                const errorsContainer = document.getElementById('errorsContainer');
+                errorsContainer.innerHTML = '';
+
+                data.errores_detalle.forEach(error => {
+                    const errorItem = document.createElement('div');
+                    errorItem.className = 'error-item';
+                    errorItem.innerHTML = `
+                        <strong>${error.email}</strong> - ${error.nombre}<br>
+                        <small style="color:#dc3545;">${error.error}</small>
+                    `;
+                    errorsContainer.appendChild(errorItem);
+                });
+            } else {
+                document.getElementById('errorsSection').classList.add('hidden');
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('btnIniciar').addEventListener('click', iniciarEnvio);
+        document.getElementById('btnRecargar').addEventListener('click', cargarEstado);
+
+        // Cargar estado inicial al cargar la página
+        window.addEventListener('load', () => {
+            cargarEstado();
+        });
+    </script>
+</body>
+</html>
