@@ -203,18 +203,23 @@ if (is_writable(__DIR__)) {
     $permisos_ok = false;
 }
 
-// Verificar carpeta qrcodes en directorio padre
+// Verificar carpeta qrcodes en directorio padre (registro/qrcodes/)
 $qrcodes_dir = dirname(__DIR__) . '/qrcodes';
 if (is_dir($qrcodes_dir)) {
     if (is_writable($qrcodes_dir)) {
-        echo "<p class='success'>✓ Carpeta QR codes: OK</p>";
+        echo "<p class='success'>✓ Carpeta QR codes encontrada: $qrcodes_dir</p>";
+
+        // Contar QR codes existentes
+        $qr_files = glob($qrcodes_dir . '/*.png');
+        $qr_count = count($qr_files);
+        echo "<p class='success'>✓ Se encontraron $qr_count códigos QR existentes</p>";
     } else {
         echo "<p class='warning'>⚠️ No hay permisos de escritura en: $qrcodes_dir</p>";
         echo "<p>Ejecuta: <code>chmod 755 $qrcodes_dir</code></p>";
     }
 } else {
     echo "<p class='warning'>⚠️ Carpeta QR codes no existe: $qrcodes_dir</p>";
-    echo "<p>Se creará automáticamente al generar el PDF</p>";
+    echo "<p>Se creará automáticamente al generar el PDF si es necesario</p>";
 }
 
 echo "</div>";

@@ -104,11 +104,17 @@ foreach ($registros as $registro) {
     $nombre_completo = trim($registro['nombre'] . ' ' . $registro['apellido']);
     $pais = $registro['pais'];
     $codigo = $registro['codigo_registro'];
-    $qr_path = __DIR__ . '/qrcodes/' . $codigo . '.png';
+
+    // Ruta al QR (en la carpeta padre: registro/qrcodes/)
+    $qr_path = dirname(__DIR__) . '/qrcodes/' . $codigo . '.png';
 
     // Verificar si existe el QR
     if (!file_exists($qr_path)) {
-        // Si no existe el QR, generarlo
+        // Si no existe el QR, generarlo en la carpeta correcta
+        $qrcodes_dir = dirname(__DIR__) . '/qrcodes';
+        if (!is_dir($qrcodes_dir)) {
+            mkdir($qrcodes_dir, 0755, true);
+        }
         require_once('phpqrcode/qrlib.php');
         QRcode::png($codigo, $qr_path, QR_ECLEVEL_L, 5);
     }
