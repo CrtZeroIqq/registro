@@ -138,8 +138,23 @@ foreach ($registros as $registro) {
     $qr_y = $y_inicio_contenido;
     $pdf->Image($qr_path, $qr_x, $qr_y, $qr_size, $qr_size, 'PNG');
 
-    // 3. NOMBRE (debajo del QR)
+    // 3. NOMBRE (debajo del QR) - Ajustar tamaño si es muy largo
+    $ancho_disponible = $recorte_ancho - 4; // 56 mm disponibles
+
+    // Calcular el tamaño de fuente apropiado según la longitud del nombre
     $pdf->SetFont('helvetica', 'B', 10);
+    $ancho_texto = $pdf->GetStringWidth($nombre_completo);
+
+    if ($ancho_texto > $ancho_disponible) {
+        // Si el nombre es muy largo, reducir tamaño de fuente
+        $font_size = 10;
+        while ($ancho_texto > $ancho_disponible && $font_size > 6) {
+            $font_size -= 0.5;
+            $pdf->SetFont('helvetica', 'B', $font_size);
+            $ancho_texto = $pdf->GetStringWidth($nombre_completo);
+        }
+    }
+
     $pdf->SetXY($x + 2, $qr_y + $qr_size + 2);
     $pdf->Cell($recorte_ancho - 4, 5, $nombre_completo, 0, 1, 'C', false);
 
