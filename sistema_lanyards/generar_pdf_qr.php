@@ -2,8 +2,8 @@
 // ==========================================
 // 🔹 GENERADOR DE PDF CON QR CODES PARA LANYARDS
 // ==========================================
-// Genera PDF con recortes de 6x6 cm para imprimir y pegar en lanyards
-// Incluye: QR Code, Nombre completo y País
+// Genera PDF con recortes de 2x6 cm para imprimir y pegar en lanyards
+// Formato horizontal: QR a la izquierda, Nombre a la derecha
 
 require_once('tcpdf/tcpdf.php');
 
@@ -66,10 +66,10 @@ $pdf->SetAutoPageBreak(false, 0);
 // 🔹 CONFIGURACIÓN DE RECORTES
 // ==========================================
 $recorte_ancho = 60;  // 6 cm en mm
-$recorte_alto = 60;   // 6 cm en mm
+$recorte_alto = 20;   // 2 cm en mm
 $columnas = 3;        // 3 recortes por fila
-$filas = 4;           // 4 recortes por columna
-$recortes_por_pagina = $columnas * $filas; // 12 recortes por página
+$filas = 13;          // 13 recortes por columna (para optimizar hoja A4)
+$recortes_por_pagina = $columnas * $filas; // 39 recortes por página
 
 $margen_izquierdo = 15; // mm
 $margen_superior = 15;  // mm
@@ -106,62 +106,72 @@ foreach ($registros as $registro) {
     $codigo = $registro['codigo_registro'];
 
     // Ruta al QR (en la carpeta padre: registro/qrcodes/)
-    $qr_path = dirname(__DIR__) . '/qrcodes/' . $codigo . '.png';
+    $qrcodes_dir = dirname(__DIR__) . '/qrcodes';
+    $qr_path = $qrcodes_dir . '/' . $codigo . '.png';
 
-    // Verificar si existe el QR
+    // Buscar el QR con diferentes variaciones de nombre
     if (!file_exists($qr_path)) {
-        // Si no existe el QR, generarlo en la carpeta correcta
-        $qrcodes_dir = dirname(__DIR__) . '/qrcodes';
-        if (!is_dir($qrcodes_dir)) {
-            mkdir($qrcodes_dir, 0755, true);
+        // Intentar con variaciones del código
+        $posibles_nombres = [
+            $codigo . '.png',
+            'REG' . $codigo . '.png',
+            strtoupper($codigo) . '.png',
+            strtolower($codigo) . '.png'
+        ];
+
+        $encontrado = false;
+        foreach ($posibles_nombres as $nombre_variante) {
+            $path_variante = $qrcodes_dir . '/' . $nombre_variante;
+            if (file_exists($path_variante)) {
+                $qr_path = $path_variante;
+                $encontrado = true;
+                break;
+            }
         }
-        require_once('phpqrcode/qrlib.php');
-        QRcode::png($codigo, $qr_path, QR_ECLEVEL_L, 5);
+
+        // Si aún no existe, generarlo
+        if (!$encontrado) {
+            if (!is_dir($qrcodes_dir)) {
+                mkdir($qrcodes_dir, 0755, true);
+            }
+            require_once('phpqrcode/qrlib.php');
+            QRcode::png($codigo, $qr_path, QR_ECLEVEL_L, 5);
+        }
     }
 
     // ==========================================
-    // 🔹 CONTENIDO DEL RECORTE
+    // 🔹 CONTENIDO DEL RECORTE (HORIZONTAL)
     // ==========================================
+    // Layout: QR a la izquierda, Nombre a la derecha
 
-    // 1. LOGO (si existe) - Pequeño arriba
-    $logo_path = __DIR__ . '/logo_evento_small.png';
-    if (file_exists($logo_path)) {
-        $pdf->Image($logo_path, $x + ($recorte_ancho/2) - 5, $y + 3, 10, 0, 'PNG');
-        $y_inicio_contenido = $y + 13;
-    } else {
-        $y_inicio_contenido = $y + 5;
-    }
-
-    // 2. QR CODE (centrado)
-    $qr_size = 32; // 3.2 cm
-    $qr_x = $x + ($recorte_ancho - $qr_size) / 2;
-    $qr_y = $y_inicio_contenido;
+    // 1. QR CODE (lado izquierdo)
+    $qr_size = 16; // 1.6 cm (más pequeño para el formato horizontal)
+    $qr_x = $x + 2; // 2mm de margen izquierdo
+    $qr_y = $y + ($recorte_alto - $qr_size) / 2; // Centrado verticalmente
     $pdf->Image($qr_path, $qr_x, $qr_y, $qr_size, $qr_size, 'PNG');
 
-    // 3. NOMBRE (debajo del QR) - Ajustar tamaño si es muy largo
-    $ancho_disponible = $recorte_ancho - 4; // 56 mm disponibles
+    // 2. NOMBRE (lado derecho del QR)
+    $nombre_x = $qr_x + $qr_size + 2; // 2mm de separación del QR
+    $ancho_disponible = $recorte_ancho - $qr_size - 6; // Espacio disponible para el texto
 
     // Calcular el tamaño de fuente apropiado según la longitud del nombre
-    $pdf->SetFont('helvetica', 'B', 10);
+    $pdf->SetFont('helvetica', 'B', 9);
     $ancho_texto = $pdf->GetStringWidth($nombre_completo);
 
     if ($ancho_texto > $ancho_disponible) {
         // Si el nombre es muy largo, reducir tamaño de fuente
-        $font_size = 10;
-        while ($ancho_texto > $ancho_disponible && $font_size > 6) {
+        $font_size = 9;
+        while ($ancho_texto > $ancho_disponible && $font_size > 5) {
             $font_size -= 0.5;
             $pdf->SetFont('helvetica', 'B', $font_size);
             $ancho_texto = $pdf->GetStringWidth($nombre_completo);
         }
     }
 
-    $pdf->SetXY($x + 2, $qr_y + $qr_size + 2);
-    $pdf->Cell($recorte_ancho - 4, 5, $nombre_completo, 0, 1, 'C', false);
-
-    // 4. PAÍS (debajo del nombre)
-    $pdf->SetFont('helvetica', '', 8);
-    $pdf->SetXY($x + 2, $qr_y + $qr_size + 7);
-    $pdf->Cell($recorte_ancho - 4, 4, $pais, 0, 1, 'C', false);
+    // Posicionar el nombre centrado verticalmente con el QR
+    $nombre_y = $y + ($recorte_alto / 2) - 2;
+    $pdf->SetXY($nombre_x, $nombre_y);
+    $pdf->Cell($ancho_disponible, $recorte_alto, $nombre_completo, 0, 0, 'L', false);
 
     $contador++;
 }

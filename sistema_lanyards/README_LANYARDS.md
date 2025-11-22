@@ -1,17 +1,16 @@
 # 📄 Generador de Lanyards con QR Codes
 
-Sistema para generar PDF con recortes de 6×6 cm que incluyen QR Code, nombre y país de cada participante registrado.
+Sistema para generar PDF con recortes de 2×6 cm (formato horizontal) que incluyen QR Code y nombre de cada participante registrado.
 
 ---
 
 ## 📋 Descripción
 
-Este sistema genera automáticamente un PDF listo para imprimir con recortes perfectos de **6×6 cm** que se pueden pegar en lanyards (porta credenciales) del evento.
+Este sistema genera automáticamente un PDF listo para imprimir con recortes perfectos de **2×6 cm** (formato horizontal) que se pueden pegar en lanyards (porta credenciales) del evento.
 
 ### Contenido de cada recorte:
-- ✅ **Código QR** - Para escaneo rápido en el evento
-- ✅ **Nombre completo** - Nombre y apellido del participante
-- ✅ **País** - País de origen
+- ✅ **Código QR** (lado izquierdo) - Para escaneo rápido en el evento
+- ✅ **Nombre completo** (lado derecho) - Nombre y apellido del participante
 
 ---
 
@@ -23,8 +22,8 @@ Script principal que genera el PDF.
 **Características:**
 - Conecta a la base de datos `registro_evento`
 - Obtiene todos los registros ordenados alfabéticamente
-- Genera QR codes si no existen
-- Crea PDF con recortes de 6×6 cm
+- Busca QR codes existentes o los genera si faltan
+- Crea PDF con recortes de 2×6 cm (horizontal)
 - Descarga automáticamente el archivo
 
 ### 2. **generar_lanyards.html**
@@ -84,15 +83,15 @@ Ejecuta directamente el script y descarga el PDF.
 - **Orientación:** Vertical (Portrait)
 
 ### Recortes
-- **Tamaño:** 6×6 cm (60×60 mm)
-- **Distribución:** 3 columnas × 4 filas
-- **Total por página:** 12 recortes
+- **Tamaño:** 2×6 cm (20×60 mm) - Formato horizontal
+- **Distribución:** 3 columnas × 13 filas
+- **Total por página:** 39 recortes
 - **Márgenes:** 15 mm en todos los lados
 
 ### Contenido de cada recorte
-- **QR Code:** 32×32 mm (centrado)
-- **Nombre:** Fuente Helvetica Bold, 10pt
-- **País:** Fuente Helvetica Regular, 8pt
+- **QR Code:** 16×16 mm (lado izquierdo)
+- **Nombre:** Fuente Helvetica Bold, 9pt (lado derecho, ajustable automáticamente)
+- **Layout:** Horizontal (QR izquierda, texto derecha)
 - **Borde:** Línea punteada gris (2,2) para facilitar el corte
 
 ---
