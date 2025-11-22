@@ -142,7 +142,7 @@ foreach ($registros as $registro) {
     // ==========================================
     // 🔹 CONTENIDO DEL RECORTE (HORIZONTAL)
     // ==========================================
-    // Layout: QR a la izquierda, Nombre a la derecha
+    // Layout: QR a la izquierda, Nombre y País a la derecha
 
     // 1. QR CODE (lado izquierdo)
     $qr_size = 16; // 1.6 cm (más pequeño para el formato horizontal)
@@ -150,28 +150,36 @@ foreach ($registros as $registro) {
     $qr_y = $y + ($recorte_alto - $qr_size) / 2; // Centrado verticalmente
     $pdf->Image($qr_path, $qr_x, $qr_y, $qr_size, $qr_size, 'PNG');
 
-    // 2. NOMBRE (lado derecho del QR)
-    $nombre_x = $qr_x + $qr_size + 2; // 2mm de separación del QR
+    // 2. NOMBRE Y PAÍS (lado derecho del QR)
+    $texto_x = $qr_x + $qr_size + 2; // 2mm de separación del QR
     $ancho_disponible = $recorte_ancho - $qr_size - 6; // Espacio disponible para el texto
 
     // Calcular el tamaño de fuente apropiado según la longitud del nombre
-    $pdf->SetFont('helvetica', 'B', 9);
+    $pdf->SetFont('helvetica', 'B', 8);
     $ancho_texto = $pdf->GetStringWidth($nombre_completo);
 
+    // Si el nombre es muy largo, reducir tamaño de fuente
+    $font_size = 8;
     if ($ancho_texto > $ancho_disponible) {
-        // Si el nombre es muy largo, reducir tamaño de fuente
-        $font_size = 9;
-        while ($ancho_texto > $ancho_disponible && $font_size > 5) {
+        while ($ancho_texto > $ancho_disponible && $font_size > 5.5) {
             $font_size -= 0.5;
             $pdf->SetFont('helvetica', 'B', $font_size);
             $ancho_texto = $pdf->GetStringWidth($nombre_completo);
         }
     }
 
-    // Posicionar el nombre centrado verticalmente con el QR
-    $nombre_y = $y + ($recorte_alto / 2) - 2;
-    $pdf->SetXY($nombre_x, $nombre_y);
-    $pdf->Cell($ancho_disponible, $recorte_alto, $nombre_completo, 0, 0, 'L', false);
+    // Posicionar el nombre (puede ser multilínea)
+    $texto_y = $y + 3; // 3mm desde el borde superior
+    $pdf->SetXY($texto_x, $texto_y);
+
+    // Usar MultiCell para permitir nombres en 2 líneas
+    $pdf->MultiCell($ancho_disponible, 4, $nombre_completo, 0, 'L', false, 1);
+
+    // 3. PAÍS (debajo del nombre)
+    $pdf->SetFont('helvetica', '', 6.5);
+    $pais_y = $pdf->GetY(); // Obtener posición después del nombre
+    $pdf->SetXY($texto_x, $pais_y);
+    $pdf->Cell($ancho_disponible, 3, $pais, 0, 0, 'L', false);
 
     $contador++;
 }

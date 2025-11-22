@@ -1,6 +1,6 @@
 # 📄 Generador de Lanyards con QR Codes
 
-Sistema para generar PDF con recortes de 2×6 cm (formato horizontal) que incluyen QR Code y nombre de cada participante registrado.
+Sistema para generar PDF con recortes de 2×6 cm (formato horizontal) que incluyen QR Code, nombre y país de cada participante registrado.
 
 ---
 
@@ -10,7 +10,8 @@ Este sistema genera automáticamente un PDF listo para imprimir con recortes per
 
 ### Contenido de cada recorte:
 - ✅ **Código QR** (lado izquierdo) - Para escaneo rápido en el evento
-- ✅ **Nombre completo** (lado derecho) - Nombre y apellido del participante
+- ✅ **Nombre completo** (lado derecho, 1-2 líneas) - Nombre y apellido del participante
+- ✅ **País** (lado derecho, abajo) - País de origen
 
 ---
 
