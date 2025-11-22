@@ -76,7 +76,22 @@ curl https://www.bioceanicocentral.cl/registro/verificar_empresas_rueda.php
 }
 ```
 
-### Paso 2: Abrir el Monitor
+### Paso 2: Probar el Correo (RECOMENDADO)
+
+**Antes de enviar masivamente**, prueba primero:
+
+```
+https://www.bioceanicocentral.cl/registro/pruebas_rueda/monitor_prueba.html
+```
+
+1. Configura tu email en `pruebas_rueda/envio_rueda_PRUEBA.php` (línea 21)
+2. Haz click en "Enviar Correo de Prueba"
+3. Revisa tu bandeja de entrada
+4. Verifica que todo se vea correctamente
+
+**Ver:** Documentación completa en `pruebas_rueda/README_PRUEBAS.md`
+
+### Paso 3: Abrir el Monitor Principal
 
 Abre en tu navegador:
 
@@ -84,7 +99,7 @@ Abre en tu navegador:
 https://www.bioceanicocentral.cl/registro/monitor_envio_rueda.html
 ```
 
-### Paso 3: Iniciar el Envío
+### Paso 4: Iniciar el Envío
 
 1. Haz clic en el botón **"▶️ Iniciar Envío Masivo"**
 2. Confirma la acción en el diálogo
@@ -135,6 +150,10 @@ Rueda de Negocios B2B - Nodo Bioceánico 2025
    - Fecha: 28 de Noviembre, 2025
    - Horario: 11:00 - 12:15 hrs
    - Lugar: Arica, Chile
+8. **Botón "Ya no me interesa"** (NUEVO)
+   - Permite a las empresas indicar que ya no desean participar
+   - Abre cliente de correo con mensaje pre-escrito
+   - Email: contacto@bioceanicocentral.cl
 
 ---
 
@@ -278,10 +297,13 @@ cat estado_envio_rueda.json | jq -r '.logs[] | [.timestamp, .email, .nombre, .st
 
 Antes de iniciar el envío masivo, verifica:
 
+- [ ] **Enviaste correo de prueba** usando `pruebas_rueda/monitor_prueba.html`
+- [ ] Verificaste que el correo de prueba se ve correctamente
 - [ ] Ejecutaste `verificar_empresas_rueda.php`
 - [ ] Confirmaste la cantidad de correos a enviar
 - [ ] Revisaste el template del correo
 - [ ] Verificaste la URL de registro en el correo
+- [ ] Probaste que el botón "Ya no me interesa" funciona
 - [ ] Abriste el monitor en el navegador
 - [ ] Confirmaste que el servidor SMTP está disponible
 - [ ] Tienes tiempo suficiente (no lo hagas con prisa)
@@ -292,33 +314,45 @@ Antes de iniciar el envío masivo, verifica:
 
 Si tienes problemas con el envío, contacta al administrador del sistema.
 
-**Archivos importantes:**
+**Archivos principales:**
 - Script principal: `envio_rueda_negocios.php`
 - Monitor: `monitor_envio_rueda.html`
 - Verificador: `verificar_empresas_rueda.php`
 - Estado: `estado_envio_rueda.json`
 - Logs: `envio_rueda_detallado.log`
+- Documentación: `INSTRUCCIONES_ENVIO_RUEDA.md`
+
+**Carpeta de pruebas:** `pruebas_rueda/`
+- Script de prueba: `pruebas_rueda/envio_rueda_PRUEBA.php`
+- Monitor de prueba: `pruebas_rueda/monitor_prueba.html`
+- Documentación: `pruebas_rueda/README_PRUEBAS.md`
 
 ---
 
 ## 📄 Ejemplo de Uso Completo
 
 ```bash
-# 1. Verificar empresas
+# 1. PRUEBA - Enviar correo de prueba primero
+# En navegador: https://bioceanicocentral.cl/registro/pruebas_rueda/monitor_prueba.html
+# - Configurar email en envio_rueda_PRUEBA.php
+# - Click en "Enviar Correo de Prueba"
+# - Verificar que se vea bien
+
+# 2. Verificar empresas interesadas
 curl https://bioceanicocentral.cl/registro/verificar_empresas_rueda.php
 
-# 2. Abrir monitor
+# 3. Abrir monitor principal
 # En navegador: https://bioceanicocentral.cl/registro/monitor_envio_rueda.html
 
-# 3. Iniciar envío (desde el monitor)
+# 4. Iniciar envío masivo (desde el monitor)
 # Click en "Iniciar Envío Masivo"
 
-# 4. Esperar a que termine
+# 5. Esperar a que termine (monitorear en tiempo real)
 
-# 5. Revisar logs
+# 6. Revisar logs
 tail -f envio_rueda_detallado.log
 
-# 6. Verificar estado final
+# 7. Verificar estado final
 cat estado_envio_rueda.json
 ```
 

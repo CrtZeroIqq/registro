@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Pruebas - Envío Rueda de Negocios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .warning-banner {
+            background: #ff9800;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+        }
+
+        .info-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .info-card ul {
+            line-height: 2;
+            color: #555;
+        }
+
+        .info-card ul li {
+            margin-bottom: 10px;
+        }
+
+        .info-card code {
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        .config-section {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .config-section h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .config-section p {
+            color: #856404;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .config-section strong {
+            color: #d63384;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 18px 45px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-test {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-test:hover {
+            background: #5568d3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-back {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #5a6268;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .result-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+            margin-top: 25px;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+
+        .alert {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+
+        .files-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .files-list h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .files-list ul {
+            list-style: none;
+        }
+
+        .files-list ul li {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #555;
+        }
+
+        .files-list ul li:last-child {
+            border-bottom: none;
+        }
+
+        .file-icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            ⚠️ ENTORNO DE PRUEBAS - NO ES PRODUCCIÓN
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🧪 Pruebas de Envío Masivo</h1>
+            <p>Rueda de Negocios B2B - Nodo Bioceánico 2025</p>
+        </div>
+
+        <!-- Config Section -->
+        <div class="config-section">
+            <h3>⚙️ Configuración Actual</h3>
+            <p>
+                <strong>📧 Email de prueba:</strong> fzavala@seidgc.cl<br>
+                <strong>👤 Nombre:</strong> Felipe Zavala<br>
+                <strong>🏢 Empresa:</strong> SEIDGC Ltda.<br>
+                <strong>💼 Cargo:</strong> Director
+            </p>
+            <p style="margin-top:15px; font-size:0.95rem;">
+                💡 Para cambiar estos datos, edita el archivo:<br>
+                <code>pruebas_rueda/envio_rueda_PRUEBA.php</code> (líneas 21-25)
+            </p>
+        </div>
+
+        <!-- Info Card -->
+        <div class="info-card">
+            <h2>📋 ¿Qué hace este script de prueba?</h2>
+            <ul>
+                <li>✅ Envía <strong>UN SOLO correo</strong> al email configurado</li>
+                <li>✅ <strong>NO consulta la base de datos</strong></li>
+                <li>✅ Usa datos de ejemplo (nombre, empresa, cargo)</li>
+                <li>✅ El correo incluye banner de <strong>"CORREO DE PRUEBA"</strong></li>
+                <li>✅ Perfecto para verificar diseño y funcionalidad</li>
+                <li>✅ Incluye el botón <strong>"Ya no me interesa"</strong></li>
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="btn-container">
+            <button id="btnTest" class="btn btn-test">🚀 Enviar Correo de Prueba</button>
+            <a href="../monitor_envio_rueda.html" class="btn btn-back">⬅️ Volver al Monitor Principal</a>
+        </div>
+
+        <!-- Result Container -->
+        <div id="resultContainer" class="result-container">
+            <div id="loadingIndicator">
+                <div class="spinner"></div>
+                <div class="loading-text">Enviando correo de prueba...</div>
+            </div>
+            <div id="resultContent"></div>
+        </div>
+
+        <!-- Files List -->
+        <div class="info-card files-list">
+            <h4>📁 Archivos en esta carpeta</h4>
+            <ul>
+                <li><span class="file-icon">📄</span> <code>envio_rueda_PRUEBA.php</code> - Script de prueba</li>
+                <li><span class="file-icon">📄</span> <code>monitor_prueba.html</code> - Esta página</li>
+                <li><span class="file-icon">📄</span> <code>README_PRUEBAS.md</code> - Documentación</li>
+            </ul>
+        </div>
+
+        <!-- Instructions -->
+        <div class="info-card">
+            <h2>📖 Instrucciones de Uso</h2>
+            <ol style="line-height:2; color:#555;">
+                <li><strong>Configura el email:</strong> Edita <code>envio_rueda_PRUEBA.php</code> línea 21</li>
+                <li><strong>Haz click en "Enviar Correo de Prueba"</strong></li>
+                <li><strong>Revisa la bandeja de entrada</strong> (y carpeta spam)</li>
+                <li><strong>Verifica que todo se vea correctamente:</strong>
+                    <ul style="margin-top:10px;">
+                        <li>✓ Banner de prueba visible</li>
+                        <li>✓ Logo del evento cargado</li>
+                        <li>✓ Colores y estilos correctos</li>
+                        <li>✓ Botón "Registrarme Ahora" funcional</li>
+                        <li>✓ Botón "Ya no me interesa" funcional</li>
+                    </ul>
+                </li>
+                <li><strong>Si todo está OK,</strong> usa el script principal para envío masivo</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('btnTest').addEventListener('click', function() {
+            const resultContainer = document.getElementById('resultContainer');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const resultContent = document.getElementById('resultContent');
+
+            // Mostrar contenedor de resultados
+            resultContainer.classList.add('show');
+            loadingIndicator.style.display = 'block';
+            resultContent.innerHTML = '';
+
+            // Hacer petición al script de prueba
+            fetch('envio_rueda_PRUEBA.php')
+                .then(response => response.text())
+                .then(data => {
+                    loadingIndicator.style.display = 'none';
+
+                    // Mostrar resultado completo (HTML)
+                    resultContent.innerHTML = data;
+                })
+                .catch(error => {
+                    loadingIndicator.style.display = 'none';
+                    resultContent.innerHTML = `
+                        <div class="alert alert-error">
+                            <h3>❌ Error al Enviar</h3>
+                            <p><strong>Error:</strong> ${error.message}</p>
+                            <p>Verifica que el servidor SMTP esté disponible.</p>
+                        </div>
+                    `;
+                });
+        });
+    </script>
+</body>
+</html>

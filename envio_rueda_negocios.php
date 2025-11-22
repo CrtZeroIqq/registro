@@ -303,6 +303,19 @@ while ($row = $result->fetch_assoc()) {
             <p style='margin-top:30px;font-size:13px;color:#777;text-align:center;'>
                 Si tienes dudas, puedes responder directamente a este correo.
             </p>
+
+            <hr style='margin:30px 0;border:none;border-top:1px solid #e0e0e0;'>
+
+            <div style='text-align:center;margin-top:25px;'>
+                <p style='font-size:13px;color:#999;margin-bottom:15px;'>
+                    ¿Ya no te interesa participar en la Rueda de Negocios?
+                </p>
+                <a href='mailto:contacto@bioceanicocentral.cl?subject=No%20me%20interesa%20Rueda%20de%20Negocios&body=Hola,%0D%0A%0D%0AYa%20no%20me%20interesa%20participar%20en%20la%20Rueda%20de%20Negocios.%0D%0A%0D%0AEmail:%20$email%0D%0AEmpresa:%20$empresa'
+                   style='background:#6c757d;color:white;padding:12px 30px;font-size:14px;
+                   font-weight:600;text-decoration:none;border-radius:6px;display:inline-block;'>
+                   Ya no me interesa
+                </a>
+            </div>
         </div>
 
         <!-- Footer -->
