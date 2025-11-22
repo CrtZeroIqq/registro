@@ -37,12 +37,20 @@ Interfaz web para generar el PDF fácilmente.
 - Instrucciones de uso
 - Botón para generar PDF
 
-### 3. **tcpdf/**
+### 3. **phpqrcode/**
+Librería PHP para generación de códigos QR.
+
+**Incluida en el paquete**
+**Licencia:** LGPL
+**Sitio web:** http://phpqrcode.sourceforge.net/
+
+### 4. **tcpdf/**
 Librería PHP para generación de PDFs.
 
 **Versión:** 6.6.2
 **Licencia:** LGPL v3
 **Sitio web:** https://tcpdf.org/
+**Nota:** Se descarga automáticamente durante la instalación
 
 ---
 

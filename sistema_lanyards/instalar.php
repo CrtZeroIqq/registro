@@ -97,10 +97,28 @@ if ($falta_extension) {
 echo "</div>";
 
 // ==========================================
-// PASO 3: Descargar e instalar TCPDF
+// PASO 3: Verificar librería phpqrcode
 // ==========================================
 echo "<div class='step'>";
-echo "<h3>Paso 3: Instalar TCPDF</h3>";
+echo "<h3>Paso 3: Verificar Librería phpqrcode</h3>";
+
+$phpqrcode_dir = __DIR__ . '/phpqrcode';
+
+if (is_dir($phpqrcode_dir) && file_exists($phpqrcode_dir . '/qrlib.php')) {
+    echo "<p class='success'>✓ phpqrcode está instalado correctamente</p>";
+    echo "<p>Ubicación: $phpqrcode_dir</p>";
+} else {
+    echo "<p class='error'>✗ phpqrcode NO encontrado</p>";
+    echo "<p class='warning'>⚠️ La librería phpqrcode debe estar incluida en la carpeta sistema_lanyards/</p>";
+    echo "<p>Si falta, descarga el paquete completo nuevamente.</p>";
+}
+echo "</div>";
+
+// ==========================================
+// PASO 4: Descargar e instalar TCPDF
+// ==========================================
+echo "<div class='step'>";
+echo "<h3>Paso 4: Instalar TCPDF</h3>";
 
 $tcpdf_dir = __DIR__ . '/tcpdf';
 
@@ -170,10 +188,10 @@ rm 6.6.2.tar.gz</pre>";
 echo "</div>";
 
 // ==========================================
-// PASO 4: Verificar permisos
+// PASO 5: Verificar permisos
 // ==========================================
 echo "<div class='step'>";
-echo "<h3>Paso 4: Verificar Permisos</h3>";
+echo "<h3>Paso 5: Verificar Permisos</h3>";
 
 $permisos_ok = true;
 
@@ -202,10 +220,10 @@ if (is_dir($qrcodes_dir)) {
 echo "</div>";
 
 // ==========================================
-// PASO 5: Verificar base de datos
+// PASO 6: Verificar base de datos
 // ==========================================
 echo "<div class='step'>";
-echo "<h3>Paso 5: Verificar Conexión a Base de Datos</h3>";
+echo "<h3>Paso 6: Verificar Conexión a Base de Datos</h3>";
 
 // Leer configuración del archivo generar_pdf_qr.php
 $config_file = __DIR__ . '/generar_pdf_qr.php';
@@ -240,7 +258,7 @@ echo "</div>";
 echo "<div class='step' style='border-left-color: #28a745; background: #d4edda;'>";
 echo "<h3>✅ Instalación Completada</h3>";
 
-if (is_dir($tcpdf_dir) && $permisos_ok) {
+if (is_dir($tcpdf_dir) && is_dir($phpqrcode_dir) && $permisos_ok) {
     echo "<p class='success'>El sistema está listo para usar</p>";
     echo "<h4>Próximos pasos:</h4>";
     echo "<ol>";

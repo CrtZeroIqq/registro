@@ -13,7 +13,7 @@ sistema_lanyards/
 ├── generar_lanyards.html     ← Interfaz web
 ├── README_LANYARDS.md        ← Documentación completa
 ├── INSTALACION.md            ← Este archivo
-└── config_ejemplo.php        ← Archivo de configuración de ejemplo
+└── phpqrcode/                ← Librería para generar QR codes (incluida)
 ```
 
 ---
@@ -50,6 +50,7 @@ https://tu-dominio.com/sistema_lanyards/instalar.php
 El instalador automáticamente:
 - ✅ Verifica la versión de PHP
 - ✅ Verifica extensiones necesarias
+- ✅ Verifica que phpqrcode esté incluido
 - ✅ Descarga e instala TCPDF
 - ✅ Verifica permisos de carpetas
 - ✅ Verifica configuración de BD
