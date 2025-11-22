@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Lanyards con QR - Nodo Bioceánico 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a3a52 50%, #2c5f7d 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #004aad;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8f4f8;
+            border: 2px solid #004aad;
+            color: #004aad;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 35px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        .info-card h2 {
+            color: #004aad;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .info-card ul {
+            line-height: 2.2;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .info-card ul li {
+            margin-bottom: 10px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .spec-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .spec-item .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .spec-item .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #004aad;
+            margin-bottom: 5px;
+        }
+
+        .spec-item .label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .alert {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .alert strong {
+            color: #856404;
+            font-size: 1.1rem;
+        }
+
+        .alert p {
+            color: #856404;
+            margin-top: 10px;
+        }
+
+        .buttons {
+            background: white;
+            padding: 35px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .btn {
+            padding: 18px 50px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #004aad;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #003580;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 74, 173, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .preview {
+            background: white;
+            padding: 35px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+            margin-top: 2px;
+        }
+
+        .preview h2 {
+            color: #004aad;
+            margin-bottom: 20px;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .preview-item {
+            border: 2px dashed #ddd;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            background: #f8f9fa;
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preview-item .qr-placeholder {
+            width: 60px;
+            height: 60px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #999;
+        }
+
+        .preview-item .name {
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .preview-item .country {
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #004aad;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .instructions {
+            background: white;
+            padding: 35px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+            margin-top: 2px;
+        }
+
+        .instructions h2 {
+            color: #004aad;
+            margin-bottom: 20px;
+        }
+
+        .instructions ol {
+            line-height: 2;
+            color: #555;
+        }
+
+        .instructions ol li {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📄 Generador de Lanyards</h1>
+            <p>QR Codes para el Evento</p>
+            <div class="badge">Nodo Bioceánico 2025</div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="info-card">
+            <h2>📋 Especificaciones del Documento</h2>
+
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="icon">📏</div>
+                    <div class="value">6×6</div>
+                    <div class="label">cm por recorte</div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="icon">📄</div>
+                    <div class="value">A4</div>
+                    <div class="label">Tamaño de hoja</div>
+                </div>
+
+                <div class="spec-item">
+                    <div class="icon">🔢</div>
+                    <div class="value">12</div>
+                    <div class="label">Recortes por página</div>
+                </div>
+            </div>
+
+            <h3 style="color:#004aad; margin-top:25px; margin-bottom:15px;">📦 Contenido de cada recorte:</h3>
+            <ul>
+                <li><strong>Código QR</strong> - Generado automáticamente para cada registro</li>
+                <li><strong>Nombre completo</strong> - Nombre y apellido del participante</li>
+                <li><strong>País</strong> - País de origen</li>
+            </ul>
+
+            <div class="alert">
+                <strong>💡 Recomendación de Impresión</strong>
+                <p>Imprime en papel de alta calidad (200g o más) para mayor durabilidad.<br>
+                Configura la impresora en modo "Tamaño real" (100% de escala) para que los recortes sean exactos.</p>
+            </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview">
+            <h2>👁️ Vista Previa de Distribución</h2>
+            <p style="text-align:center; color:#666; margin-bottom:20px;">3 columnas × 4 filas = 12 recortes por página A4</p>
+
+            <div class="preview-grid">
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+                <div class="preview-item">
+                    <div class="qr-placeholder">QR</div>
+                    <div class="name">Nombre Apellido</div>
+                    <div class="country">País</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h2>📖 Instrucciones de Uso</h2>
+            <ol>
+                <li><strong>Generar PDF:</strong> Haz clic en el botón "Generar PDF con QR Codes"</li>
+                <li><strong>Descargar:</strong> El PDF se descargará automáticamente</li>
+                <li><strong>Imprimir:</strong> Imprime en tamaño real (100% de escala) en papel de calidad</li>
+                <li><strong>Recortar:</strong> Corta por las líneas punteadas (6×6 cm cada recorte)</li>
+                <li><strong>Pegar:</strong> Adhiere cada recorte al lanyard correspondiente</li>
+            </ol>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p style="color:#004aad; font-size:1.1rem; font-weight:600;">Generando PDF...</p>
+            <p style="color:#666; font-size:0.9rem;">Por favor espera, esto puede tardar unos segundos</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="generarPDF()">📄 Generar PDF con QR Codes</button>
+            <a href="estadisticas_apertura.html" class="btn btn-secondary">⬅️ Volver</a>
+        </div>
+    </div>
+
+    <script>
+        function generarPDF() {
+            // Mostrar loading
+            document.getElementById('loading').classList.add('show');
+
+            // Abrir el script en nueva ventana para descarga
+            window.location.href = 'generar_pdf_qr.php';
+
+            // Ocultar loading después de 3 segundos
+            setTimeout(function() {
+                document.getElementById('loading').classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
