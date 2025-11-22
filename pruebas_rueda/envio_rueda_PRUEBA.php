@@ -119,9 +119,13 @@ try {
             </p>
 
             <p style='margin:0 0 20px;'>
-                Durante su registro al evento <strong>Nodo Bioceánico Central 2025</strong>, usted manifestó
-                interés en participar en nuestra <strong>Rueda de Negocios</strong>. ¡Tenemos excelentes
-                noticias para usted!
+                <strong>Ayer te contactamos</strong> porque durante tu registro al evento <strong>Nodo Bioceánico Central 2025</strong>
+                manifestaste interés en participar en nuestra <strong>Rueda de Negocios B2B</strong>.
+            </p>
+
+            <p style='margin:0 0 20px;'>
+                Notamos que <strong>aún no has completado tu registro en la plataforma</strong>.
+                ¡No dejes pasar esta oportunidad única de hacer crecer tu red de contactos!
             </p>
 
             <!-- Qué es la Rueda -->
@@ -219,17 +223,20 @@ try {
             </table>
 
             <!-- Botón Principal -->
-            <div style='text-align:center;margin:35px 0 25px;'>
+            <div style='text-align:center;margin:35px 0 20px;'>
                 <a href='https://www.bioceanicocentral.cl/registro/rueda/views/registro.php'
                    style='background:#0066cc;color:white;padding:14px 50px;font-size:16px;
                    font-weight:700;text-decoration:none;border-radius:5px;display:inline-block;'>
-                   REGISTRARSE →
+                   COMPLETAR MI REGISTRO AHORA →
                 </a>
             </div>
 
-            <p style='margin:0 0 25px;text-align:center;font-size:13px;color:#999;'>
-                Cupos limitados
-            </p>
+            <div style='background:#fff3cd;border:1px solid #ffc107;padding:15px;border-radius:5px;margin:0 0 25px;text-align:center;'>
+                <p style='margin:0;font-size:14px;color:#856404;'>
+                    <strong>⏰ ¡Últimos cupos disponibles!</strong><br>
+                    <span style='font-size:13px;'>Solo quedan plazas para 30 empresas demandantes</span>
+                </p>
+            </div>
 
             <!-- Botón Ya no me interesa -->
             <div style='text-align:center;padding:20px 0 10px;border-top:1px solid #e0e0e0;'>
