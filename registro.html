@@ -444,309 +444,64 @@
             <div id="formContent">
 
     <!-- Logos institucionales -->
-    <div class="reg-logos" style="text-align:center; margin-bottom: 20px;">
-        <img src="logos2.png" alt="Logos institucionales" 
+    <div class="reg-logos" style="text-align:center; margin-bottom: 30px;">
+        <img src="logos2.png" alt="Logos institucionales"
              style="max-width: 100%; height: auto; border-radius: 6px;">
     </div>
 
-    <h2 class="reg-form-title">Formulario de Registro</h2>
-    <p class="reg-form-subtitle">
-        Completa tus datos para confirmar tu participación. 
-        Los campos marcados con <span class="reg-required">*</span> son obligatorios.
-    </p>
+    <!-- Mensaje de Cupos Agotados -->
+    <div style="text-align: center; padding: 40px 20px;">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #e74c3c, #c0392b);
+                    border-radius: 50%; margin: 0 auto 30px; display: flex; align-items: center;
+                    justify-content: center; box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);">
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+        </div>
 
+        <h2 style="font-size: 2rem; font-weight: 800; color: #2c3e50; margin-bottom: 20px;">
+            Cupos Agotados
+        </h2>
 
-                <form id="registroForm">
-                    <!-- Sección 1: Datos Personales -->
-                    <div class="reg-form-section">
-                        <div class="reg-section-title">
-                            <span class="reg-section-icon">👤</span>
-                            <span>Datos Personales</span>
-                        </div>
+        <p style="font-size: 1.1rem; color: #7f8c8d; margin-bottom: 30px; line-height: 1.8;">
+            Lamentamos informar que el <strong>evento ha alcanzado su capacidad máxima</strong>.<br>
+            Los registros han sido cerrados.
+        </p>
 
-                        <div class="reg-form-row">
-                            <div class="reg-form-group">
-                                <label class="reg-label">
-                                    Nombre <span class="reg-required">*</span>
-                                </label>
-                                <input type="text" class="reg-input" name="nombre" required 
-                                       placeholder="Ej: Juan">
-                            </div>
+        <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px;
+                    padding: 25px; margin: 30px 0; text-align: left;">
+            <div style="display: flex; align-items: start; gap: 15px;">
+                <div style="font-size: 2rem;">💡</div>
+                <div>
+                    <h3 style="color: #856404; margin-bottom: 10px; font-size: 1.1rem;">¿Necesitas más información?</h3>
+                    <p style="color: #856404; margin: 0; line-height: 1.6;">
+                        Para consultas sobre lista de espera o información adicional,<br>
+                        puedes contactarnos a:
+                    </p>
+                </div>
+            </div>
+        </div>
 
-                            <div class="reg-form-group">
-                                <label class="reg-label">
-                                    Apellido <span class="reg-required">*</span>
-                                </label>
-                                <input type="text" class="reg-input" name="apellido" required 
-                                       placeholder="Ej: Pérez">
-                            </div>
-                        </div>
+        <div style="background: #004aad; color: white; border-radius: 12px;
+                    padding: 25px; margin: 20px 0;">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">✉️</div>
+            <a href="mailto:contacto@bioceanicocentral.cl"
+               style="color: white; text-decoration: none; font-size: 1.3rem;
+                      font-weight: 700; display: block; margin-bottom: 8px;">
+                contacto@bioceanicocentral.cl
+            </a>
+            <p style="margin: 0; opacity: 0.9; font-size: 0.95rem;">
+                Nuestro equipo te responderá a la brevedad
+            </p>
+        </div>
 
-                        <div class="reg-form-row">
-                            <div class="reg-form-group">
-                                <label class="reg-label">
-                                    Email <span class="reg-required">*</span>
-                                </label>
-                                <input type="email" class="reg-input" name="email" required 
-                                       placeholder="tu@email.com">
-                                <div class="reg-help-text">Recibirás la confirmación en este correo</div>
-                            </div>
-
-                            <div class="reg-form-group">
-                                <label class="reg-label">
-                                    Teléfono <span class="reg-required">*</span>
-                                </label>
-                                <input type="tel" class="reg-input" name="telefono" required 
-                                       placeholder="+56 9 XXXX XXXX">
-                            </div>
-                        </div>
-
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                País <span class="reg-required">*</span>
-                            </label>
-                            <select class="reg-select" name="pais" required>
-                                <option value="">Selecciona tu país</option>
-                                <option value="Chile">🇨🇱 Chile</option>
-                                <option value="Bolivia">🇧🇴 Bolivia</option>
-                                <option value="Brasil">🇧🇷 Brasil</option>
-                                <option value="Perú">🇵🇪 Perú</option>
-                                <option value="Argentina">🇦🇷 Argentina</option>
-                                <option value="Paraguay">🇵🇾 Paraguay</option>
-                                <option value="Otro">🌎 Otro</option>
-                            </select>
-                        </div>
-                    <div class="reg-form-group">
-  <label class="reg-label">
-      Documento de Identidad <span class="reg-required">*</span>
-  </label>
-  <input type="text" class="reg-input" id="docIdentidad" name="documento" placeholder="Ej: 12.345.678-9" required>
-  <div class="reg-help-text" id="docHelp">Ingresa tu RUT (formato: 12.345.678-9)</div>
-</div>
-
-<script>
-  const paisSelect = document.querySelector('select[name="pais"]');
-  const docInput = document.getElementById('docIdentidad');
-  const docHelp = document.getElementById('docHelp');
-
-  const formatos = {
-    'Chile': {placeholder: '12.345.678-9', ayuda: 'Ingresa tu RUT chileno (formato: 12.345.678-9)'},
-    'Bolivia': {placeholder: '1234567', ayuda: 'Ingresa tu Cédula de Identidad boliviana (Ej: 1234567)'},
-    'Brasil': {placeholder: '123.456.789-00', ayuda: 'Ingresa tu CPF brasileño (formato: 123.456.789-00)'},
-    'Argentina': {placeholder: '12.345.678', ayuda: 'Ingresa tu DNI argentino (solo números)'},
-    'Paraguay': {placeholder: '1234567', ayuda: 'Ingresa tu Cédula de Identidad paraguaya'},
-    'Otro': {placeholder: 'Pasaporte o ID', ayuda: 'Ingresa tu número de pasaporte o documento equivalente'}
-  };
-
-  paisSelect.addEventListener('change', e => {
-    const pais = e.target.value;
-    if (formatos[pais]) {
-      docInput.placeholder = formatos[pais].placeholder;
-      docHelp.textContent = formatos[pais].ayuda;
-    } else {
-      docInput.placeholder = 'Documento de identidad';
-      docHelp.textContent = '';
-    }
-  });
-</script>
-
-                    </div>
-
-                    <!-- Sección 2: Información Empresarial -->
-                    <div class="reg-form-section">
-                        <div class="reg-section-title">
-                            <span class="reg-section-icon">🏢</span>
-                            <span>Información de tu Empresa / Institución</span>
-                        </div>
-
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                Nombre de la Empresa / Institución <span class="reg-required">*</span>
-                            </label>
-                            <input type="text" class="reg-input" name="empresa" required 
-                                   placeholder="Ej: Exportadora del Pacífico S.A.">
-                        </div>
-
-                        <div class="reg-form-row">
-                            <div class="reg-form-group">
-                                <label class="reg-label">
-                                    Cargo <span class="reg-required">*</span>
-                                </label>
-                                <input type="text" class="reg-input" name="cargo" required 
-                                       placeholder="Ej: Gerente General / Representante">
-                            </div>
-
-                            <div class="reg-form-group">
-                                <label class="reg-label">
-                                    Tamaño (Institución elige "No Aplica") <span class="reg-required">*</span>
-                                </label>
-                                <select class="reg-select" name="tamano" required>
-                                    <option value="">Selecciona una opción</option>
-                                    <option value="PyME">PyME (hasta 50 empleados)</option>
-                                    <option value="Mediana">Mediana (51-200 empleados)</option>
-                                    <option value="Grande">Grande (más de 200 empleados)</option>
-                                <option value="N/A">No Aplica</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                Sector / Industria <span class="reg-required">*</span>
-                            </label>
-                            <select class="reg-select" name="sector" required>
-                                <option value="">Selecciona tu sector</option>
-                                <option value="Logística">Logística y Transporte</option>
-                                <option value="Exportación">Exportación/Importación</option>
-                                <option value="Agroindustria">Agroindustria</option>
-                                <option value="Minería">Minería</option>
-                                <option value="Manufactura">Manufactura</option>
-                                <option value="Servicios">Servicios</option>
-                                <option value="Prensa">Prensa</option>
-                                <option value="Gobierno">Gobierno/Institucional</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                Sitio Web de la Empresa
-                            </label>
-                            <input type="text" class="reg-input" name="website" 
-                                   placeholder="Ej:www.tuempresa.com">
-                        </div>
-                    </div>
-
-                    <!-- Sección 3: Intereses y Objetivos -->
-                    <div class="reg-form-section">
-                        <div class="reg-section-title">
-                            <span class="reg-section-icon">🎯</span>
-                            <span>Intereses y Objetivos</span>
-                        </div>
-
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                ¿Qué te interesa del Corredor Bioceánico? <span class="reg-required">*</span>
-                            </label>
-                            <div class="reg-checkbox-group">
-                                <label class="reg-checkbox-label">
-                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Exportar">
-                                    <span>Exportar productos</span>
-                                </label>
-                                <label class="reg-checkbox-label">
-                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Importar">
-                                    <span>Importar insumos</span>
-                                </label>
-                                <label class="reg-checkbox-label">
-                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Logística">
-                                    <span>Servicios logísticos</span>
-                                </label>
-                                <label class="reg-checkbox-label">
-                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Inversión">
-                                    <span>Oportunidades de inversión</span>
-                                </label>
-                                <label class="reg-checkbox-label">
-                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Networking">
-                                    <span>Networking</span>
-                                </label>
-                                <label class="reg-checkbox-label">
-                                    <input type="checkbox" class="reg-checkbox-input" name="intereses" value="Información">
-                                    <span>Información del corredor</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                Cuéntanos sobre tus objetivos en la cumbre
-                            </label>
-                            <textarea class="reg-textarea" name="objetivos" 
-                                      placeholder="Ej: Busco establecer alianzas con empresas brasileñas para exportar productos agrícolas al mercado asiático..."></textarea>
-                            <div class="reg-help-text">Esta información nos ayudará a mejorar tu experiencia</div>
-                        </div>
-                    </div>
-
-                    <!-- Sección 4: Rueda de Negocios -->
-                	<!--
-                    <div class="reg-form-section">
-                        <div class="reg-section-title">
-                            <span class="reg-section-icon">🤝</span>
-                            <span>Rueda de Negocios B2B</span>
-                        </div>
-						-->
-                        <!--
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                ¿Te interesa participar en la Rueda de Negocios? <span class="reg-required">*</span>
-                            </label>
-                            <div class="reg-radio-group">
-                                <div class="reg-radio-option">
-                                    <label class="reg-radio-label">
-                                        <input type="radio" class="reg-radio-input" name="rueda" value="Si" required>
-                                        <span class="reg-radio-text">✅ Sí, me interesa</span>
-                                    </label>
-                                </div>
-                                <div class="reg-radio-option">
-                                    <label class="reg-radio-label">
-                                        <input type="radio" class="reg-radio-input" name="rueda" value="No" required>
-                                        <span class="reg-radio-text">❌ No por ahora</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="reg-help-text">Podrás activar este servicio más adelante desde tu perfil</div>
-                        </div>
-                    </div>
-					-->
-                    <!-- Sección 5: Cómo te enteraste -->
-                    <div class="reg-form-section">
-                        <div class="reg-form-group">
-                            <label class="reg-label">
-                                ¿Cómo te enteraste de este evento?
-                            </label>
-                            <select class="reg-select" name="fuente">
-                                <option value="">Selecciona una opción</option>
-                                <option value="Email">Correo electrónico</option>
-                                <option value="Redes">Redes sociales</option>
-                                <option value="Referido">Referido por un colega</option>
-                                <option value="Web">Sitio web</option>
-                                <option value="Prensa">Prensa/Medios</option>
-                                <option value="Gobierno">Entidad gubernamental</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Términos y Condiciones -->
-                    <!-- Términos y Condiciones (con link a modal) -->
-<div class="reg-terms" style="margin-top:20px;">
-  <label class="reg-terms-label">
-    <input type="checkbox" class="reg-terms-checkbox" name="terminos" required>
-    <span>
-      Acepto los 
-      <a href="#" id="openTerms" style="color:#3498db; text-decoration:underline;">
-        términos y condiciones del servicio
-      </a>.
-      <span class="reg-required">*</span>
-    </span>
-  </label>
-</div>
-
-
-                    <div class="reg-warning-box" style="margin-top: 20px;">
-                        ⚠️ <strong>Nota:</strong> La confirmación final de tu asistencia quedará sujeta a 
-                        disponibilidad de cupos. Recibirás un email de confirmación dentro de los proximos minutos.
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="reg-button-group">
-                        <button type="button" class="reg-btn reg-btn-secondary" onclick="window.history.back()">
-                            ← Volver al Evento
-                        </button>
-                        <button type="submit" class="reg-btn reg-btn-primary" id="submitBtn">
-                            Confirmar Asistencia →
-                        </button>
-                    </div>
-                </form>
+        <p style="color: #95a5a6; font-size: 0.9rem; margin-top: 30px;">
+            Gracias por tu interés en el Nodo Bioceánico 2025
+        </p>
+    </div>
             </div>
 
             <!-- Success Message (hidden by default) -->
