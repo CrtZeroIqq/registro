@@ -213,45 +213,72 @@ while ($row = $result->fetch_assoc()) {
                 Aqu&iacute; te dejamos la informaci&oacute;n clave para tu asistencia a <strong>Nodo Bioce&aacute;nico Central 2025</strong>:
             </p>
 
-            <!-- MIÉRCOLES 26 -->
-            <div style='background:#f8f9fb;padding:20px;border-left:4px solid #004aad;margin-bottom:20px;border-radius:8px;'>
-                <p style='margin:0 0 8px;font-size:16px;'>
+            <!-- MIÉRCOLES 26 - ENTRADA ESPECIAL -->
+            <div style='background:#fff3e0;padding:20px;border:3px solid #ff9800;margin-bottom:20px;border-radius:8px;box-shadow:0 3px 10px rgba(255,152,0,0.2);'>
+                <p style='margin:0 0 12px;font-size:17px;'>
                     <strong>📌 Mi&eacute;rcoles 26 de noviembre</strong> &ndash; Centro Tur&iacute;stico Integral (EPA)
                 </p>
-                <p style='margin:0;color:#555;font-size:14px;'>
-                    🔒 Actividad exclusiva, con ingreso solo mediante invitaci&oacute;n especial<br>
-                    Este es un espacio cerrado y de aforo limitado.
-                </p>
+                <div style='background:#fff;padding:15px;border-radius:6px;border-left:4px solid #f57c00;'>
+                    <p style='margin:0;color:#e65100;font-size:15px;font-weight:bold;'>
+                        🔒 ENTRADA ESPECIAL - SOLO CON INVITACI&Oacute;N
+                    </p>
+                    <p style='margin:8px 0 0;color:#666;font-size:14px;'>
+                        Esta jornada es de car&aacute;cter exclusivo y de aforo limitado.<br>
+                        El ingreso requiere invitaci&oacute;n especial previa.
+                    </p>
+                </div>
             </div>
 
-            <!-- JUEVES 27 -->
-            <div style='background:#f8f9fb;padding:20px;border-left:4px solid #004aad;margin-bottom:20px;border-radius:8px;'>
-                <p style='margin:0 0 8px;font-size:16px;'>
+            <!-- SEPARADOR -->
+            <div style='text-align:center;margin:25px 0;'>
+                <div style='border-top:2px solid #28a745;width:60%;margin:0 auto;position:relative;'>
+                    <span style='background:#fff;padding:0 15px;position:relative;top:-12px;color:#28a745;font-weight:bold;font-size:14px;'>
+                        ✓ ENTRADA GENERAL CON TU QR
+                    </span>
+                </div>
+            </div>
+
+            <!-- JUEVES 27 - ENTRADA GENERAL -->
+            <div style='background:#e8f5e9;padding:20px;border:2px solid #4caf50;margin-bottom:20px;border-radius:8px;'>
+                <p style='margin:0 0 12px;font-size:17px;'>
                     <strong>📌 Jueves 27 de noviembre</strong> &ndash; Hotel Antay
                 </p>
-                <p style='margin:0;color:#555;font-size:14px;'>
-                    🎟️ Ingreso exclusivo con QR de registro<br>
-                    🕣 Acreditaci&oacute;n: desde las 08:30 hrs<br>
-                    🕕 T&eacute;rmino de jornada: 18:00 hrs<br><br>
-                    Prep&aacute;rate para <em>workshops</em>, speakers internacionales y nacionales, espacios de vinculaci&oacute;n y conversatorio.
-                </p>
+                <div style='background:#fff;padding:15px;border-radius:6px;border-left:4px solid #4caf50;'>
+                    <p style='margin:0;color:#2e7d32;font-size:15px;font-weight:bold;'>
+                        ✅ ENTRADA GENERAL - INGRESO CON TU QR
+                    </p>
+                    <p style='margin:8px 0 0;color:#666;font-size:14px;'>
+                        🕣 Acreditaci&oacute;n: desde las 08:30 hrs<br>
+                        🕕 T&eacute;rmino de jornada: 18:00 hrs
+                    </p>
+                    <p style='margin:12px 0 0;color:#555;font-size:14px;'>
+                        Prep&aacute;rate para <em>workshops</em>, speakers internacionales y nacionales, espacios de vinculaci&oacute;n y conversatorio.
+                    </p>
+                </div>
             </div>
 
-            <!-- VIERNES 28 -->
-            <div style='background:#f8f9fb;padding:20px;border-left:4px solid #004aad;margin-bottom:25px;border-radius:8px;'>
-                <p style='margin:0 0 8px;font-size:16px;'>
+            <!-- VIERNES 28 - ENTRADA GENERAL -->
+            <div style='background:#e8f5e9;padding:20px;border:2px solid #4caf50;margin-bottom:25px;border-radius:8px;'>
+                <p style='margin:0 0 12px;font-size:17px;'>
                     <strong>📌 Viernes 28 de noviembre</strong> &ndash; Hotel Antay
                 </p>
-                <p style='margin:0;color:#555;font-size:14px;'>
-                    🕣 Acreditaci&oacute;n: 08:30 hrs<br>
-                    🕧 Cierre jornada AM: 13:30 hrs<br><br>
-                    Prep&aacute;rate para rueda de negocios, speakers internacionales y nacionales, espacios de vinculaci&oacute;n y conversatorio.
-                </p>
-                <p style='margin:15px 0 0;color:#555;font-size:14px;'>
-                    En la jornada de la tarde, te invitamos a ser parte de un momento clave:<br>
-                    <strong>✍️ Constituci&oacute;n de mesa y firma de acuerdos del Nodo Bioce&aacute;nico Central 2025</strong>
-                    a realizarse en el Hotel Arica, instancia hist&oacute;rica para la integraci&oacute;n y desarrollo log&iacute;stico regional.
-                </p>
+                <div style='background:#fff;padding:15px;border-radius:6px;border-left:4px solid #4caf50;'>
+                    <p style='margin:0;color:#2e7d32;font-size:15px;font-weight:bold;'>
+                        ✅ ENTRADA GENERAL - INGRESO CON TU QR
+                    </p>
+                    <p style='margin:8px 0 0;color:#666;font-size:14px;'>
+                        🕣 Acreditaci&oacute;n: 08:30 hrs<br>
+                        🕧 Cierre jornada AM: 13:30 hrs
+                    </p>
+                    <p style='margin:12px 0 0;color:#555;font-size:14px;'>
+                        Prep&aacute;rate para rueda de negocios, speakers internacionales y nacionales, espacios de vinculaci&oacute;n y conversatorio.
+                    </p>
+                    <p style='margin:15px 0 0;color:#555;font-size:14px;background:#fffde7;padding:12px;border-radius:6px;border-left:3px solid #fbc02d;'>
+                        <strong>✍️ Jornada de la tarde:</strong><br>
+                        Constituci&oacute;n de mesa y firma de acuerdos del Nodo Bioce&aacute;nico Central 2025
+                        en Hotel Arica. Instancia hist&oacute;rica para la integraci&oacute;n y desarrollo log&iacute;stico regional.
+                    </p>
+                </div>
             </div>
 
             <!-- BOTÓN DESCARGA PROGRAMA -->
