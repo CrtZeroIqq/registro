@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envío Masivo - Información Evento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #004aad 0%, #0066cc 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .warning-box p {
+            margin: 5px 0 0;
+            color: #856404;
+            font-size: 14px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+        }
+
+        .info-box h3 {
+            color: #0c5460;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            color: #0c5460;
+        }
+
+        .info-box li {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #004aad 0%, #0066cc 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,74,173,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,74,173,0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .progress-container {
+            display: none;
+            margin: 25px 0;
+        }
+
+        .progress-container.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #004aad 0%, #0066cc 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #004aad;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .log-container {
+            margin-top: 25px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .log-entry {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .log-entry.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .log-entry.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .log-entry .time {
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 Envío Masivo de Información</h1>
+            <p>Nodo Bioceánico Central 2025</p>
+        </div>
+
+        <div class="content">
+            <div class="warning-box">
+                <strong>⚠️ IMPORTANTE</strong>
+                <p>Este proceso enviará un correo a TODOS los registrados en la base de datos con la información actualizada del evento.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Contenido del correo:</h3>
+                <ul>
+                    <li><strong>Asunto:</strong> Ultimas Informaciones - Nodo Bioceánico Central Arica 2025</li>
+                    <li><strong>Información:</strong> Detalles de las jornadas (26, 27 y 28 de noviembre)</li>
+                    <li><strong>Botón:</strong> Enlace para descargar el programa completo (PDF)</li>
+                </ul>
+            </div>
+
+            <div class="btn-container">
+                <button id="btnIniciar" class="btn-primary" onclick="iniciarEnvio()">
+                    🚀 Iniciar Envío Masivo
+                </button>
+            </div>
+
+            <div id="progressContainer" class="progress-container">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 0%;">0%</div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="statTotal">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statEnviados">0</div>
+                        <div class="stat-label">Enviados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statErrores">0</div>
+                        <div class="stat-label">Errores</div>
+                    </div>
+                </div>
+
+                <div id="logContainer" class="log-container"></div>
+            </div>
+
+            <div id="statusMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        let intervalo = null;
+
+        async function iniciarEnvio() {
+            const btn = document.getElementById('btnIniciar');
+            const progressContainer = document.getElementById('progressContainer');
+            const statusMessage = document.getElementById('statusMessage');
+
+            if (!confirm('¿Estás seguro de iniciar el envío masivo?\n\nSe enviará un correo a TODOS los registrados.')) {
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Iniciando...';
+            progressContainer.classList.add('active');
+            statusMessage.innerHTML = '';
+
+            try {
+                // Iniciar el envío en segundo plano
+                fetch('enviar_informacion_evento.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Proceso finalizado:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error en el proceso:', error);
+                    });
+
+                // Iniciar monitoreo
+                intervalo = setInterval(monitorearProgreso, 2000);
+
+            } catch (error) {
+                statusMessage.innerHTML = `<div class="status-message error">Error al iniciar: ${error.message}</div>`;
+                btn.disabled = false;
+                btn.innerHTML = '🚀 Iniciar Envío Masivo';
+            }
+        }
+
+        async function monitorearProgreso() {
+            try {
+                const response = await fetch('estado_envio_evento.json?t=' + Date.now());
+                const data = await response.json();
+
+                // Actualizar barra de progreso
+                const progressFill = document.getElementById('progressFill');
+                progressFill.style.width = data.progreso_porcentaje + '%';
+                progressFill.textContent = data.progreso_porcentaje + '%';
+
+                // Actualizar estadísticas
+                document.getElementById('statTotal').textContent = data.total || 0;
+                document.getElementById('statEnviados').textContent = data.enviados || 0;
+                document.getElementById('statErrores').textContent = data.errores || 0;
+
+                // Actualizar logs
+                const logContainer = document.getElementById('logContainer');
+                if (data.logs && data.logs.length > 0) {
+                    logContainer.innerHTML = '';
+                    data.logs.reverse().forEach(log => {
+                        const logEntry = document.createElement('div');
+                        logEntry.className = 'log-entry ' + (log.status === 'enviado' ? 'success' : 'error');
+                        logEntry.innerHTML = `
+                            <span class="time">${log.timestamp}</span>
+                            <span>${log.status === 'enviado' ? '✓' : '✗'} ${log.email} - ${log.nombre}</span>
+                        `;
+                        logContainer.appendChild(logEntry);
+                    });
+                }
+
+                // Verificar si terminó
+                if (data.estado === 'completado') {
+                    clearInterval(intervalo);
+                    const btn = document.getElementById('btnIniciar');
+                    btn.disabled = false;
+                    btn.innerHTML = '✓ Envío Completado';
+
+                    const statusMessage = document.getElementById('statusMessage');
+                    statusMessage.innerHTML = `
+                        <div class="status-message success">
+                            ✓ Proceso completado exitosamente<br>
+                            Enviados: ${data.enviados} | Errores: ${data.errores}
+                        </div>
+                    `;
+
+                    // Mostrar errores si hay
+                    if (data.errores_detalle && data.errores_detalle.length > 0) {
+                        statusMessage.innerHTML += `
+                            <div style="margin-top: 15px; padding: 15px; background: #fff3cd; border-radius: 8px; text-align: left;">
+                                <strong>Errores detallados:</strong>
+                                <ul style="margin-top: 10px;">
+                                    ${data.errores_detalle.map(e => `<li>${e.email} - ${e.error}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error monitoreando progreso:', error);
+            }
+        }
+    </script>
+</body>
+</html>
