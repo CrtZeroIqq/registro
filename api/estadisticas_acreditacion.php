@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Santiago');
+
 header('Content-Type: application/json');
 header('Cache-Control: no-cache, must-revalidate');
 
