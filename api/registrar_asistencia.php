@@ -40,49 +40,52 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $dia_evento)) {
 $tipo_asistente = '';
 $nombre = '';
 $institucion = '';
+$email = '';
 $tipo_participante = '';
 $carrera = '';
 
 if (strpos($codigo, 'REG') === 0) {
     // Es un registro general
     $tipo_asistente = 'general';
-    
+
     // Buscar en tabla registros
-    $stmt = $conn->prepare("SELECT nombre, apellido, empresa FROM registros WHERE codigo_registro = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT nombre, apellido, empresa, email FROM registros WHERE codigo_registro = ? LIMIT 1");
     $stmt->bind_param('s', $codigo);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $nombre = $row['nombre'] . ' ' . $row['apellido'];
         $institucion = $row['empresa'];
+        $email = $row['email'];
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Código no encontrado en registros generales']);
         exit;
     }
-    
+
 } elseif (strpos($codigo, 'INACAP') === 0) {
     // Es un registro INACAP
     $tipo_asistente = 'inacap';
-    
+
     // Buscar en tabla registros_inacap
-    $stmt = $conn->prepare("SELECT nombre, tipo_participante, carrera FROM registros_inacap WHERE codigo = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT nombre, tipo_participante, carrera, email FROM registros_inacap WHERE codigo = ? LIMIT 1");
     $stmt->bind_param('s', $codigo);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $nombre = $row['nombre'];
         $tipo_participante = $row['tipo_participante'];
         $carrera = $row['carrera'];
+        $email = $row['email'] ?? '';
         $institucion = 'INACAP';
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Código no encontrado en registros INACAP']);
         exit;
     }
-    
+
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Formato de código QR no reconocido']);
     exit;
@@ -104,8 +107,8 @@ if ($result->num_rows > 0) {
 }
 
 // Registrar asistencia
-$stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, tipo_asistente, nombre_completo, institucion) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param('sssss', $codigo, $dia_evento, $tipo_asistente, $nombre, $institucion);
+$stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, tipo_asistente, nombre_completo, institucion, email) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param('ssssss', $codigo, $dia_evento, $tipo_asistente, $nombre, $institucion, $email);
 
 if ($stmt->execute()) {
     // Formatear fecha para mostrar
