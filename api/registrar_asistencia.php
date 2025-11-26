@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Santiago');
+
 header('Content-Type: application/json');
 
 // Configuración de base de datos
@@ -106,9 +108,10 @@ if ($result->num_rows > 0) {
     exit;
 }
 
-// Registrar asistencia
-$stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, tipo_asistente, nombre_completo, institucion, email) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param('ssssss', $codigo, $dia_evento, $tipo_asistente, $nombre, $institucion, $email);
+// Registrar asistencia con fecha_hora explícita en zona horaria de Chile
+$fecha_hora_chile = date('Y-m-d H:i:s');
+$stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, tipo_asistente, nombre_completo, institucion, email, fecha_hora) VALUES (?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param('sssssss', $codigo, $dia_evento, $tipo_asistente, $nombre, $institucion, $email, $fecha_hora_chile);
 
 if ($stmt->execute()) {
     // Formatear fecha para mostrar
