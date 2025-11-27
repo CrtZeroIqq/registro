@@ -259,6 +259,10 @@
         <h2>🔍 Buscar Persona</h2>
         <p>Usa uno o más filtros</p>
 
+        <div id="dbStatusModal" style="padding: 8px; margin-bottom: 10px; background: #e7f3ff; border-radius: 5px; font-size: 0.85rem; display: none;">
+            <span id="dbStatusText"></span>
+        </div>
+
         <input id="searchNombre" class="search-input" placeholder="Nombre o Apellido">
         <input id="searchEmpresa" class="search-input" placeholder="Empresa">
         <input id="searchPais" class="search-input" placeholder="País">
@@ -281,10 +285,14 @@ let isOnline = navigator.onLine;
 let isSyncing = false;
 let connectionCheckInterval;
 let autoSyncInterval;
+let dbSyncInterval;
 
 const STORAGE_KEY = 'pending_scans';
+const DB_CACHE_KEY = 'cached_registros';
+const DB_TIMESTAMP_KEY = 'db_last_update';
 const SYNC_INTERVAL = 30000; // 30 segundos
 const CONNECTION_CHECK_INTERVAL = 10000; // 10 segundos
+const DB_SYNC_INTERVAL = 300000; // 5 minutos
 
 /* ✓ SONIDOS */
 const successSound = new Audio("success.mp3");
@@ -338,6 +346,120 @@ function updatePendingQueueUI() {
     } else {
         document.getElementById('pendingQueue').classList.remove('show');
     }
+}
+
+/* ========================
+   BASE DE DATOS LOCAL
+======================== */
+
+// Obtener registros cacheados
+function getCachedRegistros() {
+    try {
+        const data = localStorage.getItem(DB_CACHE_KEY);
+        return data ? JSON.parse(data) : [];
+    } catch (e) {
+        console.error('Error al leer cache de BD:', e);
+        return [];
+    }
+}
+
+// Guardar registros en cache
+function saveCachedRegistros(registros) {
+    try {
+        localStorage.setItem(DB_CACHE_KEY, JSON.stringify(registros));
+        localStorage.setItem(DB_TIMESTAMP_KEY, new Date().toISOString());
+        console.log(`✅ BD cacheada: ${registros.length} registros`);
+        updateDBStatusUI();
+    } catch (e) {
+        console.error('Error al cachear BD:', e);
+    }
+}
+
+// Obtener timestamp de última actualización
+function getDBLastUpdate() {
+    return localStorage.getItem(DB_TIMESTAMP_KEY);
+}
+
+// Descargar y cachear base de datos
+async function downloadAndCacheDB() {
+    if (!isOnline) {
+        console.log('📴 Offline: no se puede descargar BD');
+        return false;
+    }
+
+    try {
+        console.log('🔄 Descargando base de datos...');
+
+        const response = await fetch('api/obtener_registros.php', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (result.status === 'ok') {
+            saveCachedRegistros(result.registros);
+            console.log(`✅ BD descargada: ${result.total} registros`);
+            return true;
+        } else {
+            throw new Error(result.message || 'Error al descargar BD');
+        }
+
+    } catch (error) {
+        console.error('❌ Error al descargar BD:', error);
+        return false;
+    }
+}
+
+// Búsqueda local en cache
+function searchLocalDB(nombre, empresa, pais) {
+    const registros = getCachedRegistros();
+
+    if (registros.length === 0) {
+        return [];
+    }
+
+    const nombreLower = nombre.toLowerCase().trim();
+    const empresaLower = empresa.toLowerCase().trim();
+    const paisLower = pais.toLowerCase().trim();
+
+    return registros.filter(r => {
+        const matchNombre = !nombre || r.nombre.toLowerCase().includes(nombreLower);
+        const matchEmpresa = !empresa || r.empresa.toLowerCase().includes(empresaLower);
+        const matchPais = !pais || r.pais.toLowerCase().includes(paisLower);
+
+        return matchNombre && matchEmpresa && matchPais;
+    }).slice(0, 50); // Limitar a 50 resultados
+}
+
+// Actualizar UI de estado de BD
+function updateDBStatusUI() {
+    const lastUpdate = getDBLastUpdate();
+    const cachedCount = getCachedRegistros().length;
+
+    if (lastUpdate && cachedCount > 0) {
+        const date = new Date(lastUpdate);
+        const timeAgo = getTimeAgo(date);
+        console.log(`📊 BD Local: ${cachedCount} registros (actualizado ${timeAgo})`);
+    }
+}
+
+// Calcular tiempo transcurrido
+function getTimeAgo(date) {
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMins / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays > 0) return `hace ${diffDays} día${diffDays > 1 ? 's' : ''}`;
+    if (diffHours > 0) return `hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
+    if (diffMins > 0) return `hace ${diffMins} minuto${diffMins > 1 ? 's' : ''}`;
+    return 'recién';
 }
 
 // Actualizar indicador de conexión
@@ -491,6 +613,7 @@ function initOfflineMode() {
     // Actualizar UI inicial
     updatePendingQueueUI();
     updateConnectionStatus(isOnline);
+    updateDBStatusUI();
 
     // Event listeners del navegador
     window.addEventListener('online', () => {
@@ -507,13 +630,21 @@ function initOfflineMode() {
     // Verificación periódica de conexión
     connectionCheckInterval = setInterval(checkConnection, CONNECTION_CHECK_INTERVAL);
 
-    // Auto-sincronización periódica
+    // Auto-sincronización periódica de scans
     autoSyncInterval = setInterval(async () => {
         if (isOnline && !isSyncing && getPendingScans().length > 0) {
-            console.log('🔄 Auto-sincronización periódica...');
+            console.log('🔄 Auto-sincronización periódica de scans...');
             await syncPendingScans();
         }
     }, SYNC_INTERVAL);
+
+    // Auto-sincronización periódica de BD
+    dbSyncInterval = setInterval(async () => {
+        if (isOnline) {
+            console.log('🔄 Auto-sincronización periódica de BD...');
+            await downloadAndCacheDB();
+        }
+    }, DB_SYNC_INTERVAL);
 
     // Botón de sincronización manual
     document.getElementById('btnSyncNow').addEventListener('click', async () => {
@@ -524,8 +655,30 @@ function initOfflineMode() {
         await syncPendingScans();
     });
 
-    // Verificación inicial
-    checkConnection();
+    // Verificación inicial y descarga de BD
+    checkConnection().then(() => {
+        if (isOnline) {
+            // Descargar BD si no existe o está desactualizada (más de 1 hora)
+            const lastUpdate = getDBLastUpdate();
+            const shouldUpdate = !lastUpdate ||
+                (new Date() - new Date(lastUpdate)) > 3600000; // 1 hora
+
+            if (shouldUpdate) {
+                console.log('📥 Descargando BD inicial...');
+                downloadAndCacheDB();
+            } else {
+                console.log('✅ Usando BD cacheada');
+                updateDBStatusUI();
+            }
+        } else {
+            const cachedCount = getCachedRegistros().length;
+            if (cachedCount === 0) {
+                console.log('⚠️ No hay BD cacheada y estás offline. La búsqueda no funcionará.');
+            } else {
+                console.log(`✅ Usando BD cacheada offline: ${cachedCount} registros`);
+            }
+        }
+    });
 }
 
 /* ✓ Selección de día */
@@ -599,8 +752,28 @@ async function onScanSuccess(qrCode) {
      BUSCADOR MANUAL
 ======================*/
 
-document.getElementById("btnOpenSearch").onclick = () =>
+document.getElementById("btnOpenSearch").onclick = () => {
     document.getElementById("modalSearch").style.display = "flex";
+
+    // Actualizar estado de BD en modal
+    const cachedCount = getCachedRegistros().length;
+    const lastUpdate = getDBLastUpdate();
+    const dbStatusModal = document.getElementById("dbStatusModal");
+    const dbStatusText = document.getElementById("dbStatusText");
+
+    if (cachedCount > 0 && lastUpdate) {
+        const timeAgo = getTimeAgo(new Date(lastUpdate));
+        const icon = isOnline ? '🌐' : '💾';
+        dbStatusModal.style.display = "block";
+        dbStatusText.innerHTML = `${icon} BD Local: <strong>${cachedCount}</strong> registros (actualizado ${timeAgo})`;
+    } else if (!isOnline) {
+        dbStatusModal.style.display = "block";
+        dbStatusModal.style.background = "#fff3cd";
+        dbStatusText.innerHTML = "⚠️ Sin BD local. Conecta a internet para descargar.";
+    } else {
+        dbStatusModal.style.display = "none";
+    }
+};
 
 document.getElementById("closeModal").onclick = () =>
     document.getElementById("modalSearch").style.display = "none";
@@ -610,31 +783,65 @@ document.getElementById("btnDoSearch").onclick = async () => {
     const empresa = document.getElementById("searchEmpresa").value;
     const pais = document.getElementById("searchPais").value;
 
-    try {
-        const res = await fetch(`api/buscar_personas.php?nombre=${nombre}&empresa=${empresa}&pais=${pais}`);
+    let data = [];
 
-        if (!res.ok) {
-            throw new Error('Error en la búsqueda');
+    // Si estamos offline, usar búsqueda local
+    if (!isOnline) {
+        console.log('📴 Búsqueda offline en cache local');
+        data = searchLocalDB(nombre, empresa, pais);
+
+        if (data.length === 0) {
+            const cachedCount = getCachedRegistros().length;
+            if (cachedCount === 0) {
+                document.getElementById("searchResults").innerHTML =
+                    "<p>⚠️ No hay base de datos local. Conecta a internet para descargar los registros.</p>";
+            } else {
+                document.getElementById("searchResults").innerHTML =
+                    "<p>No se encontraron resultados en la base de datos local.</p>";
+            }
+            return;
         }
+    } else {
+        // Si estamos online, intentar búsqueda en servidor
+        try {
+            console.log('🌐 Búsqueda online en servidor');
+            const res = await fetch(`api/buscar_personas.php?nombre=${nombre}&empresa=${empresa}&pais=${pais}`);
 
-        const data = await res.json();
+            if (!res.ok) {
+                throw new Error('Error en la búsqueda');
+            }
 
-        let html = "";
-        data.forEach(p => {
-            html += `
-                <div class="result-item" onclick="registrarManual('${p.codigo}')">
-                    <strong>${p.nombre}</strong><br>
-                    Empresa: ${p.empresa}<br>
-                    País: ${p.pais}<br>
-                    <small>Código: ${p.codigo}</small>
-                </div>`;
-        });
+            data = await res.json();
+        } catch (error) {
+            console.error('Error en búsqueda online:', error);
 
-        document.getElementById("searchResults").innerHTML = html || "<p>No se encontraron resultados.</p>";
-    } catch (error) {
-        console.error('Error en búsqueda:', error);
-        document.getElementById("searchResults").innerHTML = "<p>❌ Error al buscar. Intenta nuevamente.</p>";
+            // Fallback a búsqueda local
+            console.log('⚠️ Error en búsqueda online, usando cache local');
+            data = searchLocalDB(nombre, empresa, pais);
+
+            if (data.length === 0) {
+                document.getElementById("searchResults").innerHTML =
+                    "<p>❌ Error al buscar en el servidor y no hay resultados en cache local.</p>";
+                return;
+            }
+        }
     }
+
+    // Mostrar resultados
+    let html = "";
+    const source = isOnline ? '🌐' : '💾';
+
+    data.forEach(p => {
+        html += `
+            <div class="result-item" onclick="registrarManual('${p.codigo}')">
+                <strong>${p.nombre}</strong> ${source}<br>
+                Empresa: ${p.empresa}<br>
+                País: ${p.pais}<br>
+                <small>Código: ${p.codigo}</small>
+            </div>`;
+    });
+
+    document.getElementById("searchResults").innerHTML = html || "<p>No se encontraron resultados.</p>";
 };
 
 window.registrarManual = function(codigo) {

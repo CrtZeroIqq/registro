@@ -2,7 +2,7 @@
 
 ## Descripción General
 
-El sistema de scanner ahora incluye un **modo offline robusto** que permite continuar registrando asistencias incluso cuando se pierde la conexión a internet. Los registros se almacenan localmente y se sincronizan automáticamente cuando se recupera la conexión.
+El sistema de scanner ahora incluye un **modo offline robusto** que permite continuar registrando asistencias incluso cuando se pierde la conexión a internet. Los registros se almacenan localmente y se sincronizan automáticamente cuando se recupera la conexión. Además, incluye **cache local de la base de datos** para permitir búsquedas por nombre sin conexión.
 
 ## Características Implementadas
 
@@ -15,7 +15,7 @@ El sistema de scanner ahora incluye un **modo offline robusto** que permite cont
 ### 2. **Almacenamiento Local Persistente**
 - Los scans se guardan en localStorage del navegador
 - Los datos persisten incluso si se cierra el navegador
-- Formato de almacenamiento:
+- Formato de almacenamiento de scans pendientes:
   ```json
   {
     "codigo": "REG20251127123456",
@@ -24,13 +24,32 @@ El sistema de scanner ahora incluye un **modo offline robusto** que permite cont
   }
   ```
 
-### 3. **Sincronización Automática**
-- Auto-sincronización cada 30 segundos cuando hay conexión
+### 3. **Cache Local de Base de Datos (NUEVO)**
+- Descarga completa de la base de datos de registros al iniciar
+- Actualización automática cada 5 minutos cuando hay conexión
+- Búsqueda local funcional incluso sin conexión
+- Indicador de última actualización de BD
+- Fallback automático a cache si falla la búsqueda online
+- Almacena código, nombre, empresa y país de todos los registros
+- Formato de cache:
+  ```json
+  {
+    "codigo": "REG20251127123456",
+    "nombre": "Juan Pérez",
+    "empresa": "Empresa ABC",
+    "pais": "Chile",
+    "tipo": "general"
+  }
+  ```
+
+### 4. **Sincronización Automática**
+- Auto-sincronización de scans cada 30 segundos cuando hay conexión
+- Auto-sincronización de BD cada 5 minutos cuando hay conexión
 - Sincronización inmediata al recuperar la conexión
 - Procesamiento batch de múltiples registros pendientes
 - Retry automático con exponential backoff (2s, 4s, 8s)
 
-### 4. **Indicadores Visuales**
+### 5. **Indicadores Visuales**
 
 #### Estado de Conexión
 - **Verde (En línea)**: Conexión normal, los scans se registran inmediatamente
@@ -42,7 +61,13 @@ El sistema de scanner ahora incluye un **modo offline robusto** que permite cont
 - Muestra el número de registros esperando sincronización
 - Botón para forzar sincronización manual
 
-### 5. **Manejo Robusto de Errores**
+#### Estado de BD Local (NUEVO)
+- Muestra en el modal de búsqueda el estado de la BD local
+- Indica número de registros cacheados
+- Muestra tiempo transcurrido desde última actualización
+- Icono visual: 🌐 (online) o 💾 (offline)
+
+### 6. **Manejo Robusto de Errores**
 - Try-catch en todas las operaciones críticas
 - Timeout de 10 segundos para operaciones de red
 - Fallback automático a modo offline ante errores
@@ -52,9 +77,11 @@ El sistema de scanner ahora incluye un **modo offline robusto** que permite cont
 
 ### Nuevos Archivos
 - **`api/sincronizar_asistencias.php`**: API para sincronización batch de múltiples registros
+- **`api/obtener_registros.php`**: API para descargar la base de datos completa (NUEVO)
 
 ### Archivos Modificados
-- **`scanner.php`**: Scanner principal con modo offline completo
+- **`scanner.php`**: Scanner principal con modo offline completo y cache de BD
+- **`MODO_OFFLINE.md`**: Documentación actualizada
 
 ## Flujo de Funcionamiento
 
@@ -87,12 +114,74 @@ El sistema de scanner ahora incluye un **modo offline robusto** que permite cont
 6. Mantiene los fallidos para retry
 7. Muestra notificación de sincronización
 8. Cambia indicador a "En línea"
+9. Descarga actualización de BD si es necesario
 ```
 
-## API de Sincronización Batch
+### Escenario 4: Búsqueda Manual Offline (NUEVO)
+```
+1. Usuario abre modal de búsqueda
+2. Sistema muestra estado de BD local (registros cacheados, última actualización)
+3. Usuario ingresa criterios de búsqueda
+4. Sistema detecta que está offline
+5. Realiza búsqueda en cache local (localStorage)
+6. Muestra resultados con icono 💾 indicando fuente local
+7. Usuario selecciona persona
+8. Registro se guarda en cola de pendientes
+9. Se sincroniza cuando se recupera conexión
+```
 
-### Endpoint
-`POST api/sincronizar_asistencias.php`
+### Escenario 5: Búsqueda Manual Online con Fallback
+```
+1. Usuario busca persona estando online
+2. Sistema intenta búsqueda en servidor (🌐)
+3. Si falla la conexión durante la búsqueda
+4. Sistema hace fallback automático a cache local (💾)
+5. Muestra resultados disponibles en cache
+6. Usuario puede continuar trabajando sin interrupción
+```
+
+## APIs Implementadas
+
+### API de Obtener Registros (NUEVO)
+
+**Endpoint:** `GET api/obtener_registros.php`
+
+**Descripción:** Descarga la base de datos completa de registros para cache local.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "timestamp": "2025-11-27 15:30:45",
+  "total": 250,
+  "registros": [
+    {
+      "codigo": "REG20251127123456",
+      "nombre": "Juan Pérez",
+      "empresa": "Empresa ABC",
+      "pais": "Chile",
+      "tipo": "general"
+    },
+    {
+      "codigo": "INACAP20251127789012",
+      "nombre": "María González",
+      "empresa": "Ingeniería Civil",
+      "pais": "Estudiante",
+      "tipo": "inacap"
+    }
+  ]
+}
+```
+
+**Uso:**
+- Se llama automáticamente al cargar el scanner
+- Se actualiza cada 5 minutos en background
+- Se actualiza al recuperar conexión perdida
+- Los datos se almacenan en localStorage
+
+### API de Sincronización Batch
+
+**Endpoint:** `POST api/sincronizar_asistencias.php`
 
 ### Request
 ```json
@@ -148,8 +237,11 @@ El sistema de scanner ahora incluye un **modo offline robusto** que permite cont
 ### Parámetros Ajustables (en scanner.php)
 
 ```javascript
-// Intervalo de auto-sincronización (milisegundos)
+// Intervalo de auto-sincronización de scans (milisegundos)
 const SYNC_INTERVAL = 30000; // 30 segundos
+
+// Intervalo de auto-sincronización de BD (milisegundos)
+const DB_SYNC_INTERVAL = 300000; // 5 minutos
 
 // Intervalo de verificación de conexión (milisegundos)
 const CONNECTION_CHECK_INTERVAL = 10000; // 10 segundos
@@ -159,23 +251,35 @@ const NETWORK_TIMEOUT = 10000; // 10 segundos
 
 // Máximo de reintentos para sincronización
 const MAX_RETRIES = 3;
+
+// Keys de localStorage
+const STORAGE_KEY = 'pending_scans';
+const DB_CACHE_KEY = 'cached_registros';
+const DB_TIMESTAMP_KEY = 'db_last_update';
 ```
 
 ## Ventajas del Sistema
 
 1. **Continuidad Operacional**: El scanner nunca deja de funcionar
 2. **Sin Pérdida de Datos**: Todos los scans se guardan, online u offline
-3. **Sincronización Transparente**: El usuario no necesita intervenir
-4. **Feedback Visual Claro**: El usuario siempre sabe el estado del sistema
-5. **Resiliencia**: Maneja caídas temporales de conexión sin problemas
-6. **Escalabilidad**: Puede manejar colas grandes de pendientes
+3. **Búsqueda Offline Completa**: Búsqueda por nombre funciona sin conexión (NUEVO)
+4. **Sincronización Transparente**: El usuario no necesita intervenir
+5. **Feedback Visual Claro**: El usuario siempre sabe el estado del sistema
+6. **Resiliencia**: Maneja caídas temporales de conexión sin problemas
+7. **Escalabilidad**: Puede manejar colas grandes de pendientes
+8. **Actualización Automática de BD**: La base de datos local se mantiene actualizada (NUEVO)
+9. **Fallback Inteligente**: Si falla la búsqueda online, usa cache automáticamente (NUEVO)
 
 ## Limitaciones Conocidas
 
 1. **Límite de localStorage**: Navegadores típicamente limitan a 5-10MB
-   - Estimado: ~50,000 registros pendientes (más que suficiente)
+   - Estimado scans pendientes: ~50,000 registros
+   - Estimado cache BD: ~5,000-10,000 personas registradas
+   - Si se excede el límite, el navegador puede limpiar datos antiguos
 2. **Validación Offline Limitada**: No valida duplicados hasta sincronizar
 3. **Depende del Navegador**: El usuario debe usar el mismo navegador/dispositivo
+4. **Cache de BD desactualizado**: Si no hay conexión por mucho tiempo (>1 hora), la BD local puede estar desactualizada
+5. **Sin validación en tiempo real offline**: Los códigos QR no se validan contra la BD hasta que se sincroniza
 
 ## Casos de Uso
 
@@ -193,23 +297,45 @@ const MAX_RETRIES = 3;
 - Si se necesita forzar una sincronización, hacer click en "Sincronizar ahora"
 - Útil antes de cerrar el navegador o cambiar de dispositivo
 
+### Búsqueda de Personas Sin Conexión (NUEVO)
+- El operador puede buscar personas por nombre incluso sin internet
+- La búsqueda usa el cache local descargado previamente
+- Ideal para eventos donde el operador no tiene los QR codes impresos
+- Los registros se guardan en cola y se sincronizan automáticamente
+
 ## Monitoreo y Debugging
 
 ### Console Logs
 El sistema emite logs detallados en la consola del navegador:
 ```
 🚀 Iniciando modo offline...
+📥 Descargando BD inicial...
+✅ BD descargada: 250 registros
 ✅ Conexión restaurada
 🔄 Sincronizando 5 scans...
 ✅ Sincronización completada: 5 exitosos, 0 errores
 📴 Modo offline: guardando localmente
+💾 Búsqueda offline en cache local
+🔄 Auto-sincronización periódica de BD...
+📊 BD Local: 250 registros (actualizado hace 5 minutos)
 ```
 
 ### Inspección del localStorage
-Para ver los scans pendientes en Chrome DevTools:
+Para ver los datos cacheados en Chrome DevTools (F12 → Console):
 ```javascript
-// Abrir Console
+// Ver scans pendientes
 JSON.parse(localStorage.getItem('pending_scans'))
+
+// Ver base de datos cacheada
+JSON.parse(localStorage.getItem('cached_registros'))
+
+// Ver timestamp de última actualización de BD
+localStorage.getItem('db_last_update')
+
+// Ver tamaño total usado en localStorage (aproximado)
+Object.keys(localStorage).reduce((total, key) =>
+  total + localStorage[key].length, 0
+) / 1024 + ' KB'
 ```
 
 ## Recomendaciones de Uso
