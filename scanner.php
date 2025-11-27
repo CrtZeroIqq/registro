@@ -503,15 +503,12 @@ async function checkConnection() {
 
         // Cualquier respuesta (incluso error) significa que hay conexión
         if (!isOnline) {
+            console.log('✅ Conexión restaurada - iniciando sincronización');
             isOnline = true;
             updateConnectionStatus(true);
-            console.log('✅ Conexión restaurada');
 
-            // Intentar sincronizar automáticamente
-            const pendingScans = getPendingScans();
-            if (pendingScans.length > 0 && !isSyncing) {
-                setTimeout(() => syncPendingScans(), 2000);
-            }
+            // Sincronizar inmediatamente al recuperar conexión
+            await handleConnectionRestored();
         }
         return true;
     } catch (error) {
@@ -522,6 +519,52 @@ async function checkConnection() {
         }
         return false;
     }
+}
+
+// Manejar recuperación de conexión
+async function handleConnectionRestored() {
+    console.log('🔄 Manejando recuperación de conexión...');
+
+    // Resetear flag de sincronización por si quedó en true
+    if (isSyncing) {
+        console.log('⚠️ Reseteando flag de sincronización');
+        isSyncing = false;
+    }
+
+    const pendingScans = getPendingScans();
+    const cachedCount = getCachedRegistros().length;
+
+    console.log(`📊 Estado: ${pendingScans.length} scans pendientes, ${cachedCount} registros en BD local`);
+
+    // 1. Sincronizar scans pendientes
+    if (pendingScans.length > 0) {
+        console.log(`🔄 Iniciando sincronización de ${pendingScans.length} scans pendientes...`);
+        try {
+            await syncPendingScans();
+        } catch (error) {
+            console.error('❌ Error en sincronización de scans:', error);
+        }
+    } else {
+        console.log('✅ No hay scans pendientes para sincronizar');
+    }
+
+    // 2. Actualizar BD si es necesario
+    const lastUpdate = getDBLastUpdate();
+    const shouldUpdateDB = !lastUpdate ||
+        (new Date() - new Date(lastUpdate)) > 3600000; // 1 hora
+
+    if (shouldUpdateDB || cachedCount === 0) {
+        console.log('🔄 Descargando actualización de BD...');
+        try {
+            await downloadAndCacheDB();
+        } catch (error) {
+            console.error('❌ Error al actualizar BD:', error);
+        }
+    } else {
+        console.log(`✅ BD local actualizada (${cachedCount} registros)`);
+    }
+
+    console.log('✅ Sincronización post-reconexión completada');
 }
 
 // Sincronizar scans pendientes con retry
@@ -543,20 +586,26 @@ async function syncPendingScans(retryCount = 0) {
     updateConnectionStatus(isOnline, true);
 
     try {
-        console.log(`🔄 Sincronizando ${pendingScans.length} scans...`);
+        console.log(`🔄 Sincronizando ${pendingScans.length} scans... (intento ${retryCount + 1}/${MAX_RETRIES + 1})`);
+
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
 
         const response = await fetch('api/sincronizar_asistencias.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ asistencias: pendingScans }),
-            timeout: 30000
+            signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
         }
 
         const result = await response.json();
+        console.log('📥 Respuesta de sincronización:', result);
 
         if (result.status === 'ok') {
             // Eliminar los scans sincronizados exitosamente
@@ -564,6 +613,9 @@ async function syncPendingScans(retryCount = 0) {
             result.resultados.forEach((res, index) => {
                 if (res.status === 'error') {
                     failedScans.push(pendingScans[index]);
+                    console.log(`❌ Scan fallido: ${res.codigo} - ${res.message}`);
+                } else {
+                    console.log(`✅ Scan sincronizado: ${res.codigo}`);
                 }
             });
 
@@ -572,15 +624,17 @@ async function syncPendingScans(retryCount = 0) {
             console.log(`✅ Sincronización completada: ${result.exitosos} exitosos, ${result.errores} errores`);
 
             if (result.exitosos > 0) {
-                successSound.play();
+                try {
+                    successSound.play();
+                } catch (e) {
+                    console.log('No se pudo reproducir sonido');
+                }
+
                 mostrarResultado({
                     status: 'ok',
                     message: `✅ ${result.exitosos} registro(s) sincronizado(s)`
                 });
             }
-
-            isSyncing = false;
-            updateConnectionStatus(isOnline, false);
 
             return { success: true, synced: result.exitosos, errors: result.errores };
         } else {
@@ -601,10 +655,14 @@ async function syncPendingScans(retryCount = 0) {
             return syncPendingScans(retryCount + 1);
         }
 
+        console.error(`❌ Sincronización falló después de ${MAX_RETRIES} intentos`);
+        return { success: false, message: error.message };
+
+    } finally {
+        // SIEMPRE resetear flags, incluso si hay error
         isSyncing = false;
         updateConnectionStatus(isOnline, false);
-
-        return { success: false, message: error.message };
+        console.log('🔄 Flags de sincronización reseteados');
     }
 }
 
