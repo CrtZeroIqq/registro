@@ -517,14 +517,18 @@ async function checkConnection() {
         clearTimeout(timeoutId);
 
         // Cualquier respuesta (incluso error) significa que hay conexión
-        if (!isOnline) {
-            console.log('✅ Conexión restaurada - iniciando sincronización');
-            isOnline = true;
-            updateConnectionStatus(true);
+        const wasOffline = !isOnline;
+        isOnline = true;
+        updateConnectionStatus(true);
 
-            // Sincronizar inmediatamente al recuperar conexión
+        if (wasOffline) {
+            console.log('✅ Conexión restaurada - iniciando sincronización');
             await handleConnectionRestored();
+        } else if (!isSyncing && getPendingScans().length > 0) {
+            console.log('🔄 Conexión estable y hay cola pendiente: sincronizando automáticamente');
+            await syncPendingScans();
         }
+
         return true;
     } catch (error) {
         if (isOnline) {
@@ -711,9 +715,11 @@ function initOfflineMode() {
     updateDBStatusUI();
 
     // Event listeners del navegador
-    window.addEventListener('online', () => {
+    window.addEventListener('online', async () => {
         console.log('🌐 Evento online detectado');
-        checkConnection();
+        isOnline = true;
+        updateConnectionStatus(true);
+        await handleConnectionRestored();
     });
 
     window.addEventListener('offline', () => {
