@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Inscritos | Nodo Bioceánico 2025</title>
+    <style>
+        :root {
+            --bg: #0b1628;
+            --card: #0f1f35;
+            --accent: #3b82f6;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --success: #10b981;
+            --warning: #fbbf24;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(59,130,246,.08), transparent 30%),
+                        radial-gradient(circle at 80% 0%, rgba(16,185,129,.08), transparent 35%),
+                        var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 32px 18px 48px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: -0.02em;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59,130,246,.14);
+            color: var(--text);
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 16px;
+            padding: 18px 18px 20px;
+            box-shadow: 0 14px 30px rgba(0,0,0,.35);
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+        }
+
+        .card .value { font-size: 34px; font-weight: 800; margin-bottom: 4px; }
+
+        .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
+
+        .chart-card { margin-top: 10px; }
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            height: 240px;
+            padding: 12px;
+            background: #0c1b30;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,.05);
+            overflow-x: auto;
+        }
+
+        .bar {
+            flex: 1;
+            min-width: 36px;
+            background: linear-gradient(180deg, rgba(59,130,246,.9), rgba(59,130,246,.4));
+            border-radius: 10px 10px 6px 6px;
+            position: relative;
+            transition: transform .2s ease;
+        }
+
+        .bar:hover { transform: translateY(-4px); }
+
+        .bar span {
+            position: absolute;
+            top: -26px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .bar-label {
+            margin-top: 6px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .table-card { margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; color: var(--text); }
+        th, td { padding: 12px 10px; text-align: left; }
+        th { color: var(--muted); font-size: 13px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,.08); }
+        tr:not(:last-child) td { border-bottom: 1px solid rgba(255,255,255,.04); }
+
+        .chip { padding: 6px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; }
+        .chip.success { background: rgba(16,185,129,.18); color: #6ee7b7; }
+        .chip.warning { background: rgba(251,191,36,.2); color: #fcd34d; }
+
+        .muted { color: var(--muted); font-size: 13px; }
+
+        @media (max-width: 640px) {
+            .card .value { font-size: 28px; }
+            .chart { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div>
+            <h1>📈 Dashboard de Inscritos</h1>
+            <p class="muted" id="actualizado">—</p>
+        </div>
+        <div class="badge">Seguimiento diario en tiempo real</div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Total acumulado</h3>
+            <div class="value" id="total-general">-</div>
+            <p class="subtitle">Inscritos desde el inicio</p>
+        </div>
+        <div class="card">
+            <h3>Inscritos hoy</h3>
+            <div class="value" id="total-hoy">-</div>
+            <p class="subtitle">vs ayer: <span id="variacion">-</span></p>
+        </div>
+        <div class="card">
+            <h3>Últimos 7 días</h3>
+            <div class="value" id="ultima-semana">-</div>
+            <p class="subtitle">Promedio diario: <span id="promedio-semanal">-</span></p>
+        </div>
+        <div class="card">
+            <h3>Pico diario</h3>
+            <div class="value" id="pico-diario">-</div>
+            <p class="subtitle" id="pico-dia">—</p>
+        </div>
+    </div>
+
+    <div class="card chart-card">
+        <h3 style="margin-bottom: 12px;">Registros por día</h3>
+        <div class="chart" id="chart"></div>
+    </div>
+
+    <div class="card table-card">
+        <h3 style="margin-bottom: 12px;">Detalle diario</h3>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Total del día</th>
+                    <th>Participación semanal</th>
+                </tr>
+                </thead>
+                <tbody id="tabla-diaria">
+                <tr><td colspan="3" class="muted">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+async function cargarDashboard() {
+    try {
+        const resp = await fetch('estadisticas_inscritos.php');
+        const data = await resp.json();
+
+        if (data.status !== 'ok') throw new Error('Respuesta inválida');
+
+        document.getElementById('actualizado').textContent = `Actualizado: ${data.actualizado}`;
+        document.getElementById('total-general').textContent = data.total_general.toLocaleString('es-CL');
+        document.getElementById('total-hoy').textContent = data.hoy.toLocaleString('es-CL');
+        document.getElementById('ultima-semana').textContent = data.ultima_semana.toLocaleString('es-CL');
+
+        const variacion = data.ayer ? (((data.hoy - data.ayer) / data.ayer) * 100).toFixed(1) : 'N/A';
+        document.getElementById('variacion').textContent = data.ayer ? `${variacion}% vs ayer` : 'Sin registros previos';
+
+        const promedioSemanal = data.diario.length ? Math.round(data.ultima_semana / Math.min(data.diario.length, 7)) : 0;
+        document.getElementById('promedio-semanal').textContent = promedioSemanal.toLocaleString('es-CL');
+
+        const pico = data.diario.reduce((acc, dia) => dia.total > acc.total ? dia : acc, { total: 0, dia: '—' });
+        document.getElementById('pico-diario').textContent = pico.total.toLocaleString('es-CL');
+        document.getElementById('pico-dia').textContent = pico.total ? `Día con más registros: ${pico.dia}` : '—';
+
+        renderizarChart(data.diario);
+        renderizarTabla(data.diario, data.ultima_semana);
+    } catch (error) {
+        console.error('Error cargando estadísticas', error);
+        document.getElementById('actualizado').textContent = 'No se pudieron cargar los datos';
+    }
+}
+
+function renderizarChart(diario) {
+    const contenedor = document.getElementById('chart');
+    contenedor.innerHTML = '';
+
+    if (!diario.length) {
+        contenedor.innerHTML = '<p class="muted">Sin datos disponibles</p>';
+        return;
+    }
+
+    const max = Math.max(...diario.map(d => d.total));
+    diario.slice().reverse().forEach(dia => {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        const altura = max ? (dia.total / max) * 100 : 0;
+        bar.style.height = `${altura}%`;
+        bar.innerHTML = `<span>${dia.total}</span>`;
+
+        const wrapper = document.createElement('div');
+        wrapper.style.flex = '1';
+        wrapper.style.minWidth = '40px';
+        wrapper.appendChild(bar);
+
+        const label = document.createElement('div');
+        label.className = 'bar-label';
+        label.textContent = dia.dia.slice(5); // mm-dd
+        wrapper.appendChild(label);
+
+        contenedor.appendChild(wrapper);
+    });
+}
+
+function renderizarTabla(diario, totalSemana) {
+    const tbody = document.getElementById('tabla-diaria');
+    tbody.innerHTML = '';
+
+    const totalConsiderado = Math.max(totalSemana, diario.reduce((acc, d) => acc + d.total, 0));
+
+    diario.forEach(dia => {
+        const tr = document.createElement('tr');
+        const porcentaje = totalConsiderado ? ((dia.total / totalConsiderado) * 100).toFixed(1) : '0.0';
+
+        tr.innerHTML = `
+            <td>${dia.dia}</td>
+            <td>${dia.total.toLocaleString('es-CL')}</td>
+            <td><span class="chip ${dia.total === 0 ? 'warning' : 'success'}">${porcentaje}%</span></td>
+        `;
+
+        tbody.appendChild(tr);
+    });
+}
+
+cargarDashboard();
+setInterval(cargarDashboard, 30000);
+</script>
+</body>
+</html>
