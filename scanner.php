@@ -623,16 +623,19 @@ async function syncPendingScans(retryCount = 0) {
 
         if (result.status === 'ok') {
             // Eliminar los scans sincronizados exitosamente
+            // Solo mantener los que tienen status 'error' (no duplicados, no ok)
             const failedScans = [];
             result.resultados.forEach((res, index) => {
                 if (res.status === 'error') {
                     failedScans.push(pendingScans[index]);
                     console.log(`❌ Scan fallido: ${res.codigo} - ${res.message}`);
                 } else {
-                    console.log(`✅ Scan sincronizado: ${res.codigo}`);
+                    // ok o duplicado = sincronizado correctamente
+                    console.log(`✅ Scan sincronizado: ${res.codigo} (${res.status})`);
                 }
             });
 
+            console.log(`📊 Scans a mantener en cola: ${failedScans.length} de ${pendingScans.length}`);
             savePendingScans(failedScans);
 
             console.log(`✅ Sincronización completada: ${result.exitosos} exitosos, ${result.errores} errores`);
@@ -648,6 +651,12 @@ async function syncPendingScans(retryCount = 0) {
                     status: 'ok',
                     message: `✅ ${result.exitosos} registro(s) sincronizado(s)`
                 });
+
+                // Pequeño delay para que el usuario vea el mensaje
+                setTimeout(() => {
+                    // Forzar actualización de UI
+                    updatePendingQueueUI();
+                }, 1000);
             }
 
             return { success: true, synced: result.exitosos, errors: result.errores };

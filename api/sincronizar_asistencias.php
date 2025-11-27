@@ -71,11 +71,12 @@ foreach ($asistencias as $asistencia) {
     $tipo_asistente = '';
     $nombre = '';
     $institucion = '';
+    $email = '';
 
     if (strpos($codigo, 'REG') === 0) {
         $tipo_asistente = 'general';
 
-        $stmt = $conn->prepare("SELECT nombre, apellido, empresa FROM registros WHERE codigo_registro = ? LIMIT 1");
+        $stmt = $conn->prepare("SELECT nombre, apellido, empresa, email FROM registros WHERE codigo_registro = ? LIMIT 1");
         $stmt->bind_param('s', $codigo);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -84,6 +85,7 @@ foreach ($asistencias as $asistencia) {
             $row = $result->fetch_assoc();
             $nombre = $row['nombre'] . ' ' . $row['apellido'];
             $institucion = $row['empresa'];
+            $email = $row['email'];
         } else {
             $resultado['status'] = 'error';
             $resultado['message'] = 'Código no encontrado en registros generales';
@@ -95,7 +97,7 @@ foreach ($asistencias as $asistencia) {
     } elseif (strpos($codigo, 'INACAP') === 0) {
         $tipo_asistente = 'inacap';
 
-        $stmt = $conn->prepare("SELECT nombre, tipo_participante, carrera FROM registros_inacap WHERE codigo = ? LIMIT 1");
+        $stmt = $conn->prepare("SELECT nombre, email, tipo_participante, carrera FROM registros_inacap WHERE codigo = ? LIMIT 1");
         $stmt->bind_param('s', $codigo);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -103,6 +105,7 @@ foreach ($asistencias as $asistencia) {
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $nombre = $row['nombre'];
+            $email = $row['email'];
             $institucion = 'INACAP';
         } else {
             $resultado['status'] = 'error';
@@ -137,8 +140,8 @@ foreach ($asistencias as $asistencia) {
     }
 
     // Registrar asistencia
-    $stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, evento, tipo_asistente, nombre_completo, institucion) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param('ssssss', $codigo, $dia_evento, $evento, $tipo_asistente, $nombre, $institucion);
+    $stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, evento, tipo_asistente, nombre_completo, email, institucion) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('sssssss', $codigo, $dia_evento, $evento, $tipo_asistente, $nombre, $email, $institucion);
 
     if ($stmt->execute()) {
         $resultado['status'] = 'ok';
