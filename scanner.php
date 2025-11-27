@@ -228,8 +228,20 @@
 
     <div class="scanner-container">
 
+        <!-- Selector de evento -->
+        <div id="eventoSelector" class="evento-selector">
+            <h3 style="text-align:center;">🎯 Selecciona el evento</h3>
+            <button class="btn-scan" data-evento="Nodo Bioceánico 2025" style="margin-top:5px;">Nodo Bioceánico 2025</button>
+            <button class="btn-scan" data-evento="Workshop - Seid GC" style="margin-top:5px; background: linear-gradient(135deg,#f093fb,#f5576c);">Workshop - Seid GC</button>
+        </div>
+
+        <div id="selectedEventoInfo" style="display:none; margin-bottom:15px; padding:10px; background:#f5f3ff; border-radius:10px;">
+            <strong>Evento:</strong> <span id="selectedEventoText"></span>
+            <button id="btnChangeEvento" style="margin-left:10px; padding:5px 10px; background:#667eea; color:#fff; border:none; border-radius:5px;">Cambiar</button>
+        </div>
+
         <!-- Selector de día -->
-        <div id="daySelector" class="day-selector">
+        <div id="daySelector" class="day-selector" style="display:none;">
             <h3 style="text-align:center;">📅 Selecciona el día</h3>
             <button class="btn-scan" data-day="2025-11-26">Miércoles 26</button>
             <button class="btn-scan" data-day="2025-11-27">Jueves 27</button>
@@ -275,6 +287,7 @@
 
 <script>
 let selectedDay = null;
+let selectedEvento = null;
 let html5QrCode;
 let isScanning = false;
 
@@ -324,11 +337,12 @@ function savePendingScans(scans) {
 }
 
 // Agregar scan pendiente
-function addPendingScan(codigo, dia_evento) {
+function addPendingScan(codigo, dia_evento, evento) {
     const pendingScans = getPendingScans();
     pendingScans.push({
         codigo,
         dia_evento,
+        evento: evento || 'Nodo Bioceánico 2025',
         timestamp: new Date().toISOString()
     });
     savePendingScans(pendingScans);
@@ -739,6 +753,30 @@ function initOfflineMode() {
     });
 }
 
+/* ✓ Selección de evento */
+document.querySelectorAll('[data-evento]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        selectedEvento = btn.dataset.evento;
+        document.getElementById("selectedEventoText").innerText = selectedEvento;
+        document.getElementById("eventoSelector").style.display = "none";
+        document.getElementById("selectedEventoInfo").style.display = "block";
+        document.getElementById("daySelector").style.display = "block";
+    });
+});
+
+/* Cambiar evento */
+document.getElementById("btnChangeEvento").onclick = () => {
+    selectedEvento = null;
+    selectedDay = null;
+    if (isScanning) stopScanning();
+    document.getElementById("eventoSelector").style.display = "block";
+    document.getElementById("selectedEventoInfo").style.display = "none";
+    document.getElementById("daySelector").style.display = "none";
+    document.getElementById("selectedDayInfo").style.display = "none";
+    document.getElementById("btnStartScan").style.display = "none";
+    document.getElementById("btnOpenSearch").style.display = "none";
+};
+
 /* ✓ Selección de día */
 document.querySelectorAll('[data-day]').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -917,13 +955,14 @@ async function enviarAsistencia(codigo, desdeQR) {
         // Si estamos offline, guardar directamente
         if (!isOnline) {
             console.log('📴 Modo offline: guardando localmente');
-            addPendingScan(codigo, selectedDay);
+            addPendingScan(codigo, selectedDay, selectedEvento);
 
             mostrarResultado({
                 status: 'ok',
                 message: '💾 Guardado offline (se sincronizará automáticamente)',
                 nombre: codigo,
                 dia_evento_formatted: selectedDay,
+                evento: selectedEvento,
                 tipo_asistente: 'pendiente'
             });
 
@@ -940,7 +979,11 @@ async function enviarAsistencia(codigo, desdeQR) {
         const res = await fetch("api/registrar_asistencia.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ codigo, dia_evento: selectedDay }),
+            body: JSON.stringify({
+                codigo,
+                dia_evento: selectedDay,
+                evento: selectedEvento || 'Nodo Bioceánico 2025'
+            }),
             signal: controller.signal
         });
 
@@ -969,13 +1012,14 @@ async function enviarAsistencia(codigo, desdeQR) {
             isOnline = false;
             updateConnectionStatus(false);
 
-            addPendingScan(codigo, selectedDay);
+            addPendingScan(codigo, selectedDay, selectedEvento);
 
             mostrarResultado({
                 status: 'ok',
                 message: '💾 Sin conexión - Guardado offline',
                 nombre: codigo,
                 dia_evento_formatted: selectedDay,
+                evento: selectedEvento,
                 tipo_asistente: 'pendiente'
             });
 

@@ -32,11 +32,13 @@ $errores = 0;
 foreach ($asistencias as $asistencia) {
     $codigo = trim($asistencia['codigo'] ?? '');
     $dia_evento = trim($asistencia['dia_evento'] ?? '');
+    $evento = trim($asistencia['evento'] ?? 'Nodo Bioceánico 2025');
     $timestamp = $asistencia['timestamp'] ?? null; // Timestamp de cuando se escaneó offline
 
     $resultado = [
         'codigo' => $codigo,
         'dia_evento' => $dia_evento,
+        'evento' => $evento,
         'timestamp' => $timestamp
     ];
 
@@ -118,9 +120,9 @@ foreach ($asistencias as $asistencia) {
         continue;
     }
 
-    // Verificar si ya se registró asistencia para este día
-    $stmt = $conn->prepare("SELECT id FROM asistencias WHERE codigo = ? AND dia_evento = ? LIMIT 1");
-    $stmt->bind_param('ss', $codigo, $dia_evento);
+    // Verificar si ya se registró asistencia para este día y evento
+    $stmt = $conn->prepare("SELECT id FROM asistencias WHERE codigo = ? AND dia_evento = ? AND evento = ? LIMIT 1");
+    $stmt->bind_param('sss', $codigo, $dia_evento, $evento);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -135,8 +137,8 @@ foreach ($asistencias as $asistencia) {
     }
 
     // Registrar asistencia
-    $stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, tipo_asistente, nombre_completo, institucion) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param('sssss', $codigo, $dia_evento, $tipo_asistente, $nombre, $institucion);
+    $stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, evento, tipo_asistente, nombre_completo, institucion) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssss', $codigo, $dia_evento, $evento, $tipo_asistente, $nombre, $institucion);
 
     if ($stmt->execute()) {
         $resultado['status'] = 'ok';

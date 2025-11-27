@@ -19,6 +19,7 @@ $conn->set_charset('utf8mb4');
 $data = json_decode(file_get_contents('php://input'), true);
 $codigo = trim($data['codigo'] ?? '');
 $dia_evento = trim($data['dia_evento'] ?? '');
+$evento = trim($data['evento'] ?? 'Nodo Bioceánico 2025');
 
 if (empty($codigo)) {
     echo json_encode(['status' => 'error', 'message' => 'Código QR vacío']);
@@ -88,30 +89,30 @@ if (strpos($codigo, 'REG') === 0) {
     exit;
 }
 
-// Verificar si ya se registró asistencia para este día
-$stmt = $conn->prepare("SELECT id FROM asistencias WHERE codigo = ? AND dia_evento = ? LIMIT 1");
-$stmt->bind_param('ss', $codigo, $dia_evento);
+// Verificar si ya se registró asistencia para este día y evento
+$stmt = $conn->prepare("SELECT id FROM asistencias WHERE codigo = ? AND dia_evento = ? AND evento = ? LIMIT 1");
+$stmt->bind_param('sss', $codigo, $dia_evento, $evento);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Ya existe asistencia para este día
+    // Ya existe asistencia para este día y evento
     echo json_encode([
         'status' => 'error',
-        'message' => '⚠️ Este código ya registró asistencia para este día'
+        'message' => '⚠️ Este código ya registró asistencia para este evento en este día'
     ]);
     exit;
 }
 
 // Registrar asistencia
-$stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, tipo_asistente, nombre_completo, institucion) VALUES (?, ?, ?, ?, ?)");
-$stmt->bind_param('sssss', $codigo, $dia_evento, $tipo_asistente, $nombre, $institucion);
+$stmt = $conn->prepare("INSERT INTO asistencias (codigo, dia_evento, evento, tipo_asistente, nombre_completo, institucion) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param('ssssss', $codigo, $dia_evento, $evento, $tipo_asistente, $nombre, $institucion);
 
 if ($stmt->execute()) {
     // Formatear fecha para mostrar
     $fecha_obj = DateTime::createFromFormat('Y-m-d', $dia_evento);
     $dia_evento_formatted = $fecha_obj->format('d/m/Y');
-    
+
     $response = [
         'status' => 'ok',
         'message' => 'Asistencia registrada exitosamente',
@@ -119,15 +120,16 @@ if ($stmt->execute()) {
         'nombre' => $nombre,
         'tipo_asistente' => $tipo_asistente,
         'institucion' => $institucion,
-        'dia_evento_formatted' => $dia_evento_formatted
+        'dia_evento_formatted' => $dia_evento_formatted,
+        'evento' => $evento
     ];
-    
+
     // Agregar campos específicos según el tipo
     if ($tipo_asistente === 'inacap') {
         $response['tipo_participante'] = $tipo_participante;
         $response['carrera'] = $carrera;
     }
-    
+
     echo json_encode($response);
 } else {
     echo json_encode([
