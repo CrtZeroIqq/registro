@@ -223,6 +223,7 @@
             <h4>⚠️ Scans pendientes de sincronizar</h4>
             <p><span id="pendingCount">0</span> registros esperando conexión</p>
             <button id="btnSyncNow">Sincronizar ahora</button>
+            <button id="btnClearQueue" style="background: #dc3545; margin-left: 5px;">Limpiar cola</button>
         </div>
     </div>
 
@@ -620,23 +621,39 @@ async function syncPendingScans(retryCount = 0) {
 
         const result = await response.json();
         console.log('📥 Respuesta de sincronización:', result);
+        console.log('📊 Total de scans enviados:', pendingScans.length);
+        console.log('📊 Resultados recibidos:', result.resultados ? result.resultados.length : 0);
 
         if (result.status === 'ok') {
+            // Mostrar todos los resultados para debugging
+            console.log('📋 Detalle de resultados:');
+            result.resultados.forEach((res, index) => {
+                console.log(`  [${index}] Código: ${res.codigo}, Status: ${res.status}, Mensaje: ${res.message}`);
+            });
+
             // Eliminar los scans sincronizados exitosamente
             // Solo mantener los que tienen status 'error' (no duplicados, no ok)
             const failedScans = [];
             result.resultados.forEach((res, index) => {
                 if (res.status === 'error') {
                     failedScans.push(pendingScans[index]);
-                    console.log(`❌ Scan fallido: ${res.codigo} - ${res.message}`);
+                    console.log(`❌ Scan fallido (mantener en cola): ${res.codigo} - ${res.message}`);
                 } else {
                     // ok o duplicado = sincronizado correctamente
-                    console.log(`✅ Scan sincronizado: ${res.codigo} (${res.status})`);
+                    console.log(`✅ Scan sincronizado (eliminar de cola): ${res.codigo} (${res.status})`);
                 }
             });
 
-            console.log(`📊 Scans a mantener en cola: ${failedScans.length} de ${pendingScans.length}`);
+            console.log(`📊 Scans en cola antes: ${pendingScans.length}`);
+            console.log(`📊 Scans a mantener: ${failedScans.length}`);
+            console.log(`📊 Scans a eliminar: ${pendingScans.length - failedScans.length}`);
+
+            // Guardar la nueva cola (solo los fallidos)
             savePendingScans(failedScans);
+
+            // Verificar que se guardó correctamente
+            const verificacion = getPendingScans();
+            console.log(`📊 Scans en cola después de guardar: ${verificacion.length}`);
 
             console.log(`✅ Sincronización completada: ${result.exitosos} exitosos, ${result.errores} errores`);
 
@@ -651,13 +668,10 @@ async function syncPendingScans(retryCount = 0) {
                     status: 'ok',
                     message: `✅ ${result.exitosos} registro(s) sincronizado(s)`
                 });
-
-                // Pequeño delay para que el usuario vea el mensaje
-                setTimeout(() => {
-                    // Forzar actualización de UI
-                    updatePendingQueueUI();
-                }, 1000);
             }
+
+            // Forzar actualización inmediata de UI
+            updatePendingQueueUI();
 
             return { success: true, synced: result.exitosos, errors: result.errores };
         } else {
@@ -734,6 +748,28 @@ function initOfflineMode() {
             return;
         }
         await syncPendingScans();
+    });
+
+    // Botón de limpiar cola
+    document.getElementById('btnClearQueue').addEventListener('click', () => {
+        const pendingScans = getPendingScans();
+        if (pendingScans.length === 0) {
+            alert('✅ No hay registros pendientes en la cola.');
+            return;
+        }
+
+        const confirmacion = confirm(`⚠️ ¿Estás seguro de que quieres limpiar la cola?\n\nSe eliminarán ${pendingScans.length} registro(s) pendiente(s).\n\nEsta acción NO se puede deshacer.`);
+
+        if (confirmacion) {
+            console.log(`🗑️ Limpiando cola manualmente: ${pendingScans.length} scans`);
+            console.log('📋 Scans eliminados:', pendingScans);
+
+            savePendingScans([]);
+            updatePendingQueueUI();
+
+            alert('✅ Cola limpiada correctamente.');
+            console.log('✅ Cola limpiada manualmente');
+        }
     });
 
     // Verificación inicial y descarga de BD
@@ -1069,6 +1105,37 @@ function mostrarResultado(data) {
         `;
     }
 }
+
+/* ========================
+   FUNCIONES DE DEBUGGING
+======================== */
+
+// Función global para ver la cola en consola
+window.verCola = function() {
+    const pendingScans = getPendingScans();
+    console.log('📊 ===== ESTADO DE LA COLA =====');
+    console.log(`Total de scans pendientes: ${pendingScans.length}`);
+    console.log('Scans en cola:');
+    pendingScans.forEach((scan, index) => {
+        console.log(`  [${index}] Código: ${scan.codigo}, Día: ${scan.dia_evento}, Evento: ${scan.evento}, Timestamp: ${scan.timestamp}`);
+    });
+    console.log('================================');
+    return pendingScans;
+};
+
+// Función global para limpiar cola desde consola
+window.limpiarCola = function() {
+    const pendingScans = getPendingScans();
+    console.log(`🗑️ Limpiando ${pendingScans.length} scans de la cola...`);
+    savePendingScans([]);
+    updatePendingQueueUI();
+    console.log('✅ Cola limpiada');
+};
+
+// Mostrar funciones disponibles
+console.log('🛠️ Funciones de debugging disponibles:');
+console.log('  - verCola(): Ver estado de la cola de pendientes');
+console.log('  - limpiarCola(): Limpiar toda la cola de pendientes');
 
 /* ========================
    INICIALIZAR AL CARGAR
