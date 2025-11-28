@@ -43,12 +43,12 @@ $stats_general['tasa_apertura'] = $tasa_apertura;
 // 📊 ESTADÍSTICAS DE ASISTENCIA
 // ============================
 $sql_asistencia = "SELECT
-    COUNT(DISTINCT codigo_registro) as total_asistentes,
-    SUM(CASE WHEN fecha_asistencia LIKE '2025-11-26%' THEN 1 ELSE 0 END) as dia_26,
-    SUM(CASE WHEN fecha_asistencia LIKE '2025-11-27%' THEN 1 ELSE 0 END) as dia_27,
-    SUM(CASE WHEN fecha_asistencia LIKE '2025-11-28%' THEN 1 ELSE 0 END) as dia_28,
-    SUM(CASE WHEN tipo_participante = 'inacap' THEN 1 ELSE 0 END) as inacap,
-    SUM(CASE WHEN tipo_participante = 'general' THEN 1 ELSE 0 END) as general
+    COUNT(DISTINCT codigo) as total_asistentes,
+    SUM(CASE WHEN dia_evento = '2025-11-26' THEN 1 ELSE 0 END) as dia_26,
+    SUM(CASE WHEN dia_evento = '2025-11-27' THEN 1 ELSE 0 END) as dia_27,
+    SUM(CASE WHEN dia_evento = '2025-11-28' THEN 1 ELSE 0 END) as dia_28,
+    SUM(CASE WHEN tipo_asistente = 'inacap' THEN 1 ELSE 0 END) as inacap,
+    SUM(CASE WHEN tipo_asistente = 'general' THEN 1 ELSE 0 END) as general
 FROM asistencias";
 
 $result = $conn->query($sql_asistencia);
@@ -191,11 +191,11 @@ while ($row = $result->fetch_assoc()) {
 // 📅 ESTADÍSTICAS POR FECHA DE REGISTRO
 // ============================
 $sql_fechas = "SELECT
-    DATE(fecha_registro) as fecha,
+    DATE(created_at) as fecha,
     COUNT(*) as cantidad
 FROM registros
-WHERE fecha_registro IS NOT NULL
-GROUP BY DATE(fecha_registro)
+WHERE created_at IS NOT NULL
+GROUP BY DATE(created_at)
 ORDER BY fecha ASC";
 
 $result = $conn->query($sql_fechas);
