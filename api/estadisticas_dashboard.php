@@ -191,11 +191,11 @@ while ($row = $result->fetch_assoc()) {
 // 📅 ESTADÍSTICAS POR FECHA DE REGISTRO
 // ============================
 $sql_fechas = "SELECT
-    DATE(created_at) as fecha,
+    DATE(fecha) as fecha,
     COUNT(*) as cantidad
 FROM registros
-WHERE created_at IS NOT NULL
-GROUP BY DATE(created_at)
+WHERE fecha IS NOT NULL
+GROUP BY DATE(fecha)
 ORDER BY fecha ASC";
 
 $result = $conn->query($sql_fechas);
