@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Estadísticas - Nodo Bioceánico 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .header .fecha {
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Tarjetas de métricas principales */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .value {
+            color: #2c3e50;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .metric-card .detail {
+            color: #95a5a6;
+            font-size: 0.9em;
+        }
+
+        .metric-card.primary { border-left: 5px solid #3498db; }
+        .metric-card.success { border-left: 5px solid #2ecc71; }
+        .metric-card.warning { border-left: 5px solid #f39c12; }
+        .metric-card.danger { border-left: 5px solid #e74c3c; }
+        .metric-card.info { border-left: 5px solid #9b59b6; }
+
+        /* Secciones de gráficos */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-container h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+
+        .chart-wrapper.small {
+            height: 300px;
+        }
+
+        /* Tablas */
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+
+        .table-container h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: #f8f9fa;
+        }
+
+        table th {
+            padding: 15px;
+            text-align: left;
+            color: #2c3e50;
+            font-weight: 600;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            color: #495057;
+        }
+
+        table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge.primary { background: #e3f2fd; color: #1976d2; }
+        .badge.success { background: #e8f5e9; color: #388e3c; }
+        .badge.warning { background: #fff3e0; color: #f57c00; }
+
+        /* Botones de acción */
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .metric-card .value {
+                font-size: 2em;
+            }
+
+            .chart-wrapper {
+                height: 300px;
+            }
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 Dashboard de Estadísticas (DEMO)</h1>
+            <p>Cumbre Nodo Bioceánico 2025 - Arica, Chile</p>
+            <p class="fecha">26-28 Noviembre 2025</p>
+            <p style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                ⚠️ Versión de demostración con datos de ejemplo
+            </p>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Cargando estadísticas...</p>
+        </div>
+
+        <!-- Métricas principales -->
+        <div id="metrics" style="display: none;">
+            <div class="metrics-grid" id="metricsGrid"></div>
+
+            <!-- Gráficos -->
+            <div class="charts-grid">
+                <!-- Gráfico de Países -->
+                <div class="chart-container">
+                    <h2>🌎 Registros por País</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="chartPaises"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Sectores -->
+                <div class="chart-container">
+                    <h2>🏢 Distribución por Sector</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="chartSectores"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Tamaños de Empresa -->
+                <div class="chart-container">
+                    <h2>📏 Tamaño de Empresas</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="chartTamanos"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Asistencia por Día -->
+                <div class="chart-container">
+                    <h2>📅 Asistencia por Día</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="chartAsistencia"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Intereses -->
+                <div class="chart-container full-width">
+                    <h2>🎯 Principales Intereses</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="chartIntereses"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Registros por Fecha -->
+                <div class="chart-container full-width">
+                    <h2>📈 Evolución de Registros en el Tiempo</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="chartFechas"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tablas de datos -->
+            <div class="table-container">
+                <h2>🏆 Top 15 Empresas Participantes</h2>
+                <table id="tableEmpresas">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Empresa</th>
+                            <th>País</th>
+                            <th>Registros</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h2>💼 Top 10 Cargos más Frecuentes</h2>
+                <table id="tableCargos">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cargo</th>
+                            <th>Cantidad</th>
+                            <th>Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h2>📊 Fuentes de Registro</h2>
+                <table id="tableFuentes">
+                    <thead>
+                        <tr>
+                            <th>Fuente</th>
+                            <th>Cantidad</th>
+                            <th>Porcentaje</th>
+                            <th>Visual</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="actions">
+                <button class="btn" onclick="window.print()">🖨️ Imprimir Informe</button>
+                <button class="btn secondary" onclick="exportarDatos()">📥 Exportar Datos</button>
+                <a href="index.html" class="btn">🏠 Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración global de Chart.js
+        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        Chart.defaults.color = '#2c3e50';
+
+        // Paleta de colores
+        const colors = {
+            primary: ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe'],
+            multi: [
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
+                '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#FF6384',
+                '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+            ]
+        };
+
+        let statsData = null;
+
+        // Cargar datos
+        async function cargarEstadisticas() {
+            try {
+                const response = await fetch('api/estadisticas_dashboard_demo.php');
+                if (!response.ok) throw new Error('Error al cargar datos');
+
+                statsData = await response.json();
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('metrics').style.display = 'block';
+
+                renderizarMetricas();
+                renderizarGraficos();
+                renderizarTablas();
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: #e74c3c;">❌ Error al cargar las estadísticas</p>
+                    <p style="font-size: 0.9em; margin-top: 10px;">${error.message}</p>
+                    <button class="btn" onclick="location.reload()">Reintentar</button>
+                `;
+            }
+        }
+
+        // Renderizar métricas principales
+        function renderizarMetricas() {
+            const general = statsData.general;
+            const asistencia = statsData.asistencia;
+            const inacap = statsData.inacap;
+
+            const metricsHTML = `
+                <div class="metric-card primary">
+                    <div class="icon">👥</div>
+                    <div class="label">Total Registros</div>
+                    <div class="value">${general.total_registros}</div>
+                    <div class="detail">Emails únicos: ${general.emails_unicos}</div>
+                </div>
+
+                <div class="metric-card success">
+                    <div class="icon">✅</div>
+                    <div class="label">Tasa Apertura Email</div>
+                    <div class="value">${general.tasa_apertura}%</div>
+                    <div class="detail">${general.emails_abiertos} de ${general.total_registros} abiertos</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${general.tasa_apertura}%"></div>
+                    </div>
+                </div>
+
+                <div class="metric-card info">
+                    <div class="icon">🎫</div>
+                    <div class="label">Tasa Asistencia</div>
+                    <div class="value">${asistencia.tasa_asistencia}%</div>
+                    <div class="detail">${asistencia.total_asistentes} asistentes confirmados</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${asistencia.tasa_asistencia}%"></div>
+                    </div>
+                </div>
+
+                <div class="metric-card warning">
+                    <div class="icon">🌎</div>
+                    <div class="label">Países Representados</div>
+                    <div class="value">${general.paises_total}</div>
+                    <div class="detail">Alcance internacional</div>
+                </div>
+
+                <div class="metric-card danger">
+                    <div class="icon">📅</div>
+                    <div class="label">Asistencia Día 26</div>
+                    <div class="value">${asistencia.dia_26 || 0}</div>
+                    <div class="detail">Primer día del evento</div>
+                </div>
+
+                <div class="metric-card primary">
+                    <div class="icon">📅</div>
+                    <div class="label">Asistencia Día 27</div>
+                    <div class="value">${asistencia.dia_27 || 0}</div>
+                    <div class="detail">Segundo día del evento</div>
+                </div>
+
+                <div class="metric-card success">
+                    <div class="icon">📅</div>
+                    <div class="label">Asistencia Día 28</div>
+                    <div class="value">${asistencia.dia_28 || 0}</div>
+                    <div class="detail">Tercer día del evento</div>
+                </div>
+
+                <div class="metric-card info">
+                    <div class="icon">🎓</div>
+                    <div class="label">Registros INACAP</div>
+                    <div class="value">${inacap.total_inacap || 0}</div>
+                    <div class="detail">Participantes institucionales</div>
+                </div>
+            `;
+
+            document.getElementById('metricsGrid').innerHTML = metricsHTML;
+        }
+
+        // Renderizar gráficos
+        function renderizarGraficos() {
+            // Gráfico de Países
+            const ctxPaises = document.getElementById('chartPaises').getContext('2d');
+            new Chart(ctxPaises, {
+                type: 'bar',
+                data: {
+                    labels: statsData.paises.map(p => p.pais),
+                    datasets: [{
+                        label: 'Registros por País',
+                        data: statsData.paises.map(p => p.cantidad),
+                        backgroundColor: colors.multi,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.parsed.y} registros (${statsData.paises[context.dataIndex].porcentaje}%)`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Gráfico de Sectores
+            const ctxSectores = document.getElementById('chartSectores').getContext('2d');
+            new Chart(ctxSectores, {
+                type: 'doughnut',
+                data: {
+                    labels: statsData.sectores.map(s => s.sector),
+                    datasets: [{
+                        data: statsData.sectores.map(s => s.cantidad),
+                        backgroundColor: colors.multi
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: { boxWidth: 15, padding: 10 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const sector = statsData.sectores[context.dataIndex];
+                                    return `${sector.sector}: ${sector.cantidad} (${sector.porcentaje}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de Tamaños
+            const ctxTamanos = document.getElementById('chartTamanos').getContext('2d');
+            new Chart(ctxTamanos, {
+                type: 'pie',
+                data: {
+                    labels: statsData.tamanos.map(t => t.tamano),
+                    datasets: [{
+                        data: statsData.tamanos.map(t => t.cantidad),
+                        backgroundColor: colors.multi
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 15, padding: 10 }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de Asistencia por Día
+            const ctxAsistencia = document.getElementById('chartAsistencia').getContext('2d');
+            new Chart(ctxAsistencia, {
+                type: 'bar',
+                data: {
+                    labels: ['26 Noviembre', '27 Noviembre', '28 Noviembre'],
+                    datasets: [{
+                        label: 'Asistentes',
+                        data: [
+                            statsData.asistencia.dia_26 || 0,
+                            statsData.asistencia.dia_27 || 0,
+                            statsData.asistencia.dia_28 || 0
+                        ],
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Gráfico de Intereses
+            const ctxIntereses = document.getElementById('chartIntereses').getContext('2d');
+            const topIntereses = statsData.intereses.slice(0, 10);
+            new Chart(ctxIntereses, {
+                type: 'bar',
+                data: {
+                    labels: topIntereses.map(i => i.interes),
+                    datasets: [{
+                        label: 'Cantidad de Interesados',
+                        data: topIntereses.map(i => i.cantidad),
+                        backgroundColor: colors.multi,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { beginAtZero: true }
+                    }
+                }
+            });
+
+            // Gráfico de Evolución de Registros
+            const ctxFechas = document.getElementById('chartFechas').getContext('2d');
+            const fechasFormateadas = statsData.fechas_registro.map(f => {
+                const date = new Date(f.fecha);
+                return date.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+            });
+
+            new Chart(ctxFechas, {
+                type: 'line',
+                data: {
+                    labels: fechasFormateadas,
+                    datasets: [{
+                        label: 'Registros por Día',
+                        data: statsData.fechas_registro.map(f => f.cantidad),
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        // Renderizar tablas
+        function renderizarTablas() {
+            // Tabla de Empresas
+            const tbodyEmpresas = document.querySelector('#tableEmpresas tbody');
+            statsData.empresas.forEach((empresa, index) => {
+                tbodyEmpresas.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${empresa.empresa}</strong></td>
+                        <td>${empresa.pais}</td>
+                        <td><span class="badge primary">${empresa.cantidad}</span></td>
+                    </tr>
+                `;
+            });
+
+            // Tabla de Cargos
+            const tbodyCargos = document.querySelector('#tableCargos tbody');
+            const totalCargos = statsData.cargos.reduce((sum, c) => sum + parseInt(c.cantidad), 0);
+            statsData.cargos.forEach((cargo, index) => {
+                const porcentaje = ((cargo.cantidad / totalCargos) * 100).toFixed(1);
+                tbodyCargos.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${cargo.cargo}</td>
+                        <td><span class="badge success">${cargo.cantidad}</span></td>
+                        <td>${porcentaje}%</td>
+                    </tr>
+                `;
+            });
+
+            // Tabla de Fuentes
+            const tbodyFuentes = document.querySelector('#tableFuentes tbody');
+            statsData.fuentes.forEach(fuente => {
+                tbodyFuentes.innerHTML += `
+                    <tr>
+                        <td><strong>${fuente.fuente}</strong></td>
+                        <td>${fuente.cantidad}</td>
+                        <td><span class="badge warning">${fuente.porcentaje}%</span></td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${fuente.porcentaje}%"></div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Exportar datos a CSV
+        function exportarDatos() {
+            let csv = 'INFORME DE ESTADÍSTICAS - NODO BIOCEÁNICO 2025\n\n';
+
+            csv += 'MÉTRICAS GENERALES\n';
+            csv += `Total Registros,${statsData.general.total_registros}\n`;
+            csv += `Emails Únicos,${statsData.general.emails_unicos}\n`;
+            csv += `Tasa de Apertura,${statsData.general.tasa_apertura}%\n`;
+            csv += `Países Representados,${statsData.general.paises_total}\n`;
+            csv += `Total Asistentes,${statsData.asistencia.total_asistentes}\n`;
+            csv += `Tasa de Asistencia,${statsData.asistencia.tasa_asistencia}%\n\n`;
+
+            csv += 'REGISTROS POR PAÍS\n';
+            csv += 'País,Cantidad,Porcentaje\n';
+            statsData.paises.forEach(p => {
+                csv += `${p.pais},${p.cantidad},${p.porcentaje}%\n`;
+            });
+
+            csv += '\nDISTRIBUCIÓN POR SECTOR\n';
+            csv += 'Sector,Cantidad,Porcentaje\n';
+            statsData.sectores.forEach(s => {
+                csv += `${s.sector},${s.cantidad},${s.porcentaje}%\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `informe_nodo_bioceánico_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        // Cargar al iniciar
+        cargarEstadisticas();
+    </script>
+</body>
+</html>
