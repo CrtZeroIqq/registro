@@ -1169,9 +1169,6 @@ https://validator.w3.org/
 **Test de emails:**
 https://www.mail-tester.com/
 
-**Generador de QR para testing:**
-https://www.qr-code-generator.com/
-
 ---
 
 ## 👥 Contacto y Soporte
@@ -1187,7 +1184,9 @@ https://www.qr-code-generator.com/
 
 ## 📄 Licencia
 
-Este proyecto es propiedad de la organización del evento Nodo Bioceánico 2025.
+Desarrollado por Patricio Hernández Pavez, para Seid Global Consulting
+Licenciado por Seid Global Consulting y Seid Develpment, para uso exclusivo en Registro de Asistentes al Proyecto "Nodo Bioceánico Central", Ejecutado por INACAP.
+Noviembre 2025.
 
 ---
 
